@@ -15,17 +15,24 @@ export const metadata: Metadata = {
   description: "Engineering reliable, intelligent, and scalable digital systems. Expert software development, cloud architecture, DevOps, and AI/ML integration for enterprise.",
   keywords: ["software development", "cloud architecture", "DevOps", "AI ML integration", "enterprise consulting", "technology consulting"],
   authors: [{ name: "Cubott" }],
+  icons: {
+    icon: '/favicon.ico',
+    shortcut: '/favicon.ico',
+    apple: '/favicon.ico',
+  },
   openGraph: {
     title: "Cubott - Enterprise Technology Solutions",
     description: "Engineering reliable, intelligent, and scalable digital systems for enterprise.",
     type: "website",
     locale: "en_US",
     siteName: "Cubott",
+    images: ['/cubott-logo.png'],
   },
   twitter: {
     card: "summary_large_image",
     title: "Cubott - Enterprise Technology Solutions",
     description: "Engineering reliable, intelligent, and scalable digital systems for enterprise.",
+    images: ['/cubott-logo.png'],
   },
   robots: "index, follow",
 }
