@@ -1,0 +1,55 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --font-inter: 'Inter', system-ui, sans-serif;
+  }
+  
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+@layer utilities {
+  .bg-grid-pattern {
+    background-image: 
+      linear-gradient(to right, rgba(10, 37, 64, 0.05) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(10, 37, 64, 0.05) 1px, transparent 1px);
+    background-size: 50px 50px;
+  }
+  
+  .text-balance {
+    text-wrap: balance;
+  }
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background-color: rgb(241 245 249);
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: rgba(10, 37, 64, 0.2);
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(10, 37, 64, 0.4);
+}
+
+/* Selection */
+::selection {
+  background-color: rgba(79, 179, 217, 0.3);
+  color: rgb(10, 37, 64);
+}
+
+/* Focus visible styles */
+:focus-visible {
+  outline-width: 2px;
+  outline-offset: 2px;
+  outline-color: rgb(79, 179, 217);
+}
