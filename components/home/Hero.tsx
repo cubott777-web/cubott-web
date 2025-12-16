@@ -41,17 +41,15 @@ export default function Hero() {
             transition={{ duration: 0.8, ease: "easeOut" }}
             className="flex justify-center mb-8"
           >
-            <div className="relative w-24 h-24 bg-cubott-navy rounded-2xl flex items-center justify-center shadow-2xl shadow-cubott-navy/30">
-              <div className="w-16 h-16 bg-cubott-teal rounded-lg"></div>
-              <motion.div
-                animate={{
-                  scale: [1, 1.2, 1],
-                  opacity: [0.7, 1, 0.7],
-                }}
-                transition={{ duration: 2, repeat: Infinity }}
-                className="absolute top-2 right-2 w-4 h-4 bg-cubott-teal-light rounded-full"
-              />
-            </div>
+            <motion.img
+              src="/cubott-logo.png"
+              alt="Cubott Logo"
+              className="w-24 h-24 object-contain"
+              animate={{
+                scale: [1, 1.05, 1],
+              }}
+              transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+            />
           </motion.div>
 
           {/* Badge */}

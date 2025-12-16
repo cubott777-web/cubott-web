@@ -1,4 +1,6 @@
-@import "tailwindcss";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 @layer base {
   :root {
@@ -7,6 +9,10 @@
   
   html {
     scroll-behavior: smooth;
+  }
+  
+  body {
+    @apply bg-white text-gray-900;
   }
 }
 
@@ -29,27 +35,23 @@
 }
 
 ::-webkit-scrollbar-track {
-  background-color: rgb(241 245 249);
+  @apply bg-gray-100;
 }
 
 ::-webkit-scrollbar-thumb {
-  background-color: rgba(10, 37, 64, 0.2);
-  border-radius: 9999px;
+  @apply bg-cubott-navy/20 rounded-full;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background-color: rgba(10, 37, 64, 0.4);
+  @apply bg-cubott-navy/40;
 }
 
 /* Selection */
 ::selection {
-  background-color: rgba(79, 179, 217, 0.3);
-  color: rgb(10, 37, 64);
+  @apply bg-cubott-teal/30 text-cubott-navy;
 }
 
 /* Focus visible styles */
 :focus-visible {
-  outline-width: 2px;
-  outline-offset: 2px;
-  outline-color: rgb(79, 179, 217);
+  @apply outline-2 outline-offset-2 outline-cubott-teal;
 }

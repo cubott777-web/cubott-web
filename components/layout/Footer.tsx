@@ -41,10 +41,11 @@ export default function Footer() {
             {/* Brand Column */}
             <div className="lg:col-span-2">
               <Link href="/" className="flex items-center space-x-3 group mb-6">
-                <div className="relative w-10 h-10 bg-white rounded-lg flex items-center justify-center">
-                  <div className="w-6 h-6 bg-cubott-teal rounded-sm"></div>
-                  <div className="absolute top-1 right-1 w-2 h-2 bg-cubott-teal-light rounded-full"></div>
-                </div>
+                <img 
+                  src="/cubott-logo.png" 
+                  alt="Cubott Logo" 
+                  className="h-10 w-auto brightness-0 invert"
+                />
                 <span className="text-2xl font-bold text-white">Cubott</span>
               </Link>
               <p className="text-gray-300 mb-6 max-w-sm">

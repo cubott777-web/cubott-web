@@ -39,10 +39,11 @@ export default function Header() {
         <nav className="flex items-center justify-between h-20">
           {/* Logo */}
           <Link href="/" className="flex items-center space-x-3 group">
-            <div className="relative w-10 h-10 bg-cubott-navy rounded-lg flex items-center justify-center group-hover:scale-105 transition-transform">
-              <div className="w-6 h-6 bg-cubott-teal rounded-sm"></div>
-              <div className="absolute top-1 right-1 w-2 h-2 bg-cubott-teal-light rounded-full"></div>
-            </div>
+            <img 
+              src="/cubott-logo.png" 
+              alt="Cubott Logo" 
+              className="h-10 w-auto group-hover:scale-105 transition-transform"
+            />
             <span className="text-2xl font-bold text-cubott-navy">Cubott</span>
           </Link>
 
