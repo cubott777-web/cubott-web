@@ -40,7 +40,7 @@ export default function Header() {
           {/* Logo */}
           <Link href="/" className="flex items-center space-x-3 group">
             <img 
-              src="/cubott-logo.png" 
+              src="/cubott-logo.webp" 
               alt="Cubott Logo" 
               className="h-10 w-auto group-hover:scale-105 transition-transform"
             />

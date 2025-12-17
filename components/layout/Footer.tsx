@@ -42,7 +42,7 @@ export default function Footer() {
             <div className="lg:col-span-2">
               <Link href="/" className="flex items-center space-x-3 group mb-6">
                 <img 
-                  src="/cubott-logo.png" 
+                  src="/cubott-logo.webp" 
                   alt="Cubott Logo" 
                   className="h-10 w-auto brightness-0 invert"
                 />

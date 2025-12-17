@@ -42,7 +42,7 @@ export default function Hero() {
             className="flex justify-center mb-8"
           >
             <motion.img
-              src="/cubott-logo.png"
+              src="/cubott-logo.webp"
               alt="Cubott Logo"
               className="w-24 h-24 object-contain"
               animate={{

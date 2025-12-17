@@ -26,13 +26,13 @@ export const metadata: Metadata = {
     type: "website",
     locale: "en_US",
     siteName: "Cubott",
-    images: ['/cubott-logo.png'],
+    images: ['/cubott-logo.webp'],
   },
   twitter: {
     card: "summary_large_image",
     title: "Cubott - Enterprise Technology Solutions",
     description: "Engineering reliable, intelligent, and scalable digital systems for enterprise.",
-    images: ['/cubott-logo.png'],
+    images: ['/cubott-logo.webp'],
   },
   robots: "index, follow",
 }
