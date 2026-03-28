@@ -2,172 +2,122 @@
 
 import { motion } from "framer-motion"
 import Link from "next/link"
-import Container from "../ui/Container"
-import { ArrowRight } from "lucide-react"
-import Image from "next/image"
-
-const stats = [
-  { value: "99.9%", label: "Uptime SLA" },
-  { value: "500+", label: "Active Users" },
-  { value: "4", label: "Core Modules" },
-  { value: "100%", label: "Traceability" },
-]
+import { ArrowRight, Play } from "lucide-react"
 
 export default function Hero() {
   return (
-    <section className="relative min-h-screen flex flex-col overflow-hidden bg-[#030B15]">
-      <div className="absolute inset-0 bg-grid-pattern opacity-60" />
+    <section className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden bg-[#05090F]">
+      <div className="absolute inset-0 bg-grid-pattern" />
 
+      {/* Video background placeholder — drop hero.mp4 into /public/ to activate */}
+      <div className="absolute inset-0 z-0">
+        {/* Uncomment when video is ready:
+        <video
+          autoPlay muted loop playsInline
+          className="absolute inset-0 w-full h-full object-cover opacity-30"
+          src="/hero.mp4"
+        />
+        */}
+        <div className="absolute inset-0 bg-gradient-to-br from-[#05090F] via-[#081420] to-[#05090F]" />
+      </div>
+
+      {/* Teal ambient glow */}
       <motion.div
-        animate={{ opacity: [0.08, 0.16, 0.08] }}
-        transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
-        className="absolute top-0 left-[30%] w-[700px] h-[700px] bg-cubott-teal rounded-full blur-[180px] pointer-events-none"
+        animate={{ opacity: [0.1, 0.22, 0.1], scale: [1, 1.08, 1] }}
+        transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
+        className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[900px] h-[600px] bg-cubott-teal rounded-full blur-[200px] pointer-events-none"
       />
       <motion.div
-        animate={{ opacity: [0.05, 0.1, 0.05] }}
-        transition={{ duration: 14, repeat: Infinity, ease: "easeInOut", delay: 4 }}
-        className="absolute bottom-0 right-[10%] w-[500px] h-[500px] bg-cubott-navy-light rounded-full blur-[140px] pointer-events-none"
+        animate={{ opacity: [0.05, 0.12, 0.05] }}
+        transition={{ duration: 18, repeat: Infinity, ease: "easeInOut", delay: 5 }}
+        className="absolute bottom-0 right-0 w-[600px] h-[600px] bg-blue-600 rounded-full blur-[200px] pointer-events-none"
       />
 
-      <Container className="relative z-10 flex-1 flex flex-col justify-center pt-28 pb-0">
-        <div className="grid grid-cols-1 lg:grid-cols-[1fr_1fr] gap-16 items-center min-h-[80vh]">
+      <div className="relative z-10 max-w-5xl mx-auto px-6 text-center">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+          className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full glass-teal text-cubott-teal text-xs font-semibold tracking-[0.15em] uppercase mb-10"
+        >
+          <span className="w-1.5 h-1.5 rounded-full bg-cubott-teal animate-ping absolute" />
+          <span className="w-1.5 h-1.5 rounded-full bg-cubott-teal" />
+          Precision Intelligence System
+        </motion.div>
 
-          <div className="flex flex-col justify-center">
-            <motion.div
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.5 }}
-              className="flex items-center gap-3 mb-10"
-            >
-              <span className="w-px h-6 bg-cubott-teal" />
-              <span className="text-xs font-semibold tracking-[0.2em] text-cubott-teal uppercase">
-                Cubott — Precision Intelligence System
-              </span>
-            </motion.div>
+        <motion.h1
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7, delay: 0.1 }}
+          className="font-bagel text-[clamp(3.5rem,9vw,8rem)] leading-[1.05] text-white mb-8 tracking-wide"
+        >
+          The OS for{" "}
+          <span className="gradient-teal">Modern</span>
+          <br />
+          Dealerships.
+        </motion.h1>
 
-            <motion.h1
-              initial={{ opacity: 0, x: -24 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.7, delay: 0.1 }}
-              className="text-[clamp(3rem,6vw,5.5rem)] font-black leading-[0.95] tracking-[-0.03em] mb-8"
-            >
-              <span className="block text-white">The Operating</span>
-              <span className="block text-white">System for</span>
-              <span className="block gradient-text">Modern</span>
-              <span className="block text-white">Dealerships.</span>
-            </motion.h1>
+        <motion.p
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.25 }}
+          className="text-lg md:text-xl text-white/45 max-w-2xl mx-auto mb-12 leading-relaxed font-light"
+        >
+          One platform for service, inventory, sales, and finance.
+          Complete traceability. Role-based control. Zero compromises.
+        </motion.p>
 
-            <motion.p
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.6, delay: 0.25 }}
-              className="text-base text-white/45 max-w-sm mb-10 leading-relaxed font-light"
-            >
-              Cubott replaces disconnected spreadsheets and manual workflows with one unified platform — service, inventory, sales, and finance with complete traceability.
-            </motion.p>
-
-            <motion.div
-              initial={{ opacity: 0, y: 12 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.35 }}
-              className="flex flex-wrap items-center gap-3"
-            >
-              <Link
-                href="/contact"
-                className="group inline-flex items-center gap-2.5 px-6 py-3.5 rounded-xl bg-cubott-teal text-white font-semibold text-sm hover:bg-cubott-teal-dark transition-all duration-200 shadow-2xl shadow-cubott-teal/25 hover:shadow-cubott-teal/40 hover:-translate-y-0.5"
-              >
-                Request a Demo
-                <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
-              </Link>
-              <Link
-                href="/#platform"
-                className="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl border border-white/10 text-white/60 font-medium text-sm hover:text-white hover:border-white/20 transition-all duration-200"
-              >
-                See the Platform
-              </Link>
-            </motion.div>
-          </div>
-
-          <motion.div
-            initial={{ opacity: 0, x: 30 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8, delay: 0.3, ease: "easeOut" }}
-            className="relative hidden lg:flex items-center justify-center"
+        <motion.div
+          initial={{ opacity: 0, y: 16 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.4 }}
+          className="flex flex-col sm:flex-row items-center justify-center gap-4"
+        >
+          <Link
+            href="/contact"
+            className="group inline-flex items-center gap-2.5 px-8 py-4 rounded-xl bg-cubott-teal text-white font-semibold hover:bg-cubott-teal-dark transition-all duration-200 hover:scale-105 hover:shadow-2xl hover:shadow-cubott-teal/30 text-base"
           >
-            <div className="relative w-full max-w-[580px]">
-              <div className="relative rounded-2xl overflow-hidden mockup-shadow">
-                <div className="bg-[#080f1c] px-4 py-2.5 flex items-center gap-2 border-b border-white/5">
-                  <div className="flex gap-1.5">
-                    <span className="w-2.5 h-2.5 rounded-full bg-red-500/50" />
-                    <span className="w-2.5 h-2.5 rounded-full bg-yellow-500/50" />
-                    <span className="w-2.5 h-2.5 rounded-full bg-green-500/50" />
-                  </div>
-                  <div className="flex-1 mx-3">
-                    <div className="max-w-[200px] mx-auto h-5 bg-white/5 rounded flex items-center justify-center">
-                      <span className="text-white/20 text-[10px]">app.cubott.com</span>
-                    </div>
-                  </div>
-                </div>
-                <Image
-                  src="/screenshot-supervisor.png"
-                  alt="Cubott Supervisor Dashboard"
-                  width={900}
-                  height={506}
-                  className="w-full object-cover"
-                  style={{ height: 'auto' }}
-                  priority
-                />
-                <div className="absolute inset-0 bg-gradient-to-tr from-[#030B15]/60 via-transparent to-transparent" />
-              </div>
+            Let&apos;s Talk Business
+            <ArrowRight className="w-5 h-5 group-hover:translate-x-0.5 transition-transform" />
+          </Link>
+          <Link
+            href="/#platform"
+            className="group inline-flex items-center gap-2.5 px-8 py-4 rounded-xl border border-white/10 text-white/70 font-medium hover:text-white hover:border-white/25 transition-all duration-200 text-base"
+          >
+            <Play className="w-4 h-4 fill-white/50 group-hover:fill-white transition-colors" />
+            See the Platform
+          </Link>
+        </motion.div>
 
-              <motion.div
-                initial={{ opacity: 0, y: 16 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.9 }}
-                className="animate-float absolute -bottom-6 -left-8 glass rounded-2xl p-4 shadow-2xl"
-              >
-                <div className="text-[10px] text-white/40 uppercase tracking-widest mb-1">Live Stock</div>
-                <div className="text-2xl font-black text-white">2,710</div>
-                <div className="flex items-center gap-1.5 mt-1">
-                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
-                  <span className="text-[11px] text-emerald-400 font-medium">All healthy</span>
-                </div>
-              </motion.div>
-
-              <motion.div
-                initial={{ opacity: 0, y: -16 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 1.0 }}
-                className="absolute -top-6 -right-6 glass rounded-2xl p-4 shadow-2xl"
-              >
-                <div className="text-[10px] text-white/40 uppercase tracking-widest mb-1">Bays In Service</div>
-                <div className="text-2xl font-black text-white">3<span className="text-white/30 font-light">/10</span></div>
-                <div className="flex items-center gap-1.5 mt-1">
-                  <span className="w-1.5 h-1.5 rounded-full bg-cubott-teal animate-pulse" />
-                  <span className="text-[11px] text-cubott-teal font-medium">Live</span>
-                </div>
-              </motion.div>
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.7, duration: 0.8 }}
+          className="mt-24 flex flex-wrap items-center justify-center gap-x-12 gap-y-6"
+        >
+          {[
+            { val: "99.9%", label: "Uptime SLA" },
+            { val: "500+", label: "Active Users" },
+            { val: "4", label: "Core Modules" },
+            { val: "100%", label: "Traceability" },
+          ].map((s) => (
+            <div key={s.label} className="text-center">
+              <div className="font-bagel text-3xl md:text-4xl text-white">{s.val}</div>
+              <div className="text-xs text-white/35 uppercase tracking-widest mt-0.5">{s.label}</div>
             </div>
-          </motion.div>
-        </div>
-      </Container>
+          ))}
+        </motion.div>
+      </div>
 
+      {/* Scroll indicator */}
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ delay: 0.6 }}
-        className="relative z-10 border-t border-white/5 mt-auto"
+        transition={{ delay: 1.2 }}
+        className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
       >
-        <Container>
-          <div className="grid grid-cols-2 md:grid-cols-4 divide-x divide-white/5">
-            {stats.map((stat) => (
-              <div key={stat.label} className="py-6 px-8 first:pl-0">
-                <div className="text-3xl font-black text-white mb-0.5">{stat.value}</div>
-                <div className="text-xs text-white/35 uppercase tracking-widest">{stat.label}</div>
-              </div>
-            ))}
-          </div>
-        </Container>
+        <div className="w-px h-12 bg-gradient-to-b from-white/20 to-transparent" />
+        <span className="text-[10px] text-white/25 tracking-widest uppercase">Scroll</span>
       </motion.div>
     </section>
   )
