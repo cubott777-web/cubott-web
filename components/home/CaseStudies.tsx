@@ -48,11 +48,11 @@ export default function CaseStudies() {
   const current = screens.find((s) => s.id === active)!
 
   return (
-    <section id="platform" className="py-28 bg-[#05090F] relative overflow-hidden">
+    <section id="platform" className="py-16 bg-[#05090F] relative overflow-hidden">
       <div className="absolute inset-0 bg-grid-pattern opacity-40" />
 
       <Container className="relative z-10">
-        <div className="mb-16">
+        <div className="mb-10">
           <div className="flex items-center gap-3 mb-6">
             <span className="w-6 h-px bg-cubott-teal" />
             <span className="text-xs font-semibold tracking-[0.2em] text-cubott-teal uppercase">Platform Screenshots</span>

@@ -54,11 +54,11 @@ const modules = [
 
 export default function Services() {
   return (
-    <section id="features" className="py-28 bg-[#05090F] relative overflow-hidden">
+    <section id="features" className="py-16 bg-[#05090F] relative overflow-hidden">
       <div className="absolute inset-0 bg-grid-pattern opacity-50" />
 
       <Container className="relative z-10">
-        <div className="mb-20">
+        <div className="mb-10">
           <motion.div
             initial={{ opacity: 0, y: 16 }}
             whileInView={{ opacity: 1, y: 0 }}

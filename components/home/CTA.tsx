@@ -7,7 +7,7 @@ import { ArrowRight } from "lucide-react"
 
 export default function CTA() {
   return (
-    <section className="relative overflow-hidden bg-[#05090F] py-36">
+    <section className="relative overflow-hidden bg-[#05090F] py-20">
       <div className="absolute inset-0 bg-grid-pattern opacity-40" />
       <motion.div
         animate={{ opacity: [0.1, 0.2, 0.1], scale: [1, 1.06, 1] }}

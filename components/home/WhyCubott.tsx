@@ -23,9 +23,9 @@ export default function WhyCubott() {
       <div className="absolute inset-0 bg-grid-pattern opacity-30" />
 
       <Container className="relative z-10">
-        <div className="grid grid-cols-1 lg:grid-cols-2 min-h-[80vh]">
+        <div className="grid grid-cols-1 lg:grid-cols-2">
 
-          <div className="py-28 pr-0 lg:pr-20 border-b lg:border-b-0 lg:border-r border-white/5">
+          <div className="py-16 pr-0 lg:pr-20 border-b lg:border-b-0 lg:border-r border-white/5">
             <motion.div
               initial={{ opacity: 0, y: 16 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -60,7 +60,7 @@ export default function WhyCubott() {
             </div>
           </div>
 
-          <div className="py-28 pl-0 lg:pl-20 flex flex-col justify-between">
+          <div className="py-16 pl-0 lg:pl-20 flex flex-col justify-between">
             <motion.div
               initial={{ opacity: 0, y: 16 }}
               whileInView={{ opacity: 1, y: 0 }}
