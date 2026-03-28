@@ -1,4 +1,5 @@
 import Hero from "@/components/home/Hero"
+import Marquee from "@/components/home/Marquee"
 import Services from "@/components/home/Services"
 import WhyCubott from "@/components/home/WhyCubott"
 import CaseStudies from "@/components/home/CaseStudies"
@@ -9,6 +10,7 @@ export default function HomePage() {
   return (
     <main className="min-h-screen">
       <Hero />
+      <Marquee />
       <Services />
       <WhyCubott />
       <CaseStudies />

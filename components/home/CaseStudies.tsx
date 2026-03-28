@@ -82,7 +82,7 @@ export default function CaseStudies() {
             See Cubott in action
           </h2>
           <p className="text-white/50 text-lg max-w-2xl mx-auto">
-            Every module is purpose-built for agricultural dealership workflows — not adapted from a generic template.
+            Real screens, real workflows — built for dealerships, not adapted from a generic template.
           </p>
         </AnimatedSection>
 

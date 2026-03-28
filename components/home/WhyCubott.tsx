@@ -2,127 +2,139 @@
 
 import { motion } from "framer-motion"
 import Container from "../ui/Container"
-import AnimatedSection from "../shared/AnimatedSection"
-import { AlertTriangle, Eye, Clock, UserX } from "lucide-react"
 
 const problems = [
   {
-    icon: Clock,
+    num: "01",
     title: "Manual Service Tracking",
     description: "Teams rely on phone calls and spreadsheets to track service jobs, causing delays and missed SLAs.",
   },
   {
-    icon: Eye,
+    num: "02",
     title: "Poor Inventory Visibility",
-    description: "No real-time view of stock availability leads to shortages, over-ordering, and operational downtime.",
+    description: "No real-time view of stock leads to shortages, over-ordering, and operational downtime.",
   },
   {
-    icon: AlertTriangle,
+    num: "03",
     title: "Fragmented Sales Process",
-    description: "Sales data lives in silos — disconnected from service, inventory, and finance — slowing down deals.",
+    description: "Sales data lives in silos — disconnected from service, inventory, and finance — slowing deals down.",
   },
   {
-    icon: UserX,
-    title: "Lack of Accountability",
-    description: "Without traceability, it's impossible to know who did what, when, and why — leaving gaps in every audit.",
+    num: "04",
+    title: "Zero Accountability",
+    description: "Without traceability, you can't know who did what or when — leaving every audit full of gaps.",
   },
 ]
 
-const solutions = [
-  { stat: "100%", label: "Digital Traceability" },
-  { stat: "60%", label: "Faster Operations" },
-  { stat: "3x", label: "Inventory Accuracy" },
-  { stat: "500+", label: "Active Users" },
+const metrics = [
+  { value: "100%", label: "Traceability" },
+  { value: "60%", label: "Faster Ops" },
+  { value: "3×", label: "Inventory Accuracy" },
+  { value: "500+", label: "Active Users" },
 ]
 
 export default function WhyCubott() {
   return (
-    <section id="why-cubott" className="py-28 bg-[#060F1E] relative overflow-hidden">
-      <div className="absolute inset-0 bg-grid-pattern opacity-30" />
-      <div className="absolute right-0 top-0 w-1/2 h-full bg-gradient-to-l from-cubott-teal/5 via-transparent to-transparent pointer-events-none" />
+    <section id="why-cubott" className="bg-[#020810] relative overflow-hidden">
+      <div className="absolute inset-0 bg-grid-pattern opacity-25" />
 
       <Container className="relative z-10">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
-          <AnimatedSection>
-            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full glass-bright text-cubott-teal text-sm font-semibold mb-6">
-              The Problem
-            </div>
-            <h2 className="text-4xl md:text-5xl font-bold text-white mb-6 leading-tight">
-              Businesses are drowning
-              <br />
-              <span className="gradient-text-teal">in manual processes</span>
-            </h2>
-            <p className="text-white/50 text-lg mb-10 leading-relaxed">
-              Dealerships and distribution businesses manage complex, multi-step workflows across service, inventory, sales, and finance — all without the right tools.
-            </p>
+        <div className="grid grid-cols-1 lg:grid-cols-2 min-h-[70vh]">
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div className="py-24 pr-0 lg:pr-20 border-b lg:border-b-0 lg:border-r border-white/6">
+            <motion.div
+              initial={{ opacity: 0, y: 16 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+            >
+              <div className="flex items-center gap-3 mb-12">
+                <span className="w-px h-5 bg-red-400/60" />
+                <span className="text-xs font-semibold tracking-[0.2em] text-red-400/60 uppercase">The Problem</span>
+              </div>
+              <h2 className="text-4xl md:text-5xl font-black tracking-[-0.03em] text-white leading-[1] mb-16">
+                Businesses drowning<br />in broken tools.
+              </h2>
+            </motion.div>
+
+            <div className="space-y-0">
               {problems.map((p, i) => (
                 <motion.div
-                  key={p.title}
+                  key={p.num}
                   initial={{ opacity: 0, x: -16 }}
                   whileInView={{ opacity: 1, x: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: i * 0.1 }}
-                  className="glass-card p-5 rounded-xl hover:border-white/10 transition-all"
+                  className="group flex gap-6 py-8 border-t border-white/6 hover:border-white/12 transition-colors"
                 >
-                  <div className="flex items-start gap-3">
-                    <div className="flex-shrink-0 w-9 h-9 rounded-lg bg-red-500/10 flex items-center justify-center mt-0.5">
-                      <p.icon className="w-4 h-4 text-red-400" />
-                    </div>
-                    <div>
-                      <h4 className="text-white text-sm font-semibold mb-1">{p.title}</h4>
-                      <p className="text-white/40 text-xs leading-relaxed">{p.description}</p>
-                    </div>
+                  <span className="text-xs font-bold tracking-widest text-white/15 mt-1 flex-shrink-0 w-6">{p.num}</span>
+                  <div>
+                    <h4 className="font-bold text-white mb-1.5 group-hover:text-cubott-teal transition-colors text-base">{p.title}</h4>
+                    <p className="text-white/35 text-sm leading-relaxed font-light">{p.description}</p>
                   </div>
                 </motion.div>
               ))}
             </div>
-          </AnimatedSection>
+          </div>
 
-          <AnimatedSection delay={0.2}>
-            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full glass-bright text-cubott-teal text-sm font-semibold mb-6">
-              Our Solution
-            </div>
-            <h2 className="text-4xl md:text-5xl font-bold text-white mb-6 leading-tight">
-              Cubott digitizes
-              <br />
-              <span className="gradient-text-teal">the entire workflow</span>
-            </h2>
-            <p className="text-white/50 text-lg mb-10 leading-relaxed">
-              One unified platform replaces disconnected tools. Every team — supervisors, store staff, sales, and finance — works from the same system with role-based access and complete traceability.
-            </p>
-
-            <div className="grid grid-cols-2 gap-4 mb-10">
-              {solutions.map((s, i) => (
-                <motion.div
-                  key={s.label}
-                  initial={{ opacity: 0, scale: 0.95 }}
-                  whileInView={{ opacity: 1, scale: 1 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: i * 0.08 }}
-                  className="glass-card p-6 rounded-2xl text-center hover:border-cubott-teal/20 transition-all"
-                >
-                  <div className="text-4xl font-bold gradient-text-teal mb-1">{s.stat}</div>
-                  <div className="text-white/40 text-sm">{s.label}</div>
-                </motion.div>
-              ))}
-            </div>
-
-            <div className="glass-card p-5 rounded-2xl">
-              <div className="flex items-start gap-3">
-                <div className="flex-shrink-0 w-9 h-9 rounded-lg bg-cubott-teal/10 flex items-center justify-center mt-0.5">
-                  <span className="text-cubott-teal text-lg font-bold">✓</span>
-                </div>
-                <div>
-                  <div className="text-white text-sm font-semibold mb-1">Multi-Tenant Architecture</div>
-                  <div className="text-white/40 text-xs leading-relaxed">
-                    Fully isolated per business. Each tenant gets their own data, users, and configuration — with cross-tenant visibility for management where needed.
-                  </div>
-                </div>
+          <div className="py-24 pl-0 lg:pl-20 flex flex-col justify-between">
+            <motion.div
+              initial={{ opacity: 0, y: 16 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.1 }}
+            >
+              <div className="flex items-center gap-3 mb-12">
+                <span className="w-px h-5 bg-cubott-teal" />
+                <span className="text-xs font-semibold tracking-[0.2em] text-cubott-teal uppercase">Our Solution</span>
               </div>
+              <h2 className="text-4xl md:text-5xl font-black tracking-[-0.03em] text-white leading-[1] mb-6">
+                One platform.<br />
+                <span className="gradient-text-teal">Total control.</span>
+              </h2>
+              <p className="text-white/40 text-base leading-relaxed font-light max-w-sm mb-16">
+                Every team — supervisors, store staff, sales, and finance — works from the same system with role-based access and complete traceability.
+              </p>
+            </motion.div>
+
+            <div>
+              <div className="grid grid-cols-2 gap-4 mb-8">
+                {metrics.map((m, i) => (
+                  <motion.div
+                    key={m.label}
+                    initial={{ opacity: 0, scale: 0.9 }}
+                    whileInView={{ opacity: 1, scale: 1 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: 0.15 + i * 0.07 }}
+                    className="border border-white/6 rounded-2xl p-6 hover:border-cubott-teal/20 hover:bg-cubott-teal/3 transition-all duration-300"
+                  >
+                    <div className="text-4xl font-black gradient-text-teal mb-1">{m.value}</div>
+                    <div className="text-xs text-white/35 uppercase tracking-wider">{m.label}</div>
+                  </motion.div>
+                ))}
+              </div>
+
+              <motion.div
+                initial={{ opacity: 0, y: 8 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.4 }}
+                className="border border-cubott-teal/15 rounded-2xl p-5 bg-cubott-teal/4"
+              >
+                <div className="flex items-start gap-3">
+                  <div className="w-8 h-8 rounded-lg border border-cubott-teal/30 flex items-center justify-center flex-shrink-0 mt-0.5">
+                    <span className="text-cubott-teal text-sm font-bold">✓</span>
+                  </div>
+                  <div>
+                    <div className="text-white text-sm font-bold mb-1">Multi-Tenant Architecture</div>
+                    <div className="text-white/35 text-xs leading-relaxed font-light">
+                      Fully isolated per business. Each tenant gets their own data, users, and config — with cross-tenant visibility for management where needed.
+                    </div>
+                  </div>
+                </div>
+              </motion.div>
             </div>
-          </AnimatedSection>
+          </div>
+
         </div>
       </Container>
     </section>

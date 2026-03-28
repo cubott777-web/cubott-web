@@ -1,129 +1,151 @@
 "use client"
 
+import { motion } from "framer-motion"
 import { Wrench, Package, TrendingUp, FileText } from "lucide-react"
 import Container from "../ui/Container"
-import AnimatedSection from "../shared/AnimatedSection"
+import Image from "next/image"
 
 const modules = [
   {
+    num: "01",
     icon: Wrench,
     title: "Service",
-    description: "End-to-end service request lifecycle management. Assign technicians, track job progress, manage service bays, and close work orders with complete accountability and audit history.",
-    accent: "from-cubott-teal to-sky-400",
-    tag: "Core Module",
-    features: [
-      "Service request intake & assignment",
-      "Bay and slot management",
-      "Job progress tracking",
-      "Overdue & long-stay alerts",
-      "Warranty claim workflows",
-      "Full service audit trail",
-    ],
+    description: "End-to-end service request lifecycle. Assign technicians, track bays, manage work orders, and close jobs with full accountability.",
+    accent: "#4FB3D9",
+    accentClass: "from-cubott-teal to-sky-400",
+    features: ["Request intake & assignment", "Bay and slot management", "Job progress tracking", "Overdue & long-stay alerts", "Warranty workflows", "Full audit trail"],
+    image: "/screenshot-supervisor.png",
+    span: "lg:col-span-2",
+    imagePos: "object-top",
   },
   {
+    num: "02",
     icon: Package,
-    title: "Inventory Management",
-    description: "Real-time visibility into parts and stock across all locations. Eliminate shortages, reduce over-ordering, and keep operations running without interruption.",
-    accent: "from-violet-500 to-purple-400",
-    tag: "Inventory",
-    features: [
-      "Parts catalog with location tracking",
-      "Low stock & out-of-stock alerts",
-      "Parts issuance and returns",
-      "Category and bin management",
-      "Multi-location stock visibility",
-      "Replenishment workflows",
-    ],
+    title: "Inventory",
+    description: "Real-time visibility into parts and stock across all locations. Eliminate shortages and reduce over-ordering.",
+    accent: "#a78bfa",
+    accentClass: "from-violet-500 to-purple-400",
+    features: ["Parts catalog", "Low stock alerts", "Issuance & returns", "Multi-location", "Category bins", "Replenishment"],
+    image: "/screenshot-inventory.png",
+    span: "lg:col-span-1",
+    imagePos: "object-top",
   },
   {
+    num: "03",
     icon: TrendingUp,
     title: "Sales",
-    description: "Manage your sales pipeline from inquiry to delivery. Track orders, monitor dealer performance, and give your sales team the tools to close more deals faster.",
-    accent: "from-emerald-500 to-teal-400",
-    tag: "Sales",
-    features: [
-      "Sales pipeline management",
-      "Quote and order tracking",
-      "Dealer performance metrics",
-      "Customer management",
-      "Dispatch and delivery tracking",
-      "Sales analytics dashboard",
-    ],
+    description: "Manage your pipeline from inquiry to delivery. Track orders, monitor performance, close deals faster.",
+    accent: "#34d399",
+    accentClass: "from-emerald-500 to-teal-400",
+    features: ["Pipeline management", "Quote & order tracking", "Performance metrics", "Customer management", "Dispatch tracking", "Analytics"],
+    image: "/screenshot-manufacturer.png",
+    span: "lg:col-span-1",
+    imagePos: "object-top",
   },
   {
+    num: "04",
     icon: FileText,
     title: "Finance",
-    description: "Integrated billing and financial workflows across every team. Auto-generate invoices, track payments, reconcile accounts, and maintain a complete financial audit trail.",
-    accent: "from-amber-500 to-orange-400",
-    tag: "Finance",
-    features: [
-      "Invoice generation & management",
-      "Payment tracking & reconciliation",
-      "Financial audit logs",
-      "Role-based finance access",
-      "Cross-module billing visibility",
-      "Expense and cost reporting",
-    ],
+    description: "Integrated billing workflows across every team. Auto-generate invoices, track payments, maintain a complete financial audit trail.",
+    accent: "#fbbf24",
+    accentClass: "from-amber-500 to-orange-400",
+    features: ["Invoice generation", "Payment tracking", "Financial audit logs", "Role-based access", "Cross-module billing", "Cost reporting"],
+    image: "/screenshot-audit.png",
+    span: "lg:col-span-2",
+    imagePos: "object-top",
   },
 ]
 
 export default function Services() {
   return (
-    <section id="features" className="py-28 relative overflow-hidden bg-[#040D1A]">
-      <div className="absolute inset-0 bg-grid-pattern opacity-50" />
-      <div className="absolute left-0 top-0 w-1/2 h-full bg-gradient-to-r from-cubott-teal/5 via-transparent to-transparent pointer-events-none" />
+    <section id="features" className="py-24 bg-[#030B15] relative overflow-hidden">
+      <div className="absolute inset-0 bg-grid-pattern opacity-40" />
 
       <Container className="relative z-10">
-        <AnimatedSection className="text-center mb-20">
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full glass-bright text-cubott-teal text-sm font-semibold mb-6">
-            Platform Modules
-          </div>
-          <h2 className="text-4xl md:text-5xl font-bold text-white mb-5 leading-tight">
-            Everything your business needs,
-            <br />
-            <span className="gradient-text-teal">built into one platform</span>
-          </h2>
-          <p className="text-lg text-white/50 max-w-2xl mx-auto">
-            Four tightly integrated modules that replace disconnected spreadsheets and manual processes with a single source of truth.
-          </p>
-        </AnimatedSection>
+        <div className="flex items-end justify-between mb-16 gap-8">
+          <motion.div
+            initial={{ opacity: 0, y: 16 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+          >
+            <div className="flex items-center gap-3 mb-5">
+              <span className="w-px h-5 bg-cubott-teal" />
+              <span className="text-xs font-semibold tracking-[0.2em] text-cubott-teal uppercase">Platform Modules</span>
+            </div>
+            <h2 className="text-5xl md:text-6xl font-black leading-[0.95] tracking-[-0.03em] text-white">
+              Four modules.<br />
+              <span className="gradient-text-teal">One platform.</span>
+            </h2>
+          </motion.div>
+          <motion.p
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.15 }}
+            className="hidden md:block text-white/40 text-sm leading-relaxed max-w-xs text-right font-light"
+          >
+            Four tightly integrated modules replace disconnected spreadsheets and fragmented tools.
+          </motion.p>
+        </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {modules.map((mod, index) => (
-            <AnimatedSection key={mod.title} delay={index * 0.1}>
-              <div className="group relative h-full p-8 glass-card rounded-2xl hover:border-cubott-teal/25 transition-all duration-300 hover:bg-white/5 hover:-translate-y-1">
-                <div className="flex items-start gap-5 mb-6">
-                  <div className={`flex-shrink-0 w-14 h-14 rounded-2xl bg-gradient-to-br ${mod.accent} p-px`}>
-                    <div className="w-full h-full rounded-2xl bg-[#070f1e] flex items-center justify-center">
-                      <mod.icon className="w-6 h-6 text-white" />
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
+          {modules.map((mod, i) => (
+            <motion.div
+              key={mod.title}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: i * 0.08 }}
+              className={`${mod.span} relative group overflow-hidden rounded-2xl border border-white/6 bg-[#060d1a] card-hover min-h-[320px]`}
+            >
+              <div className="absolute inset-0">
+                <Image
+                  src={mod.image}
+                  alt={mod.title}
+                  fill
+                  sizes="(max-width: 1024px) 100vw, 66vw"
+                  className={`object-cover ${mod.imagePos} opacity-[0.07] group-hover:opacity-[0.12] transition-opacity duration-500`}
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#060d1a] via-[#060d1a]/80 to-transparent" />
+              </div>
+
+              <div className="absolute top-6 right-6 text-[5rem] font-black leading-none tracking-tighter select-none pointer-events-none"
+                style={{ color: mod.accent, opacity: 0.08 }}>
+                {mod.num}
+              </div>
+
+              <div className="relative z-10 p-7 h-full flex flex-col">
+                <div className="flex items-center gap-3 mb-4">
+                  <div className={`w-9 h-9 rounded-lg bg-gradient-to-br ${mod.accentClass} p-px flex-shrink-0`}>
+                    <div className="w-full h-full rounded-lg bg-[#060d1a] flex items-center justify-center">
+                      <mod.icon className="w-4 h-4 text-white" />
                     </div>
                   </div>
-                  <div>
-                    <div className={`inline-flex items-center px-2.5 py-1 rounded-md bg-gradient-to-r ${mod.accent} text-white text-xs font-semibold mb-2 opacity-90`}>
-                      {mod.tag}
-                    </div>
-                    <h3 className="text-xl font-bold text-white group-hover:text-cubott-teal transition-colors duration-200">
-                      {mod.title}
-                    </h3>
-                  </div>
+                  <span className="text-[10px] font-bold tracking-[0.2em] uppercase" style={{ color: mod.accent }}>
+                    {mod.num} / {mod.title}
+                  </span>
                 </div>
 
-                <p className="text-white/50 text-sm leading-relaxed mb-6">
-                  {mod.description}
-                </p>
+                <h3 className="text-2xl font-black text-white tracking-tight mb-3">{mod.title}</h3>
+                <p className="text-white/45 text-sm leading-relaxed mb-6 font-light">{mod.description}</p>
 
-                <ul className="grid grid-cols-2 gap-2">
-                  {mod.features.map((feature) => (
-                    <li key={feature} className="flex items-center gap-2 text-xs text-white/40">
-                      <span className={`w-1 h-1 rounded-full flex-shrink-0 bg-gradient-to-r ${mod.accent}`} style={{ minWidth: '4px', minHeight: '4px' }} />
-                      {feature}
-                    </li>
+                <div className="mt-auto flex flex-wrap gap-1.5">
+                  {mod.features.map((f) => (
+                    <span
+                      key={f}
+                      className="text-[11px] px-2.5 py-1 rounded-md border border-white/8 text-white/35 bg-white/3"
+                    >
+                      {f}
+                    </span>
                   ))}
-                </ul>
+                </div>
 
-                <div className={`absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r ${mod.accent} opacity-0 group-hover:opacity-30 transition-opacity rounded-b-2xl`} />
+                <div
+                  className="absolute bottom-0 left-0 right-0 h-px opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                  style={{ background: `linear-gradient(to right, transparent, ${mod.accent}60, transparent)` }}
+                />
               </div>
-            </AnimatedSection>
+            </motion.div>
           ))}
         </div>
       </Container>
