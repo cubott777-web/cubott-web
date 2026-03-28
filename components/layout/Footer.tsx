@@ -33,12 +33,15 @@ export default function Footer() {
       <Container>
         <div className="py-16 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-12">
           <div className="lg:col-span-2">
-            <Link href="/" className="inline-block mb-5 group">
+            <Link href="/" className="inline-flex items-center gap-3 mb-5 group">
               <img
-                src="/cubott-logo-full.png"
+                src="/cubott-logo.webp"
                 alt="Cubott"
-                className="h-10 w-auto opacity-80 group-hover:opacity-100 transition-opacity"
+                className="h-9 w-auto opacity-70 group-hover:opacity-100 transition-opacity"
               />
+              <span className="text-white/70 font-bold text-lg tracking-tight group-hover:text-white transition-colors">
+                Cubott
+              </span>
             </Link>
             <p className="text-white/35 text-sm mb-6 leading-relaxed max-w-xs font-light">
               Multi-tenant SaaS platform that digitizes end-to-end dealership operations with complete traceability and role-based control.
@@ -75,7 +78,7 @@ export default function Footer() {
 
         <div className="border-t border-white/5 py-6 flex flex-col md:flex-row justify-between items-center gap-3">
           <p className="text-white/20 text-xs font-light">© {currentYear} Cubott Technologies. All rights reserved.</p>
-          <p className="text-white/15 text-xs font-light">Precision Intelligence System</p>
+          <p className="text-white/15 text-xs font-light">Built for modern dealerships.</p>
         </div>
       </Container>
     </footer>

@@ -33,12 +33,15 @@ export default function Header() {
     >
       <Container>
         <nav className="flex items-center justify-between h-20">
-          <Link href="/" className="group">
+          <Link href="/" className="group flex items-center gap-3">
             <img
-              src="/cubott-logo-full.png"
+              src="/cubott-logo.webp"
               alt="Cubott"
-              className="h-10 w-auto transition-transform duration-300 group-hover:scale-105"
+              className="h-9 w-auto transition-transform duration-300 group-hover:scale-105"
             />
+            <span className="text-white font-bold text-lg tracking-tight group-hover:text-cubott-teal transition-colors">
+              Cubott
+            </span>
           </Link>
 
           <div className="hidden md:flex items-center gap-1">
