@@ -3,7 +3,7 @@ import Link from "next/link"
 import { ButtonHTMLAttributes, forwardRef, AnchorHTMLAttributes, ReactNode } from "react"
 
 interface ButtonBaseProps {
-  variant?: "primary" | "secondary" | "outline"
+  variant?: "primary" | "secondary" | "outline" | "ghost"
   size?: "sm" | "md" | "lg"
   className?: string
   children?: ReactNode
@@ -22,20 +22,20 @@ type ButtonProps = ButtonAsButton | ButtonAsLink
 const Button = forwardRef<HTMLButtonElement | HTMLAnchorElement, ButtonProps>(
   ({ className, variant = "primary", size = "md", children, ...props }, ref) => {
     const classes = cn(
-      "inline-flex items-center justify-center rounded-lg font-semibold transition-all duration-200",
-      "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2",
+      "inline-flex items-center justify-center rounded-xl font-semibold transition-all duration-200",
+      "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cubott-teal focus-visible:ring-offset-2 focus-visible:ring-offset-[#040D1A]",
       "disabled:opacity-50 disabled:pointer-events-none",
       {
-        // Variants
-        "bg-cubott-teal text-white hover:bg-cubott-teal-dark shadow-lg shadow-cubott-teal/30 hover:shadow-xl hover:shadow-cubott-teal/40":
+        "bg-cubott-teal text-white hover:bg-cubott-teal-dark shadow-lg shadow-cubott-teal/25 hover:shadow-xl hover:shadow-cubott-teal/35 hover:-translate-y-0.5":
           variant === "primary",
-        "bg-cubott-navy text-white hover:bg-cubott-navy-light shadow-lg shadow-cubott-navy/20":
+        "bg-white/8 text-white hover:bg-white/14 border border-white/10 hover:border-white/20":
           variant === "secondary",
-        "border-2 border-cubott-navy text-cubott-navy hover:bg-cubott-navy hover:text-white":
+        "border border-cubott-teal/50 text-cubott-teal hover:bg-cubott-teal hover:text-white":
           variant === "outline",
+        "text-white/70 hover:text-white hover:bg-white/5":
+          variant === "ghost",
       },
       {
-        // Sizes
         "px-4 py-2 text-sm": size === "sm",
         "px-6 py-3 text-base": size === "md",
         "px-8 py-4 text-lg": size === "lg",

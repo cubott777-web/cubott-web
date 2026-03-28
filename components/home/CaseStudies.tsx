@@ -1,132 +1,174 @@
-import Link from "next/link"
-import { ArrowRight, TrendingUp } from "lucide-react"
+"use client"
+
+import { useState } from "react"
+import { motion, AnimatePresence } from "framer-motion"
 import Container from "../ui/Container"
-import Button from "../ui/Button"
 import AnimatedSection from "../shared/AnimatedSection"
+import Image from "next/image"
+
+const screens = [
+  {
+    id: "supervisor",
+    label: "Supervisor Dashboard",
+    image: "/screenshot-supervisor.png",
+    description: "Daily operational overview with real-time visibility into service calendar, parking slots, service bays, and overdue vehicles.",
+    stats: [
+      { value: "10", label: "Service Bays" },
+      { value: "8", label: "Parking Slots" },
+      { value: "100%", label: "Resource Visibility" },
+    ],
+  },
+  {
+    id: "intelligence",
+    label: "Intelligence Dashboard",
+    image: "/screenshot-intelligence.png",
+    description: "Real-time analytics across service performance, capacity utilization, and logistics funnel — with date-range filtering.",
+    stats: [
+      { value: "Live", label: "Analytics" },
+      { value: "3", label: "Request Types" },
+      { value: "360°", label: "Operations View" },
+    ],
+  },
+  {
+    id: "inventory",
+    label: "Inventory",
+    image: "/screenshot-inventory.png",
+    description: "Manage 2,700+ parts with health indicators, location tracking, and low-stock alerts — all searchable and filterable.",
+    stats: [
+      { value: "2,710", label: "Total Parts" },
+      { value: "786", label: "Low Stock Alert" },
+      { value: "Real-time", label: "Status Updates" },
+    ],
+  },
+  {
+    id: "audit",
+    label: "Audit Logs",
+    image: "/screenshot-audit.png",
+    description: "Complete audit trail with every create, update, and delete — timestamped, attributed, and searchable across all entities.",
+    stats: [
+      { value: "124+", label: "Log Entries" },
+      { value: "100%", label: "Traceability" },
+      { value: "All", label: "Entity Types" },
+    ],
+  },
+  {
+    id: "manufacturer",
+    label: "Manufacturer View",
+    image: "/screenshot-manufacturer.png",
+    description: "Manufacturer dashboard showing warranty funnel stages, dealer performance metrics, and recent activity in real time.",
+    stats: [
+      { value: "5", label: "Funnel Stages" },
+      { value: "100%", label: "Dealer Efficiency" },
+      { value: "Live", label: "Activity Feed" },
+    ],
+  },
+]
 
 export default function CaseStudies() {
-  const caseStudies = [
-    {
-      title: "ServiceHub",
-      industry: "Agricultural Machinery",
-      description: "Complete multi-tenant SaaS platform for service management with sales, operations, and finance workflows.",
-      metrics: [
-        { label: "Uptime", value: "99.9%" },
-        { label: "Users", value: "500+" },
-        { label: "Completion", value: "100%" },
-      ],
-      tech: ["React", "TypeScript", "PostgreSQL", "Node.js"],
-      gradient: "from-blue-600 to-cyan-600",
-    },
-    {
-      title: "Global Financial Platform",
-      industry: "FinTech",
-      description: "Migrated legacy banking system to AWS cloud with microservices architecture and zero downtime.",
-      metrics: [
-        { label: "Uptime", value: "99.99%" },
-        { label: "Cost Saved", value: "60%" },
-        { label: "Response", value: "<100ms" },
-      ],
-      tech: ["AWS", "Kubernetes", "Terraform", "Go"],
-      gradient: "from-indigo-600 to-purple-600",
-    },
-    {
-      title: "E-Commerce Infrastructure",
-      industry: "Retail",
-      description: "Built event-driven serverless architecture handling 10M+ daily transactions with auto-scaling.",
-      metrics: [
-        { label: "Scale", value: "10x" },
-        { label: "Latency", value: "<50ms" },
-        { label: "Availability", value: "99.95%" },
-      ],
-      tech: ["GCP", "Cloud Functions", "Pub/Sub", "Redis"],
-      gradient: "from-violet-600 to-fuchsia-600",
-    },
-    {
-      title: "Healthcare Data Platform",
-      industry: "Healthcare",
-      description: "HIPAA-compliant ML pipeline for healthcare analytics with automated insights and reporting.",
-      metrics: [
-        { label: "Compliance", value: "100%" },
-        { label: "Faster Insights", value: "80%" },
-        { label: "Data Points", value: "1B+" },
-      ],
-      tech: ["Azure", "Databricks", "Python", "MLflow"],
-      gradient: "from-pink-600 to-rose-600",
-    },
-  ]
+  const [active, setActive] = useState(screens[0].id)
+  const current = screens.find((s) => s.id === active)!
 
   return (
-    <section className="py-24 bg-gray-50">
-      <Container>
+    <section id="platform" className="py-28 relative overflow-hidden bg-[#040D1A]">
+      <div className="absolute inset-0 bg-grid-pattern opacity-40" />
+      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-cubott-teal/3 to-transparent pointer-events-none" />
+
+      <Container className="relative z-10">
         <AnimatedSection className="text-center mb-16">
-          <div className="inline-flex items-center space-x-2 px-4 py-2 bg-cubott-teal/10 rounded-full mb-6">
-            <TrendingUp className="w-4 h-4 text-cubott-teal" />
-            <span className="text-sm font-medium text-cubott-navy">Success Stories</span>
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full glass-bright text-cubott-teal text-sm font-semibold mb-6">
+            Platform Screenshots
           </div>
-          <h2 className="text-4xl md:text-5xl font-bold text-cubott-navy mb-6">
-            Real Results, Real Impact
+          <h2 className="text-4xl md:text-5xl font-bold text-white mb-5">
+            See Cubott in action
           </h2>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            See how we've helped enterprises transform their technology and achieve measurable business outcomes.
+          <p className="text-white/50 text-lg max-w-2xl mx-auto">
+            Every module is purpose-built for agricultural dealership workflows — not adapted from a generic template.
           </p>
         </AnimatedSection>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-12">
-          {caseStudies.map((study, index) => (
-            <AnimatedSection key={study.title} delay={index * 0.1}>
-              <div className="group h-full p-8 bg-white rounded-2xl border border-gray-200 hover:border-cubott-teal transition-all duration-300 hover:shadow-2xl">
-                {/* Header */}
-                <div className={`inline-block px-4 py-2 rounded-lg bg-gradient-to-r ${study.gradient} text-white text-sm font-semibold mb-4`}>
-                  {study.industry}
-                </div>
-                
-                <h3 className="text-2xl font-bold text-cubott-navy mb-3 group-hover:text-cubott-teal transition-colors">
-                  {study.title}
-                </h3>
-                
-                <p className="text-gray-600 mb-6 leading-relaxed">
-                  {study.description}
-                </p>
-
-                {/* Metrics */}
-                <div className="grid grid-cols-3 gap-4 mb-6 p-4 bg-gray-50 rounded-lg">
-                  {study.metrics.map((metric) => (
-                    <div key={metric.label} className="text-center">
-                      <div className="text-2xl font-bold text-cubott-teal mb-1">
-                        {metric.value}
-                      </div>
-                      <div className="text-xs text-gray-500">{metric.label}</div>
-                    </div>
-                  ))}
-                </div>
-
-                {/* Tech Stack */}
-                <div className="flex flex-wrap gap-2">
-                  {study.tech.map((tech) => (
-                    <span
-                      key={tech}
-                      className="px-3 py-1 text-xs font-medium bg-cubott-navy/5 text-cubott-navy rounded-full"
-                    >
-                      {tech}
-                    </span>
-                  ))}
-                </div>
-              </div>
-            </AnimatedSection>
+        <div className="flex flex-wrap justify-center gap-2 mb-10">
+          {screens.map((screen) => (
+            <button
+              key={screen.id}
+              onClick={() => setActive(screen.id)}
+              className={`px-4 py-2 rounded-xl text-sm font-medium transition-all duration-200 ${
+                active === screen.id
+                  ? "bg-cubott-teal text-white shadow-lg shadow-cubott-teal/25"
+                  : "glass text-white/60 hover:text-white hover:bg-white/8"
+              }`}
+            >
+              {screen.label}
+            </button>
           ))}
         </div>
 
-        <AnimatedSection className="text-center" delay={0.4}>
-          <Link href="/case-studies" className="group inline-block">
-            <Button size="lg" variant="outline">
-              View All Case Studies
-              <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
-            </Button>
-          </Link>
+        <AnimatedSection>
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-center">
+            <div className="lg:col-span-2 relative">
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={active}
+                  initial={{ opacity: 0, y: 12 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -12 }}
+                  transition={{ duration: 0.3 }}
+                  className="rounded-2xl overflow-hidden mockup-shadow"
+                >
+                  <div className="bg-[#0A1628] px-4 py-3 flex items-center gap-2 border-b border-white/5">
+                    <div className="flex gap-1.5">
+                      <span className="w-2.5 h-2.5 rounded-full bg-red-500/60" />
+                      <span className="w-2.5 h-2.5 rounded-full bg-yellow-500/60" />
+                      <span className="w-2.5 h-2.5 rounded-full bg-green-500/60" />
+                    </div>
+                    <div className="flex-1 mx-4">
+                      <div className="max-w-xs mx-auto h-5 bg-white/5 rounded flex items-center justify-center">
+                        <span className="text-white/20 text-xs">app.cubott.com</span>
+                      </div>
+                    </div>
+                  </div>
+                  <Image
+                    src={current.image}
+                    alt={current.label}
+                    width={900}
+                    height={506}
+                    className="w-full object-cover"
+                    style={{ height: 'auto' }}
+                  />
+                </motion.div>
+              </AnimatePresence>
+            </div>
+
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={active}
+                initial={{ opacity: 0, x: 16 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: -16 }}
+                transition={{ duration: 0.3 }}
+                className="space-y-6"
+              >
+                <div>
+                  <div className="text-cubott-teal text-sm font-semibold mb-2 uppercase tracking-wider">
+                    {current.label}
+                  </div>
+                  <p className="text-white/60 text-base leading-relaxed">
+                    {current.description}
+                  </p>
+                </div>
+
+                <div className="space-y-3">
+                  {current.stats.map((stat) => (
+                    <div key={stat.label} className="glass-card p-4 rounded-xl flex items-center justify-between">
+                      <span className="text-white/50 text-sm">{stat.label}</span>
+                      <span className="text-white font-bold text-lg">{stat.value}</span>
+                    </div>
+                  ))}
+                </div>
+              </motion.div>
+            </AnimatePresence>
+          </div>
         </AnimatedSection>
       </Container>
     </section>
   )
 }
-

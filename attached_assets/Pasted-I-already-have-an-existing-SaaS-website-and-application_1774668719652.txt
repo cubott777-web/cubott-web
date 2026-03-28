@@ -1,0 +1,89 @@
+I already have an existing SaaS website and application UI.
+Your task is to redesign it into a completely unique, premium, high-end website.
+
+Current website is very generic software company structure with loads of services.
+---
+
+🎯 OBJECTIVE:
+
+Transform my current website into a visually striking, non-template, $10,000+ quality SaaS product application design.
+
+The result must feel:
+- Unique and custom-designed (not a generic startup template)
+- Modern, clean, and highly polished
+- Product-focused with strong visual hierarchy
+
+---
+
+🎨 DESIGN DIRECTION:
+
+- Use a refined version of my existing color palette
+- Add depth using gradients, soft shadows, and layered UI
+- Use modern typography scale (large headings, clean body text)
+- Maintain a consistent spacing system and grid layout
+- Introduce glassmorphism or subtle futuristic UI elements
+- Ensure strong contrast and readability
+
+---
+
+🧱 LAYOUT IMPROVEMENT:
+
+- Redesign all sections with better spacing and alignment
+- Improve hierarchy using size, spacing, and positioning
+- Convert dense sections into clean, modular layouts
+- Use card-based design where appropriate
+- Break monotony with alternating layouts (left/right, stacked, layered)
+
+---
+
+🖼️ PRODUCT VISUALS:
+
+- Use my uploaded screenshots as the primary design element
+- Place them inside premium UI mockups (desktop, tablet, floating cards)
+- Add depth, perspective, and layering
+- Create visually engaging arrangements (overlapping, stacking, parallax-style)
+
+---
+
+✨ INTERACTIONS & EFFECTS:
+
+- Add subtle animations and micro-interactions
+- Smooth hover effects on buttons and cards
+- Gentle transitions between sections
+- Avoid excessive or distracting animations
+
+---
+
+🧠 UNIQUENESS REQUIREMENTS:
+
+- Avoid common SaaS templates and predictable layouts
+- Introduce creative section transitions or layouts
+- Use asymmetry where it improves visual interest
+- Make the hero section visually distinctive and bold
+- Ensure the design feels custom-crafted, not generated
+
+---
+
+📐 DESIGN QUALITY STANDARDS:
+
+- High whitespace usage
+- Pixel-perfect alignment
+- Consistent spacing system
+- Clear visual hierarchy
+- Balanced composition across all sections
+
+---
+
+🚫 AVOID:
+
+- Generic startup-style layouts
+- Overcrowded sections
+- Too many colors or visual noise
+- Flat, lifeless design
+- Repetitive section patterns
+
+---
+
+💡 FINAL GOAL:
+
+A unique, visually impressive SaaS website redesign that looks like it was crafted by a top-tier design agency, without changing any of the original content.

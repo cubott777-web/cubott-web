@@ -4,16 +4,16 @@ import "./globals.css"
 import Header from "@/components/layout/Header"
 import Footer from "@/components/layout/Footer"
 
-const inter = Inter({ 
+const inter = Inter({
   subsets: ["latin"],
   variable: "--font-inter",
   display: "swap",
 })
 
 export const metadata: Metadata = {
-  title: "Cubott - Enterprise Technology Solutions",
-  description: "Engineering reliable, intelligent, and scalable digital systems. Expert software development, cloud architecture, DevOps, and AI/ML integration for enterprise.",
-  keywords: ["software development", "cloud architecture", "DevOps", "AI ML integration", "enterprise consulting", "technology consulting"],
+  title: "Cubott — Agricultural Dealership Management Platform",
+  description: "Cubott is a multi-tenant SaaS platform that digitizes end-to-end service operations for agricultural machinery dealerships. Service requests, spare parts, warranty approvals, inventory, and billing — all in one place.",
+  keywords: ["agricultural machinery", "dealership management", "SaaS", "service management", "spare parts tracking", "warranty approvals", "inventory management", "multi-tenant"],
   authors: [{ name: "Cubott" }],
   icons: {
     icon: '/favicon.ico',
@@ -21,8 +21,8 @@ export const metadata: Metadata = {
     apple: '/favicon.ico',
   },
   openGraph: {
-    title: "Cubott - Enterprise Technology Solutions",
-    description: "Engineering reliable, intelligent, and scalable digital systems for enterprise.",
+    title: "Cubott — Agricultural Dealership Management Platform",
+    description: "Digitize your entire dealership workflow with complete traceability and role-based control.",
     type: "website",
     locale: "en_US",
     siteName: "Cubott",
@@ -30,8 +30,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Cubott - Enterprise Technology Solutions",
-    description: "Engineering reliable, intelligent, and scalable digital systems for enterprise.",
+    title: "Cubott — Agricultural Dealership Management Platform",
+    description: "Digitize your entire dealership workflow with complete traceability and role-based control.",
     images: ['/cubott-logo.webp'],
   },
   robots: "index, follow",
