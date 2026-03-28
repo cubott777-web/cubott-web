@@ -66,7 +66,7 @@ function InventoryViz() {
   ]
   const colors = { ok: "#34d399", low: "#fbbf24", critical: "#f87171" }
   return (
-    <div className="grid grid-cols-3 gap-2 w-full">
+    <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 w-full">
       {parts.map((p, i) => (
         <motion.div
           key={p.name}

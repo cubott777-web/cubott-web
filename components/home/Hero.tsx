@@ -63,7 +63,7 @@ export default function Hero() {
         style={{ background: "radial-gradient(circle, rgba(79,179,217,0.12) 0%, transparent 70%)" }}
       />
 
-      <div className="relative z-10 w-full max-w-[1400px] mx-auto px-8 lg:px-16 pt-24 pb-0">
+      <div className="relative z-10 w-full max-w-[1400px] mx-auto px-6 lg:px-16 pt-24 pb-12 lg:pb-0">
         <div className="grid grid-cols-1 lg:grid-cols-[52%_48%] gap-12 lg:gap-0 items-center">
 
           <div className="lg:pr-16">

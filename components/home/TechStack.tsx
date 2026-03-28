@@ -141,7 +141,7 @@ export default function TechStack() {
 
         <div className="grid grid-cols-1 lg:grid-cols-[240px_1fr] gap-4 items-start">
 
-          <div className="flex flex-row lg:flex-col gap-2">
+          <div className="grid grid-cols-2 lg:grid-cols-1 gap-2">
             {roles.map((role) => {
               const isActive = role.id === activeId
               return (

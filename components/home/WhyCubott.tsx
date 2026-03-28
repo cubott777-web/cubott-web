@@ -60,7 +60,7 @@ export default function WhyCubott() {
             </div>
           </div>
 
-          <div className="py-16 pl-0 lg:pl-20 flex flex-col justify-between">
+          <div className="py-16 pl-0 lg:pl-20 pt-0 lg:pt-16 flex flex-col justify-between">
             <motion.div
               initial={{ opacity: 0, y: 16 }}
               whileInView={{ opacity: 1, y: 0 }}
