@@ -8,10 +8,10 @@ const roleGroups = [
     color: "from-cubott-teal to-sky-400",
     dot: "bg-cubott-teal",
     capabilities: [
-      "Daily schedule overview",
-      "Parking & bay management",
-      "Overdue vehicle tracking",
-      "Long-stay machine alerts",
+      "Daily operations overview",
+      "Resource & bay management",
+      "Job scheduling & assignment",
+      "Overdue task alerts",
     ],
     image: "/screenshot-supervisor.png",
   },
@@ -20,9 +20,9 @@ const roleGroups = [
     color: "from-violet-500 to-purple-400",
     dot: "bg-violet-400",
     capabilities: [
-      "Service request intake",
+      "Service request handling",
       "Parts issuance & returns",
-      "Technician assignment",
+      "Technician coordination",
       "Job completion tracking",
     ],
     image: "/screenshot-inventory.png",
@@ -40,14 +40,14 @@ const roleGroups = [
     image: "/screenshot-audit.png",
   },
   {
-    role: "Manufacturer",
+    role: "Management",
     color: "from-emerald-500 to-teal-400",
     dot: "bg-emerald-400",
     capabilities: [
-      "Warranty funnel visibility",
-      "Dealer performance metrics",
-      "Parts dispatch tracking",
-      "Cross-dealer analytics",
+      "Cross-team performance views",
+      "Sales funnel analytics",
+      "Operational KPI dashboards",
+      "Multi-location visibility",
     ],
     image: "/screenshot-manufacturer.png",
   },
@@ -66,10 +66,10 @@ export default function TechStack() {
           <h2 className="text-4xl md:text-5xl font-bold text-white mb-5">
             Purpose-built for every
             <br />
-            <span className="gradient-text-teal">team in the dealership</span>
+            <span className="gradient-text-teal">team in your business</span>
           </h2>
           <p className="text-lg text-white/50 max-w-2xl mx-auto">
-            Each role sees a tailored interface with exactly the data and actions they need — no more, no less.
+            Each role gets a tailored interface showing exactly the data and actions they need — nothing more, nothing less.
           </p>
         </AnimatedSection>
 

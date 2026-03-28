@@ -8,10 +8,10 @@ import Image from "next/image"
 
 export default function Hero() {
   const badges = [
-    "Service Request Lifecycle",
-    "Spare Parts Tracking",
-    "Warranty Approvals",
-    "Inventory Management",
+    "Service Management",
+    "Inventory Control",
+    "Sales Pipeline",
+    "Finance & Billing",
   ]
 
   return (
@@ -50,7 +50,7 @@ export default function Hero() {
           >
             The Operating System
             <br />
-            <span className="gradient-text">for Agricultural</span>
+            <span className="gradient-text">for Modern</span>
             <br />
             Dealerships
           </motion.h1>
@@ -61,7 +61,7 @@ export default function Hero() {
             transition={{ duration: 0.6, delay: 0.2 }}
             className="text-lg md:text-xl text-white/55 max-w-2xl mx-auto mb-10 leading-relaxed"
           >
-            Cubott digitizes end-to-end service operations for agricultural machinery dealerships — from service requests to warranty approvals, with complete traceability and role-based control.
+            Cubott digitizes end-to-end dealership operations — from service and inventory to sales and finance — with complete traceability and role-based control.
           </motion.p>
 
           <motion.div
@@ -138,7 +138,6 @@ export default function Hero() {
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 0.9 }}
-              animate-float={{ y: [0, -8, 0] }}
               className="glass rounded-2xl p-4 shadow-2xl w-52"
             >
               <div className="text-xs text-white/40 mb-1">BAYS IN SERVICE</div>

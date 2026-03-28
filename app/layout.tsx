@@ -11,9 +11,9 @@ const inter = Inter({
 })
 
 export const metadata: Metadata = {
-  title: "Cubott — Agricultural Dealership Management Platform",
-  description: "Cubott is a multi-tenant SaaS platform that digitizes end-to-end service operations for agricultural machinery dealerships. Service requests, spare parts, warranty approvals, inventory, and billing — all in one place.",
-  keywords: ["agricultural machinery", "dealership management", "SaaS", "service management", "spare parts tracking", "warranty approvals", "inventory management", "multi-tenant"],
+  title: "Cubott — Dealership Management Platform",
+  description: "Cubott is a multi-tenant SaaS platform that digitizes end-to-end dealership operations. Service, inventory, sales, and finance — all in one place with complete traceability.",
+  keywords: ["dealership management", "SaaS", "service management", "inventory management", "sales management", "finance", "multi-tenant", "precision intelligence"],
   authors: [{ name: "Cubott" }],
   icons: {
     icon: '/favicon.ico',
@@ -21,7 +21,7 @@ export const metadata: Metadata = {
     apple: '/favicon.ico',
   },
   openGraph: {
-    title: "Cubott — Agricultural Dealership Management Platform",
+    title: "Cubott — Dealership Management Platform",
     description: "Digitize your entire dealership workflow with complete traceability and role-based control.",
     type: "website",
     locale: "en_US",
@@ -30,7 +30,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Cubott — Agricultural Dealership Management Platform",
+    title: "Cubott — Dealership Management Platform",
     description: "Digitize your entire dealership workflow with complete traceability and role-based control.",
     images: ['/cubott-logo.webp'],
   },
