@@ -4,7 +4,6 @@ import { motion } from "framer-motion"
 import Link from "next/link"
 import Container from "../ui/Container"
 import { ArrowRight, CheckCircle2 } from "lucide-react"
-import Image from "next/image"
 
 export default function Hero() {
   const badges = [
@@ -99,96 +98,6 @@ export default function Hero() {
             ))}
           </motion.div>
         </div>
-
-        <motion.div
-          initial={{ opacity: 0, y: 40 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.5, ease: "easeOut" }}
-          className="relative mt-20 mx-auto max-w-5xl"
-        >
-          <div className="relative rounded-2xl overflow-hidden mockup-shadow">
-            <div className="bg-[#0A1628] rounded-t-2xl px-4 py-3 flex items-center gap-2 border-b border-white/5">
-              <div className="flex gap-1.5">
-                <span className="w-3 h-3 rounded-full bg-red-500/60" />
-                <span className="w-3 h-3 rounded-full bg-yellow-500/60" />
-                <span className="w-3 h-3 rounded-full bg-green-500/60" />
-              </div>
-              <div className="flex-1 mx-4">
-                <div className="max-w-xs mx-auto h-6 bg-white/5 rounded-md flex items-center justify-center">
-                  <span className="text-white/25 text-xs">app.cubott.com/dashboard</span>
-                </div>
-              </div>
-            </div>
-            <div className="relative">
-              <Image
-                src="/screenshot-intelligence.png"
-                alt="Cubott Intelligence Dashboard"
-                width={1024}
-                height={576}
-                className="w-full object-cover"
-                style={{ height: 'auto' }}
-                priority
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#040D1A]/40 via-transparent to-transparent" />
-            </div>
-          </div>
-
-          <div className="absolute -left-8 top-16 hidden lg:block">
-            <motion.div
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: 0.9 }}
-              className="glass rounded-2xl p-4 shadow-2xl w-52"
-            >
-              <div className="text-xs text-white/40 mb-1">BAYS IN SERVICE</div>
-              <div className="text-3xl font-bold text-white mb-0.5">3/10</div>
-              <div className="flex items-center gap-1.5">
-                <span className="w-2 h-2 rounded-full bg-cubott-teal" />
-                <span className="text-xs text-cubott-teal">Live Operations</span>
-              </div>
-            </motion.div>
-          </div>
-
-          <div className="absolute -right-8 top-24 hidden lg:block">
-            <motion.div
-              initial={{ opacity: 0, x: 20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: 1.0 }}
-              className="glass rounded-2xl p-4 shadow-2xl w-52"
-            >
-              <div className="text-xs text-white/40 mb-1">TOTAL STOCK</div>
-              <div className="text-3xl font-bold text-white mb-0.5">2,710</div>
-              <div className="flex items-center gap-1.5">
-                <span className="w-2 h-2 rounded-full bg-green-400" />
-                <span className="text-xs text-green-400">Inventory Healthy</span>
-              </div>
-            </motion.div>
-          </div>
-
-          <div className="absolute -bottom-6 left-1/2 -translate-x-1/2 hidden lg:block">
-            <motion.div
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 1.1 }}
-              className="glass rounded-2xl px-6 py-3 shadow-2xl flex items-center gap-6"
-            >
-              <div className="text-center">
-                <div className="text-xl font-bold text-white">99.9%</div>
-                <div className="text-xs text-white/40">Uptime SLA</div>
-              </div>
-              <div className="w-px h-8 bg-white/10" />
-              <div className="text-center">
-                <div className="text-xl font-bold text-white">500+</div>
-                <div className="text-xs text-white/40">Active Users</div>
-              </div>
-              <div className="w-px h-8 bg-white/10" />
-              <div className="text-center">
-                <div className="text-xl font-bold text-white">100%</div>
-                <div className="text-xs text-white/40">Traceability</div>
-              </div>
-            </motion.div>
-          </div>
-        </motion.div>
       </Container>
     </section>
   )
