@@ -17,9 +17,8 @@ export default function Footer() {
       <Container>
         <div className="py-10 flex flex-col sm:flex-row items-center justify-between gap-6">
 
-          <Link href="/" className="flex items-center gap-2.5 group flex-shrink-0">
-            <img src="/cubott-logo.webp" alt="Cubott" className="h-7 w-auto opacity-60 group-hover:opacity-90 transition-opacity" />
-            <span className="text-white/60 font-bold text-base tracking-tight group-hover:text-white/90 transition-colors">Cubott</span>
+          <Link href="/" className="flex-shrink-0 group">
+            <span className="text-white/50 font-black text-sm tracking-tight group-hover:text-white/80 transition-colors">Cubott</span>
           </Link>
 
           <nav className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2">
