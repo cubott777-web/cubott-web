@@ -28,7 +28,7 @@ export default function CTA() {
             <span className="w-6 h-px bg-cubott-teal" />
           </div>
 
-          <h2 className="font-bagel text-[clamp(3rem,8vw,7rem)] text-white leading-[1.05] tracking-wide mb-8">
+          <h2 className="text-5xl md:text-6xl lg:text-7xl font-black tracking-[-0.03em] text-white leading-[0.95] mb-8">
             Ready to run a<br />
             <span className="gradient-teal">smarter dealership?</span>
           </h2>
@@ -37,7 +37,7 @@ export default function CTA() {
             Join businesses already running on Cubott. See the platform in action with a personalized walkthrough.
           </p>
 
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-20">
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <Link
               href="/contact"
               className="group inline-flex items-center gap-3 px-10 py-4 rounded-xl bg-cubott-teal text-white font-semibold hover:bg-cubott-teal-dark transition-all duration-200 hover:scale-105 hover:shadow-2xl hover:shadow-cubott-teal/30 text-base"
@@ -51,12 +51,6 @@ export default function CTA() {
             >
               Explore Features
             </Link>
-          </div>
-
-          <div className="pt-10 border-t border-white/5">
-            <div className="font-bagel text-[clamp(5rem,18vw,14rem)] text-white/[0.03] leading-none select-none tracking-wide">
-              CUBOTT
-            </div>
           </div>
         </motion.div>
       </Container>

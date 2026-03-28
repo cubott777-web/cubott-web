@@ -54,7 +54,7 @@ export default function TechStack() {
             <span className="w-6 h-px bg-cubott-teal" />
             <span className="text-xs font-semibold tracking-[0.2em] text-cubott-teal uppercase">Role-Based Access</span>
           </div>
-          <h2 className="font-bagel text-[clamp(2.5rem,6vw,5rem)] text-white leading-[1.1] tracking-wide">
+          <h2 className="text-5xl md:text-6xl font-black tracking-[-0.03em] text-white leading-[0.95]">
             Built for every{" "}
             <span className="gradient-teal">team.</span>
           </h2>
@@ -73,7 +73,7 @@ export default function TechStack() {
               <div className="grid grid-cols-1 md:grid-cols-[180px_1fr_220px] items-center">
                 <div className="px-8 py-6 md:border-r border-white/5">
                   <div className="text-[10px] text-white/15 tracking-widest font-bold mb-1">{r.num}</div>
-                  <div className={`font-bagel text-xl tracking-wide ${r.color}`}>{r.role}</div>
+                  <div className={`text-xl font-black tracking-tight ${r.color}`}>{r.role}</div>
                 </div>
 
                 <div className="px-8 py-5 md:border-r border-white/5">

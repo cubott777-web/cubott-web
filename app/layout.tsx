@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next"
-import { Inter, Bagel_Fat_One } from "next/font/google"
+import { Inter } from "next/font/google"
 import "./globals.css"
 import Header from "@/components/layout/Header"
 import Footer from "@/components/layout/Footer"
@@ -7,13 +7,6 @@ import Footer from "@/components/layout/Footer"
 const inter = Inter({
   subsets: ["latin"],
   variable: "--font-inter",
-  display: "swap",
-})
-
-const bagelFatOne = Bagel_Fat_One({
-  weight: "400",
-  subsets: ["latin"],
-  variable: "--font-bagel",
   display: "swap",
 })
 
@@ -48,7 +41,7 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en" className={`${inter.variable} ${bagelFatOne.variable} scroll-smooth`}>
+    <html lang="en" className={`${inter.variable} scroll-smooth`}>
       <body className={`${inter.className} antialiased`}>
         <Header />
         {children}

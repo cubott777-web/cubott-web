@@ -21,7 +21,6 @@ export default function Hero() {
         <div className="absolute inset-0 bg-gradient-to-br from-[#05090F] via-[#081420] to-[#05090F]" />
       </div>
 
-      {/* Teal ambient glow */}
       <motion.div
         animate={{ opacity: [0.1, 0.22, 0.1], scale: [1, 1.08, 1] }}
         transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
@@ -38,18 +37,18 @@ export default function Hero() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
-          className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full glass-teal text-cubott-teal text-xs font-semibold tracking-[0.15em] uppercase mb-10"
+          className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full glass-teal text-cubott-teal text-xs font-semibold tracking-[0.15em] uppercase mb-10 relative"
         >
-          <span className="w-1.5 h-1.5 rounded-full bg-cubott-teal animate-ping absolute" />
-          <span className="w-1.5 h-1.5 rounded-full bg-cubott-teal" />
-          Precision Intelligence System
+          <span className="w-1.5 h-1.5 rounded-full bg-cubott-teal animate-ping absolute left-4" />
+          <span className="w-1.5 h-1.5 rounded-full bg-cubott-teal ml-3" />
+          <span className="ml-1">Precision Intelligence System</span>
         </motion.div>
 
         <motion.h1
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, delay: 0.1 }}
-          className="font-bagel text-[clamp(3.5rem,9vw,8rem)] leading-[1.05] text-white mb-8 tracking-wide"
+          className="text-[clamp(3.5rem,9vw,7.5rem)] font-black leading-[0.95] tracking-[-0.04em] text-white mb-8"
         >
           The OS for{" "}
           <span className="gradient-teal">Modern</span>
@@ -102,14 +101,13 @@ export default function Hero() {
             { val: "100%", label: "Traceability" },
           ].map((s) => (
             <div key={s.label} className="text-center">
-              <div className="font-bagel text-3xl md:text-4xl text-white">{s.val}</div>
+              <div className="text-3xl md:text-4xl font-black text-white tracking-tight">{s.val}</div>
               <div className="text-xs text-white/35 uppercase tracking-widest mt-0.5">{s.label}</div>
             </div>
           ))}
         </motion.div>
       </div>
 
-      {/* Scroll indicator */}
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}

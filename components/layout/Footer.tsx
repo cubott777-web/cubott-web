@@ -33,9 +33,12 @@ export default function Footer() {
       <Container>
         <div className="py-16 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-12">
           <div className="lg:col-span-2">
-            <Link href="/" className="flex items-center gap-3 mb-5 group">
-              <img src="/cubott-logo.webp" alt="Cubott" className="h-8 w-auto opacity-90 group-hover:opacity-100 transition-opacity" />
-              <span className="font-bagel text-xl text-white tracking-wide">Cubott</span>
+            <Link href="/" className="inline-block mb-5 group">
+              <img
+                src="/cubott-logo-full.png"
+                alt="Cubott"
+                className="h-10 w-auto opacity-80 group-hover:opacity-100 transition-opacity"
+              />
             </Link>
             <p className="text-white/35 text-sm mb-6 leading-relaxed max-w-xs font-light">
               Multi-tenant SaaS platform that digitizes end-to-end dealership operations with complete traceability and role-based control.

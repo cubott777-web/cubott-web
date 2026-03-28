@@ -9,7 +9,6 @@ export default function ContactPage() {
     <main className="min-h-screen bg-[#05090F] flex flex-col">
       <div className="absolute inset-0 bg-grid-pattern opacity-40 pointer-events-none" />
 
-      {/* Ambient glow */}
       <motion.div
         animate={{ opacity: [0.08, 0.16, 0.08] }}
         transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
@@ -28,7 +27,7 @@ export default function ContactPage() {
             <span className="w-6 h-px bg-cubott-teal" />
           </div>
 
-          <h1 className="font-bagel text-[clamp(3.5rem,9vw,8rem)] text-white leading-[1.05] tracking-wide mb-6">
+          <h1 className="text-[clamp(3.5rem,9vw,7.5rem)] font-black tracking-[-0.04em] text-white leading-[0.92] mb-6">
             Let&apos;s Talk<br />
             <span className="gradient-teal">Business.</span>
           </h1>
@@ -49,7 +48,7 @@ export default function ContactPage() {
             </div>
             <div className="text-left">
               <div className="text-xs text-white/30 uppercase tracking-widest mb-0.5 font-light">Email us at</div>
-              <div className="font-bagel text-2xl text-white tracking-wide group-hover:text-cubott-teal transition-colors">
+              <div className="text-2xl font-black tracking-tight text-white group-hover:text-cubott-teal transition-colors">
                 contact@cubott.com
               </div>
             </div>
@@ -66,13 +65,6 @@ export default function ContactPage() {
           </motion.p>
         </motion.div>
       </Container>
-
-      {/* Bottom wordmark */}
-      <div className="relative z-10 overflow-hidden">
-        <div className="font-bagel text-[clamp(5rem,18vw,14rem)] text-white/[0.025] leading-none select-none tracking-wide text-center pb-0">
-          CUBOTT
-        </div>
-      </div>
     </main>
   )
 }

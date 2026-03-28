@@ -25,7 +25,6 @@ export default function WhyCubott() {
       <Container className="relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-2 min-h-[80vh]">
 
-          {/* Problem */}
           <div className="py-28 pr-0 lg:pr-20 border-b lg:border-b-0 lg:border-r border-white/5">
             <motion.div
               initial={{ opacity: 0, y: 16 }}
@@ -36,7 +35,7 @@ export default function WhyCubott() {
                 <span className="w-6 h-px bg-red-400/50" />
                 <span className="text-xs font-semibold tracking-[0.2em] text-red-400/60 uppercase">The Problem</span>
               </div>
-              <h2 className="font-bagel text-[clamp(2rem,4.5vw,3.5rem)] text-white leading-[1.1] tracking-wide mb-16">
+              <h2 className="text-4xl md:text-5xl font-black tracking-[-0.03em] text-white leading-[0.95] mb-16">
                 Businesses drowning<br />in broken tools.
               </h2>
             </motion.div>
@@ -49,11 +48,11 @@ export default function WhyCubott() {
                   whileInView={{ opacity: 1, x: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: i * 0.1 }}
-                  className="group flex gap-6 py-7 hover:border-white/10 transition-colors"
+                  className="group flex gap-6 py-7"
                 >
                   <span className="text-xs font-bold tracking-widest text-white/12 mt-1 flex-shrink-0">{p.num}</span>
                   <div>
-                    <h4 className="font-semibold text-white/80 mb-1.5 group-hover:text-cubott-teal transition-colors">{p.title}</h4>
+                    <h4 className="font-bold text-white/80 mb-1.5 group-hover:text-cubott-teal transition-colors">{p.title}</h4>
                     <p className="text-white/30 text-sm leading-relaxed font-light">{p.desc}</p>
                   </div>
                 </motion.div>
@@ -61,7 +60,6 @@ export default function WhyCubott() {
             </div>
           </div>
 
-          {/* Solution */}
           <div className="py-28 pl-0 lg:pl-20 flex flex-col justify-between">
             <motion.div
               initial={{ opacity: 0, y: 16 }}
@@ -73,7 +71,7 @@ export default function WhyCubott() {
                 <span className="w-6 h-px bg-cubott-teal" />
                 <span className="text-xs font-semibold tracking-[0.2em] text-cubott-teal uppercase">Our Solution</span>
               </div>
-              <h2 className="font-bagel text-[clamp(2rem,4.5vw,3.5rem)] text-white leading-[1.1] tracking-wide mb-6">
+              <h2 className="text-4xl md:text-5xl font-black tracking-[-0.03em] text-white leading-[0.95] mb-6">
                 One platform.<br />
                 <span className="gradient-teal">Total control.</span>
               </h2>
@@ -91,9 +89,9 @@ export default function WhyCubott() {
                     whileInView={{ opacity: 1, scale: 1 }}
                     viewport={{ once: true }}
                     transition={{ delay: 0.2 + i * 0.07 }}
-                    className="border border-white/6 rounded-2xl p-6 hover:border-cubott-teal/20 hover:bg-cubott-teal/3 transition-all duration-300 group"
+                    className="border border-white/6 rounded-2xl p-6 hover:border-cubott-teal/20 hover:bg-cubott-teal/3 transition-all duration-300"
                   >
-                    <div className="font-bagel text-4xl gradient-teal mb-1.5">{m.value}</div>
+                    <div className="text-4xl font-black tracking-tight gradient-teal mb-1.5">{m.value}</div>
                     <div className="text-xs text-white/30 uppercase tracking-wider">{m.label}</div>
                   </motion.div>
                 ))}

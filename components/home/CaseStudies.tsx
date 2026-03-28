@@ -57,8 +57,8 @@ export default function CaseStudies() {
             <span className="w-6 h-px bg-cubott-teal" />
             <span className="text-xs font-semibold tracking-[0.2em] text-cubott-teal uppercase">Platform Screenshots</span>
           </div>
-          <h2 className="font-bagel text-[clamp(2.5rem,6vw,5rem)] text-white leading-[1.1] tracking-wide">
-            See Cubott<br />
+          <h2 className="text-5xl md:text-6xl font-black tracking-[-0.03em] text-white leading-[0.95]">
+            See Cubott{" "}
             <span className="gradient-teal">in action.</span>
           </h2>
         </div>
@@ -136,7 +136,7 @@ export default function CaseStudies() {
                 {current.stats.map((stat) => (
                   <div key={stat.label} className="glass-card rounded-xl p-4 flex items-center justify-between">
                     <span className="text-white/40 text-sm">{stat.label}</span>
-                    <span className="font-bagel text-xl text-white">{stat.value}</span>
+                    <span className="font-black text-xl text-white tracking-tight">{stat.value}</span>
                   </div>
                 ))}
               </div>

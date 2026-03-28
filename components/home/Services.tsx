@@ -73,7 +73,7 @@ export default function Services() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.1 }}
-            className="font-bagel text-[clamp(2.5rem,6vw,5rem)] text-white leading-[1.1] tracking-wide"
+            className="text-5xl md:text-6xl font-black tracking-[-0.03em] text-white leading-[0.95]"
           >
             Four modules.{" "}
             <span className="gradient-teal">One platform.</span>
@@ -88,7 +88,7 @@ export default function Services() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: i * 0.08 }}
-              className={`${mod.large ? "lg:col-span-2" : "lg:col-span-1"} relative group overflow-hidden rounded-2xl border border-white/6 bg-[#080d18] hover:border-white/12 transition-all duration-400 hover:-translate-y-1 min-h-[300px]`}
+              className={`${mod.large ? "lg:col-span-2" : "lg:col-span-1"} relative group overflow-hidden rounded-2xl border border-white/6 bg-[#080d18] hover:border-white/12 transition-all duration-300 hover:-translate-y-1 min-h-[300px]`}
             >
               <div className="absolute inset-0">
                 <Image
@@ -102,7 +102,7 @@ export default function Services() {
               </div>
 
               <div
-                className="absolute top-6 right-6 font-bagel text-[6rem] leading-none select-none pointer-events-none opacity-[0.07]"
+                className="absolute top-6 right-6 text-[6rem] font-black leading-none select-none pointer-events-none tracking-tighter opacity-[0.07]"
                 style={{ color: mod.accentColor }}
               >
                 {mod.num}
@@ -120,7 +120,7 @@ export default function Services() {
                   </span>
                 </div>
 
-                <h3 className="font-bagel text-2xl text-white tracking-wide mb-3">{mod.title}</h3>
+                <h3 className="text-2xl font-black tracking-tight text-white mb-3">{mod.title}</h3>
                 <p className="text-white/40 text-sm leading-relaxed mb-6 font-light">{mod.description}</p>
 
                 <div className="mt-auto flex flex-wrap gap-2">
@@ -132,7 +132,7 @@ export default function Services() {
                 </div>
 
                 <div
-                  className="absolute bottom-0 left-8 right-8 h-px opacity-0 group-hover:opacity-100 transition-opacity duration-400"
+                  className="absolute bottom-0 left-8 right-8 h-px opacity-0 group-hover:opacity-100 transition-opacity duration-300"
                   style={{ background: `linear-gradient(to right, transparent, ${mod.accentColor}50, transparent)` }}
                 />
               </div>
