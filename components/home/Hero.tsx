@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion"
 import Link from "next/link"
-import { ArrowRight, CheckCircle, Wrench, Package, TrendingUp, FileText } from "lucide-react"
+import { ArrowRight, Wrench, Package, TrendingUp, FileText } from "lucide-react"
 
 const modules = [
   { icon: Wrench, label: "Service", metric: "12 active jobs", color: "#4FB3D9", dot: "bg-cubott-teal" },
@@ -129,24 +129,6 @@ export default function Hero() {
               </Link>
             </motion.div>
 
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.65 }}
-              className="flex flex-wrap gap-x-7 gap-y-3"
-            >
-              {[
-                "Full audit trail",
-                "Role-based access",
-                "Multi-location",
-                "Real-time sync",
-              ].map((item) => (
-                <div key={item} className="flex items-center gap-2 text-xs text-white/30">
-                  <CheckCircle size={12} className="text-cubott-teal/50 flex-shrink-0" />
-                  {item}
-                </div>
-              ))}
-            </motion.div>
           </div>
 
           <div className="relative h-[520px] lg:h-[640px] hidden lg:block">
