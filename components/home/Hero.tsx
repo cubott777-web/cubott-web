@@ -63,7 +63,7 @@ export default function Hero() {
         style={{ background: "radial-gradient(circle, rgba(79,179,217,0.12) 0%, transparent 70%)" }}
       />
 
-      <div className="relative z-10 w-full max-w-[1400px] mx-auto px-8 lg:px-16 pt-32 pb-20">
+      <div className="relative z-10 w-full max-w-[1400px] mx-auto px-8 lg:px-16 pt-28 pb-16">
         <div className="grid grid-cols-1 lg:grid-cols-[52%_48%] gap-12 lg:gap-0 items-center min-h-[85vh]">
 
           <div className="lg:pr-16">
@@ -194,17 +194,6 @@ export default function Hero() {
         </div>
       </div>
 
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 1.4 }}
-        className="absolute bottom-10 left-16 flex flex-col items-start gap-2"
-      >
-        <div className="flex items-center gap-3">
-          <div className="w-px h-12 bg-gradient-to-b from-white/20 to-transparent" />
-          <span className="text-[10px] text-white/20 tracking-widest uppercase rotate-0">Scroll to explore</span>
-        </div>
-      </motion.div>
     </section>
   )
 }
