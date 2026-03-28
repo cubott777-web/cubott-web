@@ -45,7 +45,7 @@ function FloatingCard({
 
 export default function Hero() {
   return (
-    <section className="relative min-h-screen flex items-center overflow-hidden bg-[#05090F]">
+    <section className="relative flex items-center overflow-hidden bg-[#05090F]">
       <div className="absolute inset-0 bg-grid-pattern opacity-40" />
 
       <div
@@ -64,7 +64,7 @@ export default function Hero() {
       />
 
       <div className="relative z-10 w-full max-w-[1400px] mx-auto px-8 lg:px-16 pt-28 pb-16">
-        <div className="grid grid-cols-1 lg:grid-cols-[52%_48%] gap-12 lg:gap-0 items-center min-h-[85vh]">
+        <div className="grid grid-cols-1 lg:grid-cols-[52%_48%] gap-12 lg:gap-0 items-center">
 
           <div className="lg:pr-16">
             <motion.div
