@@ -42,7 +42,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${inter.variable} scroll-smooth`}>
-      <body className={`${inter.className} antialiased`}>
+      <body className={`${inter.className} antialiased grain-overlay`}>
         <Header />
         {children}
         <Footer />
