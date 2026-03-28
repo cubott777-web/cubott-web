@@ -1,105 +1,297 @@
 "use client"
 
-import { motion } from "framer-motion"
+import { useState } from "react"
+import { motion, AnimatePresence } from "framer-motion"
+import { Shield, Users, DollarSign, BarChart3, Check, Minus, Lock } from "lucide-react"
 import Container from "../ui/Container"
-import Image from "next/image"
 
 const roles = [
   {
-    num: "01",
-    role: "Supervisor",
-    color: "text-cubott-teal",
-    border: "border-cubott-teal/15",
-    bg: "hover:bg-cubott-teal/4",
-    capabilities: ["Daily operations overview", "Resource & bay management", "Job scheduling & assignment", "Overdue task alerts"],
-    image: "/screenshot-supervisor.png",
+    id: "supervisor",
+    title: "Supervisor",
+    icon: Shield,
+    color: "#4FB3D9",
+    colorDim: "rgba(79,179,217,0.12)",
+    colorBorder: "rgba(79,179,217,0.2)",
+    summary: "Full operational control of the floor — jobs, bays, teams, and inventory.",
+    permissions: {
+      service:   [true, true, true, true, true],
+      inventory: [true, true, true, true, false],
+      sales:     [true, false, false, false, false],
+      finance:   [false, false, false, false, false],
+    },
   },
   {
-    num: "02",
-    role: "Store Team",
-    color: "text-violet-400",
-    border: "border-violet-400/15",
-    bg: "hover:bg-violet-400/4",
-    capabilities: ["Service request handling", "Parts issuance & returns", "Technician coordination", "Job completion tracking"],
-    image: "/screenshot-inventory.png",
+    id: "store",
+    title: "Store Team",
+    icon: Users,
+    color: "#a78bfa",
+    colorDim: "rgba(167,139,250,0.12)",
+    colorBorder: "rgba(167,139,250,0.2)",
+    summary: "Handles day-to-day service requests and parts issuance on the floor.",
+    permissions: {
+      service:   [true, true, true, false, false],
+      inventory: [true, true, false, false, false],
+      sales:     [false, false, false, false, false],
+      finance:   [false, false, false, false, false],
+    },
   },
   {
-    num: "03",
-    role: "Finance",
-    color: "text-amber-400",
-    border: "border-amber-400/15",
-    bg: "hover:bg-amber-400/4",
-    capabilities: ["Invoice generation", "Payment tracking", "Financial audit trail", "Billing reconciliation"],
-    image: "/screenshot-audit.png",
+    id: "finance",
+    title: "Finance",
+    icon: DollarSign,
+    color: "#fbbf24",
+    colorDim: "rgba(251,191,36,0.12)",
+    colorBorder: "rgba(251,191,36,0.2)",
+    summary: "Manages invoicing, payments, and financial reporting across all teams.",
+    permissions: {
+      service:   [false, false, false, true, false],
+      inventory: [false, false, true, false, false],
+      sales:     [false, true, false, false, false],
+      finance:   [true, true, true, true, true],
+    },
   },
   {
-    num: "04",
-    role: "Management",
-    color: "text-emerald-400",
-    border: "border-emerald-400/15",
-    bg: "hover:bg-emerald-400/4",
-    capabilities: ["Cross-team performance views", "Sales funnel analytics", "Operational KPI dashboards", "Multi-location visibility"],
-    image: "/screenshot-manufacturer.png",
+    id: "management",
+    title: "Management",
+    icon: BarChart3,
+    color: "#34d399",
+    colorDim: "rgba(52,211,153,0.12)",
+    colorBorder: "rgba(52,211,153,0.2)",
+    summary: "Cross-team visibility into all operations, KPIs, and financial performance.",
+    permissions: {
+      service:   [true, true, true, true, true],
+      inventory: [true, true, true, true, true],
+      sales:     [true, true, true, true, true],
+      finance:   [true, true, true, true, false],
+    },
   },
 ]
 
-export default function TechStack() {
+const modules = [
+  {
+    key: "service" as const,
+    label: "Service",
+    color: "#4FB3D9",
+    capabilities: ["Create work orders", "Assign technicians", "Close & audit jobs", "View all WOs", "Overdue escalation"],
+  },
+  {
+    key: "inventory" as const,
+    label: "Inventory",
+    color: "#a78bfa",
+    capabilities: ["Issue & return parts", "Add stock", "View cost reports", "Multi-location", "Replenishment"],
+  },
+  {
+    key: "sales" as const,
+    label: "Sales",
+    color: "#34d399",
+    capabilities: ["Create quotes", "Track pipeline", "Manage orders", "Dispatch", "Analytics"],
+  },
+  {
+    key: "finance" as const,
+    label: "Finance",
+    color: "#fbbf24",
+    capabilities: ["Generate invoices", "Track payments", "View financials", "Reconcile", "Audit logs"],
+  },
+]
+
+function ScanLine({ color }: { color: string }) {
   return (
-    <section className="py-16 bg-[#030710] relative overflow-hidden">
-      <div className="absolute inset-0 bg-grid-pattern opacity-30" />
+    <motion.div
+      key={color}
+      initial={{ top: "-2px", opacity: 0.9 }}
+      animate={{ top: "calc(100% + 2px)", opacity: 0 }}
+      transition={{ duration: 0.65, ease: "easeInOut" }}
+      className="absolute left-0 right-0 h-px pointer-events-none z-20"
+      style={{
+        background: `linear-gradient(to right, transparent, ${color}, transparent)`,
+        boxShadow: `0 0 12px 3px ${color}60`,
+      }}
+    />
+  )
+}
+
+export default function TechStack() {
+  const [activeId, setActiveId] = useState("supervisor")
+  const [scanKey, setScanKey] = useState(0)
+
+  const active = roles.find((r) => r.id === activeId)!
+
+  function handleRoleClick(id: string) {
+    if (id === activeId) return
+    setActiveId(id)
+    setScanKey((k) => k + 1)
+  }
+
+  return (
+    <section id="roles" className="py-16 bg-[#030710] relative overflow-hidden">
+      <div className="absolute inset-0 bg-grid-pattern opacity-25" />
 
       <Container className="relative z-10">
         <div className="mb-10">
-          <div className="flex items-center gap-3 mb-6">
+          <div className="flex items-center gap-3 mb-4">
             <span className="w-6 h-px bg-cubott-teal" />
             <span className="text-xs font-semibold tracking-[0.2em] text-cubott-teal uppercase">Role-Based Access</span>
           </div>
-          <h2 className="text-5xl md:text-6xl font-black tracking-[-0.03em] text-white leading-[0.95]">
-            Built for every{" "}
-            <span className="gradient-teal">team.</span>
+          <h2 className="text-4xl md:text-5xl font-black tracking-[-0.03em] text-white leading-[0.95]">
+            Every team sees{" "}
+            <span className="gradient-teal">exactly what they need.</span>
           </h2>
         </div>
 
-        <div className="space-y-3">
-          {roles.map((r, i) => (
-            <motion.div
-              key={r.role}
-              initial={{ opacity: 0, x: -16 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: i * 0.08 }}
-              className={`group relative overflow-hidden rounded-2xl border ${r.border} ${r.bg} transition-all duration-300`}
-            >
-              <div className="grid grid-cols-1 md:grid-cols-[180px_1fr_220px] items-center">
-                <div className="px-8 py-6 md:border-r border-white/5">
-                  <div className="text-[10px] text-white/15 tracking-widest font-bold mb-1">{r.num}</div>
-                  <div className={`text-xl font-black tracking-tight ${r.color}`}>{r.role}</div>
-                </div>
+        <div className="grid grid-cols-1 lg:grid-cols-[240px_1fr] gap-4 items-start">
 
-                <div className="px-8 py-5 md:border-r border-white/5">
-                  <div className="flex flex-wrap gap-x-8 gap-y-2">
-                    {r.capabilities.map((cap) => (
-                      <div key={cap} className="flex items-center gap-2 text-sm text-white/40">
-                        <span className="w-1 h-1 rounded-full flex-shrink-0 bg-white/20" />
-                        {cap}
-                      </div>
-                    ))}
+          <div className="flex flex-row lg:flex-col gap-2">
+            {roles.map((role) => {
+              const isActive = role.id === activeId
+              return (
+                <motion.button
+                  key={role.id}
+                  onClick={() => handleRoleClick(role.id)}
+                  className="relative flex items-center gap-3 px-4 py-3.5 rounded-xl text-left w-full transition-all duration-200 overflow-hidden group"
+                  style={{
+                    background: isActive ? role.colorDim : "rgba(255,255,255,0.02)",
+                    border: `1px solid ${isActive ? role.colorBorder : "rgba(255,255,255,0.05)"}`,
+                  }}
+                  whileHover={{ scale: 1.01 }}
+                  whileTap={{ scale: 0.99 }}
+                >
+                  {isActive && (
+                    <motion.div
+                      layoutId="activeRoleBar"
+                      className="absolute left-0 top-2 bottom-2 w-0.5 rounded-full"
+                      style={{ background: role.color }}
+                    />
+                  )}
+                  <div
+                    className="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0"
+                    style={{
+                      background: isActive ? `${role.color}20` : "rgba(255,255,255,0.04)",
+                    }}
+                  >
+                    <role.icon size={14} style={{ color: isActive ? role.color : "rgba(255,255,255,0.3)" }} />
                   </div>
-                </div>
+                  <span
+                    className="text-sm font-semibold"
+                    style={{ color: isActive ? role.color : "rgba(255,255,255,0.4)" }}
+                  >
+                    {role.title}
+                  </span>
+                </motion.button>
+              )
+            })}
+          </div>
 
-                <div className="relative h-20 md:h-full overflow-hidden rounded-r-2xl">
-                  <Image
-                    src={r.image}
-                    alt={r.role}
-                    fill
-                    sizes="220px"
-                    className="object-cover object-top opacity-20 group-hover:opacity-35 transition-all duration-500 group-hover:scale-105"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-r from-[#030710] via-transparent to-transparent md:from-transparent" />
-                </div>
+          <div
+            className="rounded-2xl overflow-hidden border"
+            style={{ borderColor: active.colorBorder, background: active.colorDim }}
+          >
+            <div className="px-6 pt-5 pb-4 border-b" style={{ borderColor: "rgba(255,255,255,0.06)" }}>
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={activeId + "-header"}
+                  initial={{ opacity: 0, y: 8 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -8 }}
+                  transition={{ duration: 0.25 }}
+                  className="flex items-center justify-between"
+                >
+                  <div>
+                    <div className="flex items-center gap-2 mb-0.5">
+                      <active.icon size={14} style={{ color: active.color }} />
+                      <span className="text-xl font-black" style={{ color: active.color }}>{active.title}</span>
+                    </div>
+                    <p className="text-xs text-white/35 font-light">{active.summary}</p>
+                  </div>
+                  <div
+                    className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-full text-[10px] font-bold uppercase tracking-wider"
+                    style={{ background: `${active.color}15`, color: active.color, border: `1px solid ${active.color}25` }}
+                  >
+                    <div className="w-1.5 h-1.5 rounded-full animate-pulse" style={{ background: active.color }} />
+                    Access Active
+                  </div>
+                </motion.div>
+              </AnimatePresence>
+            </div>
+
+            <div className="relative p-4 overflow-hidden">
+              <ScanLine key={scanKey} color={active.color} />
+
+              <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
+                {modules.map((mod) => {
+                  const perms = active.permissions[mod.key]
+                  const accessCount = perms.filter(Boolean).length
+                  const total = perms.length
+                  const hasAccess = accessCount > 0
+
+                  return (
+                    <motion.div
+                      key={mod.key + activeId}
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      transition={{ duration: 0.3 }}
+                      className="rounded-xl p-3.5 border"
+                      style={{
+                        background: hasAccess ? `${mod.color}06` : "rgba(255,255,255,0.015)",
+                        borderColor: hasAccess ? `${mod.color}18` : "rgba(255,255,255,0.04)",
+                      }}
+                    >
+                      <div className="flex items-center justify-between mb-3">
+                        <span className="text-[10px] font-bold tracking-wider uppercase" style={{ color: hasAccess ? mod.color : "rgba(255,255,255,0.15)" }}>
+                          {mod.label}
+                        </span>
+                        {hasAccess ? (
+                          <span className="text-[9px] font-semibold" style={{ color: mod.color }}>
+                            {accessCount}/{total}
+                          </span>
+                        ) : (
+                          <Lock size={10} className="text-white/15" />
+                        )}
+                      </div>
+
+                      <div className="h-0.5 w-full rounded-full mb-3 overflow-hidden" style={{ background: "rgba(255,255,255,0.05)" }}>
+                        <motion.div
+                          key={activeId + mod.key}
+                          initial={{ width: 0 }}
+                          animate={{ width: `${(accessCount / total) * 100}%` }}
+                          transition={{ duration: 0.5, delay: 0.15, ease: "easeOut" }}
+                          className="h-full rounded-full"
+                          style={{ background: hasAccess ? mod.color : "transparent" }}
+                        />
+                      </div>
+
+                      <div className="space-y-1.5">
+                        {mod.capabilities.map((cap, ci) => {
+                          const allowed = perms[ci]
+                          return (
+                            <motion.div
+                              key={cap}
+                              initial={{ opacity: 0, x: -4 }}
+                              animate={{ opacity: 1, x: 0 }}
+                              transition={{ delay: 0.1 + ci * 0.05 }}
+                              className="flex items-center gap-1.5"
+                            >
+                              {allowed ? (
+                                <Check size={9} style={{ color: mod.color }} className="flex-shrink-0" />
+                              ) : (
+                                <Minus size={9} className="flex-shrink-0 text-white/10" />
+                              )}
+                              <span
+                                className="text-[10px] font-light leading-tight"
+                                style={{ color: allowed ? "rgba(255,255,255,0.55)" : "rgba(255,255,255,0.12)" }}
+                              >
+                                {cap}
+                              </span>
+                            </motion.div>
+                          )
+                        })}
+                      </div>
+                    </motion.div>
+                  )
+                })}
               </div>
-            </motion.div>
-          ))}
+            </div>
+          </div>
         </div>
       </Container>
     </section>
