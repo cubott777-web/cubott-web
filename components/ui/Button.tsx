@@ -1,74 +1,80 @@
 import { cn } from "@/lib/utils"
 import Link from "next/link"
-import { ButtonHTMLAttributes, forwardRef, AnchorHTMLAttributes, ReactNode } from "react"
+import { ArrowRight } from "lucide-react"
+import type { AnchorHTMLAttributes, ButtonHTMLAttributes, ReactNode } from "react"
 
-interface ButtonBaseProps {
-  variant?: "primary" | "secondary" | "outline" | "ghost"
-  size?: "sm" | "md" | "lg"
+type Variant = "primary" | "secondary" | "ghost" | "primary-dark" | "ghost-dark"
+type Size = "sm" | "md" | "lg"
+
+interface Base {
+  variant?: Variant
+  size?: Size
+  arrow?: boolean
   className?: string
   children?: ReactNode
 }
 
-type ButtonAsButton = ButtonBaseProps & Omit<ButtonHTMLAttributes<HTMLButtonElement>, keyof ButtonBaseProps> & {
-  href?: never
+type AsButton = Base & Omit<ButtonHTMLAttributes<HTMLButtonElement>, keyof Base> & { href?: never }
+type AsLink = Base & Omit<AnchorHTMLAttributes<HTMLAnchorElement>, keyof Base> & { href: string }
+
+export type ButtonProps = AsButton | AsLink
+
+const variants: Record<Variant, string> = {
+  primary:
+    "bg-blue text-white hover:bg-[#1D4ED8] shadow-[0_1px_0_rgba(255,255,255,0.15)_inset,0_8px_20px_-8px_rgba(37,99,235,0.5)]",
+  secondary:
+    "bg-white text-navy border border-navy/15 hover:border-navy/35 hover:bg-surface",
+  ghost: "text-navy hover:text-blue",
+  "primary-dark":
+    "bg-white text-navy hover:bg-blue-50",
+  "ghost-dark": "text-white/80 hover:text-white",
 }
 
-type ButtonAsLink = ButtonBaseProps & Omit<AnchorHTMLAttributes<HTMLAnchorElement>, keyof ButtonBaseProps> & {
-  href: string
+const sizes: Record<Size, string> = {
+  sm: "h-9 px-4 text-sm gap-1.5",
+  md: "h-11 px-5 text-[15px] gap-2",
+  lg: "h-12 px-6 text-base gap-2.5",
 }
 
-type ButtonProps = ButtonAsButton | ButtonAsLink
+export default function Button({
+  variant = "primary",
+  size = "md",
+  arrow = false,
+  className,
+  children,
+  ...props
+}: ButtonProps) {
+  const isGhost = variant === "ghost" || variant === "ghost-dark"
+  const classes = cn(
+    "group/btn inline-flex items-center justify-center rounded-full font-semibold transition-colors duration-200",
+    "disabled:opacity-50 disabled:pointer-events-none",
+    variants[variant],
+    isGhost ? sizes[size].replace(/px-\d+/, "px-1") : sizes[size],
+    className
+  )
+  const content = (
+    <>
+      {children}
+      {arrow && (
+        <ArrowRight
+          className="h-4 w-4 transition-transform duration-300 ease-out group-hover/btn:translate-x-0.5"
+          aria-hidden="true"
+        />
+      )}
+    </>
+  )
 
-const Button = forwardRef<HTMLButtonElement | HTMLAnchorElement, ButtonProps>(
-  ({ className, variant = "primary", size = "md", children, ...props }, ref) => {
-    const classes = cn(
-      "inline-flex items-center justify-center rounded-xl font-semibold transition-all duration-200",
-      "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cubott-teal focus-visible:ring-offset-2 focus-visible:ring-offset-[#040D1A]",
-      "disabled:opacity-50 disabled:pointer-events-none",
-      {
-        "bg-cubott-teal text-white hover:bg-cubott-teal-dark shadow-lg shadow-cubott-teal/25 hover:shadow-xl hover:shadow-cubott-teal/35 hover:-translate-y-0.5":
-          variant === "primary",
-        "bg-white/8 text-white hover:bg-white/14 border border-white/10 hover:border-white/20":
-          variant === "secondary",
-        "border border-cubott-teal/50 text-cubott-teal hover:bg-cubott-teal hover:text-white":
-          variant === "outline",
-        "text-white/70 hover:text-white hover:bg-white/5":
-          variant === "ghost",
-      },
-      {
-        "px-4 py-2 text-sm": size === "sm",
-        "px-6 py-3 text-base": size === "md",
-        "px-8 py-4 text-lg": size === "lg",
-      },
-      className
-    )
-
-    if ("href" in props && props.href) {
-      const { href, ...restProps } = props as ButtonAsLink
-      return (
-        <Link
-          href={href}
-          className={classes}
-          ref={ref as React.Ref<HTMLAnchorElement>}
-          {...restProps}
-        >
-          {children}
-        </Link>
-      )
-    }
-
+  if ("href" in props && props.href) {
+    const { href, ...rest } = props as AsLink
     return (
-      <button
-        ref={ref as React.Ref<HTMLButtonElement>}
-        className={classes}
-        {...(props as ButtonAsButton)}
-      >
-        {children}
-      </button>
+      <Link href={href} className={classes} {...rest}>
+        {content}
+      </Link>
     )
   }
-)
-
-Button.displayName = "Button"
-
-export default Button
+  return (
+    <button className={classes} {...(props as AsButton)}>
+      {content}
+    </button>
+  )
+}

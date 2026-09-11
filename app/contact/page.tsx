@@ -1,70 +1,49 @@
-"use client"
-
-import { motion } from "framer-motion"
+import type { Metadata } from "next"
 import Container from "@/components/ui/Container"
-import { Mail, ArrowUpRight } from "lucide-react"
+import Reveal from "@/components/motion/Reveal"
+import ContactForm from "@/components/contact/ContactForm"
+import CubottMark from "@/components/brand/CubottMark"
+import { siteConfig } from "@/lib/site"
+
+export const metadata: Metadata = {
+  title: "Contact",
+  description: "Have a complex problem? Tell us how your business works. Let's see what we can build.",
+  alternates: { canonical: "/contact" },
+}
 
 export default function ContactPage() {
   return (
-    <main className="min-h-screen bg-[#05090F] flex flex-col">
-      <div className="absolute inset-0 bg-grid-pattern opacity-40 pointer-events-none" />
-
-      <motion.div
-        animate={{ opacity: [0.08, 0.16, 0.08] }}
-        transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
-        className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[600px] bg-cubott-teal rounded-full blur-[200px] pointer-events-none"
-      />
-
-      <Container className="relative z-10 flex-1 flex flex-col items-center justify-center py-32 text-center">
-        <motion.div
-          initial={{ opacity: 0, y: 24 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7 }}
-        >
-          <div className="flex items-center justify-center gap-3 mb-10">
-            <span className="w-6 h-px bg-cubott-teal" />
-            <span className="text-xs font-semibold tracking-[0.2em] text-cubott-teal uppercase">Contact</span>
-            <span className="w-6 h-px bg-cubott-teal" />
+    <main id="main" className="bg-white">
+      <section className="pb-20 pt-36 md:pb-28 md:pt-44">
+        <Container>
+          <div className="grid gap-14 lg:grid-cols-12 lg:gap-20">
+            <div className="lg:col-span-5">
+              <Reveal>
+                <p className="eyebrow text-blue">Contact</p>
+                <h1 className="display-xl mt-5 text-navy">Have a complex problem?</h1>
+                <p className="mt-6 max-w-md text-xl leading-relaxed text-slate">
+                  Tell us how your business works. Let&apos;s see what we can build.
+                </p>
+                <div className="mt-10 border-t border-navy/10 pt-6">
+                  <p className="eyebrow text-navy/50">Email</p>
+                  <a href={`mailto:${siteConfig.contactEmail}`} className="mt-2 inline-block text-lg font-medium text-navy hover:text-blue">
+                    {siteConfig.contactEmail}
+                  </a>
+                </div>
+                <div className="mt-10 flex items-center gap-3 text-sm text-slate">
+                  <CubottMark className="h-5 w-5" />
+                  We read every message and reply personally.
+                </div>
+              </Reveal>
+            </div>
+            <div className="lg:col-span-7">
+              <Reveal delay={0.1}>
+                <ContactForm />
+              </Reveal>
+            </div>
           </div>
-
-          <h1 className="text-[clamp(3.5rem,9vw,7.5rem)] font-black tracking-[-0.04em] text-white leading-[0.92] mb-6">
-            Let&apos;s Talk<br />
-            <span className="gradient-teal">Business.</span>
-          </h1>
-
-          <p className="text-white/40 text-lg max-w-md mx-auto mb-16 leading-relaxed font-light">
-            Ready to digitize your dealership operations? Drop us an email and we&apos;ll get back to you within 24 hours.
-          </p>
-
-          <motion.a
-            href="mailto:contact@cubott.com"
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ delay: 0.3 }}
-            className="group inline-flex items-center gap-4 px-10 py-6 rounded-2xl border border-cubott-teal/20 bg-cubott-teal/6 hover:bg-cubott-teal/12 hover:border-cubott-teal/40 transition-all duration-300 hover:scale-105"
-          >
-            <div className="w-12 h-12 rounded-xl bg-cubott-teal/15 flex items-center justify-center group-hover:bg-cubott-teal/25 transition-colors">
-              <Mail className="w-5 h-5 text-cubott-teal" />
-            </div>
-            <div className="text-left">
-              <div className="text-xs text-white/30 uppercase tracking-widest mb-0.5 font-light">Email us at</div>
-              <div className="text-2xl font-black tracking-tight text-white group-hover:text-cubott-teal transition-colors">
-                contact@cubott.com
-              </div>
-            </div>
-            <ArrowUpRight className="w-6 h-6 text-white/30 group-hover:text-cubott-teal group-hover:translate-x-1 group-hover:-translate-y-1 transition-all duration-200" />
-          </motion.a>
-
-          <motion.p
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.5 }}
-            className="mt-12 text-white/20 text-sm font-light"
-          >
-            We typically respond within 24 business hours.
-          </motion.p>
-        </motion.div>
-      </Container>
+        </Container>
+      </section>
     </main>
   )
 }

@@ -1,110 +1,169 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useEffect, useState } from "react"
 import Link from "next/link"
-import Container from "../ui/Container"
+import { usePathname } from "next/navigation"
+import { AnimatePresence, motion, useReducedMotion } from "framer-motion"
 import { Menu, X } from "lucide-react"
-import { motion, AnimatePresence } from "framer-motion"
+import Container from "@/components/ui/Container"
+import Button from "@/components/ui/Button"
+import CubottLogo from "@/components/brand/CubottLogo"
+import { nav } from "@/lib/site"
+import { cn } from "@/lib/utils"
 
+/**
+ * Header adapts to the scene beneath it. Pages mark dark scenes with `data-scene="dark"`;
+ * while one sits under the header the palette flips to the reverse version.
+ */
 export default function Header() {
-  const [isScrolled, setIsScrolled] = useState(false)
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+  const pathname = usePathname()
+  const reduce = useReducedMotion()
+  const [scrolled, setScrolled] = useState(false)
+  const [onDark, setOnDark] = useState(false)
+  const [open, setOpen] = useState(false)
 
   useEffect(() => {
-    const handleScroll = () => setIsScrolled(window.scrollY > 30)
-    window.addEventListener("scroll", handleScroll)
-    return () => window.removeEventListener("scroll", handleScroll)
+    const onScroll = () => setScrolled(window.scrollY > 8)
+    const raf = requestAnimationFrame(onScroll)
+    window.addEventListener("scroll", onScroll, { passive: true })
+    return () => {
+      cancelAnimationFrame(raf)
+      window.removeEventListener("scroll", onScroll)
+    }
   }, [])
 
-  const navLinks = [
-    { href: "/#features", label: "Features" },
-    { href: "/#platform", label: "Platform" },
-    { href: "/#why-cubott", label: "Why Cubott" },
-    { href: "/contact", label: "Contact" },
-  ]
+  useEffect(() => {
+    const scenes = Array.from(document.querySelectorAll<HTMLElement>('[data-scene="dark"]'))
+    const probe = 36 // vertical centre of the header
+    const check = () => {
+      setOnDark(
+        scenes.some((el) => {
+          const r = el.getBoundingClientRect()
+          return r.top <= probe && r.bottom >= probe
+        })
+      )
+    }
+    const raf = requestAnimationFrame(check)
+    window.addEventListener("scroll", check, { passive: true })
+    window.addEventListener("resize", check)
+    return () => {
+      cancelAnimationFrame(raf)
+      window.removeEventListener("scroll", check)
+      window.removeEventListener("resize", check)
+    }
+  }, [pathname])
+
+  useEffect(() => {
+    document.documentElement.style.overflow = open ? "hidden" : ""
+    return () => {
+      document.documentElement.style.overflow = ""
+    }
+  }, [open])
+
+  const dark = onDark && !open
 
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-        isScrolled
-          ? "bg-[#05090F]/90 backdrop-blur-xl border-b border-white/5"
-          : "bg-transparent"
-      }`}
+      className={cn(
+        "fixed inset-x-0 top-0 z-50 transition-colors duration-500",
+        scrolled && !open && (dark ? "bg-navy/80 backdrop-blur-md" : "bg-white/85 backdrop-blur-md"),
+        scrolled && !open && "border-b",
+        dark ? "border-white/10" : "border-navy/10",
+        open && "bg-white"
+      )}
     >
-      <Container>
-        <nav className="flex items-center justify-between h-20">
-          <Link href="/" className="group flex items-center gap-3">
-            <img
-              src="/cubott-logo.webp"
-              alt="Cubott"
-              className="h-9 w-auto transition-transform duration-300 group-hover:scale-105"
-            />
-            <span className="text-white font-bold text-lg tracking-tight group-hover:text-cubott-teal transition-colors">
-              Cubott
-            </span>
+      <Container size="xl">
+        <nav className="flex h-[72px] items-center justify-between" aria-label="Primary">
+          <Link href="/" className="rounded-md" aria-label="Cubott home">
+            <CubottLogo variant={dark ? "dark" : "light"} />
           </Link>
 
-          <div className="hidden md:flex items-center gap-1">
-            {navLinks.map((link) => (
-              <Link
-                key={link.href}
-                href={link.href}
-                className="px-4 py-2 text-sm text-white/60 hover:text-white transition-all duration-200 rounded-lg hover:bg-white/5 hover:scale-105 font-medium"
-              >
-                {link.label}
-              </Link>
-            ))}
-          </div>
+          <ul className="hidden items-center gap-1 md:flex">
+            {nav.map((item) => {
+              const active = pathname === item.href || pathname.startsWith(item.href + "/")
+              return (
+                <li key={item.href}>
+                  <Link
+                    href={item.href}
+                    aria-current={active ? "page" : undefined}
+                    className={cn(
+                      "relative rounded-full px-3.5 py-2 text-[15px] font-medium transition-colors",
+                      dark ? "text-white/75 hover:text-white" : "text-navy/70 hover:text-navy",
+                      active && (dark ? "text-white" : "text-navy")
+                    )}
+                  >
+                    {item.label}
+                    {active && (
+                      <span
+                        aria-hidden="true"
+                        className={cn("absolute inset-x-3.5 -bottom-0.5 h-0.5 rounded-full", dark ? "bg-blue-400" : "bg-blue")}
+                      />
+                    )}
+                  </Link>
+                </li>
+              )
+            })}
+          </ul>
 
-          <div className="hidden md:flex items-center gap-3">
-            <Link
-              href="/contact"
-              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-cubott-teal text-white text-sm font-semibold hover:bg-cubott-teal-dark transition-all duration-200 hover:scale-105 hover:shadow-lg hover:shadow-cubott-teal/30"
-            >
-              Let&apos;s Talk Business
-            </Link>
+          <div className="hidden md:block">
+            <Button href="/contact" size="sm" variant={dark ? "primary-dark" : "primary"} arrow>
+              Let&apos;s build
+            </Button>
           </div>
 
           <button
-            className="md:hidden text-white/70 hover:text-white transition-colors p-1"
-            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            aria-label="Toggle menu"
+            type="button"
+            className={cn(
+              "inline-flex h-10 w-10 items-center justify-center rounded-full md:hidden",
+              dark ? "text-white" : "text-navy"
+            )}
+            aria-expanded={open}
+            aria-controls="mobile-menu"
+            aria-label={open ? "Close menu" : "Open menu"}
+            onClick={() => setOpen((v) => !v)}
           >
-            {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+            {open ? <X size={22} /> : <Menu size={22} />}
           </button>
         </nav>
       </Container>
 
       <AnimatePresence>
-        {isMobileMenuOpen && (
+        {open && (
           <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: "auto" }}
-            exit={{ opacity: 0, height: 0 }}
-            className="md:hidden bg-[#05090F]/98 backdrop-blur-xl border-t border-white/5"
+            id="mobile-menu"
+            initial={reduce ? false : { opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
+            className="fixed inset-x-0 bottom-0 top-[72px] z-40 overflow-y-auto bg-white md:hidden"
           >
-            <Container>
-              <div className="py-6 space-y-1">
-                {navLinks.map((link) => (
-                  <Link
-                    key={link.href}
-                    href={link.href}
-                    className="block px-4 py-3 text-white/60 hover:text-white hover:bg-white/5 rounded-xl transition-all font-medium"
-                    onClick={() => setIsMobileMenuOpen(false)}
+            <Container size="xl" className="flex min-h-full flex-col py-6">
+              <ul className="flex flex-col">
+                {nav.map((item, i) => (
+                  <motion.li
+                    key={item.href}
+                    initial={reduce ? false : { opacity: 0, x: -8 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: 0.04 * i, duration: 0.3 }}
+                    className="border-b border-navy/10"
                   >
-                    {link.label}
-                  </Link>
+                    <Link
+                      href={item.href}
+                      className="flex items-center justify-between py-5 text-2xl font-semibold tracking-tight text-navy"
+                      onClick={() => setOpen(false)}
+                    >
+                      {item.label}
+                      <span className="text-blue" aria-hidden="true">→</span>
+                    </Link>
+                  </motion.li>
                 ))}
-                <div className="pt-4">
-                  <Link
-                    href="/contact"
-                    className="flex items-center justify-center w-full px-5 py-3 rounded-xl bg-cubott-teal text-white font-semibold hover:bg-cubott-teal-dark transition-all"
-                    onClick={() => setIsMobileMenuOpen(false)}
-                  >
-                    Let&apos;s Talk Business
-                  </Link>
-                </div>
+              </ul>
+              <div className="mt-8">
+                <Button href="/contact" size="lg" className="w-full" arrow onClick={() => setOpen(false)}>
+                  Let&apos;s build
+                </Button>
               </div>
+              <p className="mt-auto pt-10 text-sm text-slate">Technology for businesses that don&apos;t fit inside a template.</p>
             </Container>
           </motion.div>
         )}

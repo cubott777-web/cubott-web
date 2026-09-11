@@ -1,50 +1,63 @@
 import Link from "next/link"
-import Container from "../ui/Container"
-import { Mail } from "lucide-react"
+import Container from "@/components/ui/Container"
+import CubottLogo from "@/components/brand/CubottLogo"
+import { siteConfig } from "@/lib/site"
+
+const columns = [
+  {
+    title: "Company",
+    links: [
+      { label: "Products", href: "/products" },
+      { label: "Solutions", href: "/solutions" },
+      { label: "Work", href: "/work" },
+      { label: "About", href: "/about" },
+      { label: "Contact", href: "/contact" },
+    ],
+  },
+  {
+    title: "Products",
+    links: [{ label: "Dealer Management", href: "/products/dealer-management" }],
+  },
+]
 
 export default function Footer() {
-  const currentYear = new Date().getFullYear()
-
-  const links = [
-    { label: "Features", href: "/#features" },
-    { label: "Platform", href: "/#platform" },
-    { label: "Why Cubott", href: "/#why-cubott" },
-    { label: "Contact", href: "/contact" },
-  ]
-
   return (
-    <footer className="bg-[#020608] border-t border-white/5">
-      <Container>
-        <div className="py-10 flex flex-col sm:flex-row items-center justify-between gap-6">
-
-          <Link href="/" className="flex-shrink-0 group">
-            <span className="text-white/50 font-black text-sm tracking-tight group-hover:text-white/80 transition-colors">Cubott</span>
-          </Link>
-
-          <nav className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2">
-            {links.map((link) => (
-              <Link
-                key={link.href}
-                href={link.href}
-                className="text-sm text-white/30 hover:text-white/70 transition-colors font-light"
-              >
-                {link.label}
-              </Link>
-            ))}
-          </nav>
-
-          <a
-            href="mailto:contact@cubott.com"
-            className="flex items-center gap-2 text-sm text-white/30 hover:text-cubott-teal transition-colors font-light flex-shrink-0"
-          >
-            <Mail size={13} />
-            contact@cubott.com
-          </a>
-
+    <footer className="border-t border-navy/10 bg-white">
+      <Container size="xl" className="py-14 md:py-16">
+        <div className="grid gap-10 md:grid-cols-12">
+          <div className="md:col-span-6">
+            <Link href="/" aria-label="Cubott home" className="inline-block rounded-md">
+              <CubottLogo />
+            </Link>
+            <p className="mt-5 max-w-sm text-[15px] leading-relaxed text-slate">
+              We build systems that turn complexity into clarity. Products, business systems and custom software for
+              businesses that don&apos;t fit inside a template.
+            </p>
+            <a
+              href={`mailto:${siteConfig.contactEmail}`}
+              className="mt-5 inline-block text-[15px] font-medium text-navy underline-offset-4 hover:text-blue hover:underline"
+            >
+              {siteConfig.contactEmail}
+            </a>
+          </div>
+          {columns.map((col) => (
+            <nav key={col.title} className="md:col-span-3" aria-label={col.title}>
+              <h2 className="eyebrow text-navy/60">{col.title}</h2>
+              <ul className="mt-4 space-y-2.5">
+                {col.links.map((l) => (
+                  <li key={l.href}>
+                    <Link href={l.href} className="text-[15px] text-navy/80 hover:text-blue">
+                      {l.label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </nav>
+          ))}
         </div>
-
-        <div className="border-t border-white/[0.04] py-4 text-center">
-          <p className="text-white/15 text-xs font-light">© {currentYear} Cubott Technologies. All rights reserved.</p>
+        <div className="mt-12 flex flex-col gap-2 border-t border-navy/10 pt-6 text-sm text-slate sm:flex-row sm:items-center sm:justify-between">
+          <p>© {new Date().getFullYear()} {siteConfig.legalName}. All rights reserved.</p>
+          <p>Build. Connect. Grow.</p>
         </div>
       </Container>
     </footer>

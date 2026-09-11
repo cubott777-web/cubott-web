@@ -1,21 +1,10 @@
-import Hero from "@/components/home/Hero"
-import Marquee from "@/components/home/Marquee"
-import Services from "@/components/home/Services"
-import WhyCubott from "@/components/home/WhyCubott"
-import CaseStudies from "@/components/home/CaseStudies"
-import TechStack from "@/components/home/TechStack"
-import CTA from "@/components/home/CTA"
+import BrandStory from "@/components/home/BrandStory"
 
+/** Homepage = the Cubott brand. Seven scenes, one 3D object. Product detail lives on its own pages. */
 export default function HomePage() {
   return (
-    <main className="min-h-screen">
-      <Hero />
-      <Marquee />
-      <Services />
-      <WhyCubott />
-      <CaseStudies />
-      <TechStack />
-      <CTA />
+    <main id="main">
+      <BrandStory />
     </main>
   )
 }

@@ -13,99 +13,76 @@ const inter = Inter({
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),
-  title: "Cubott - Dealership Management Platform",
+  title: {
+    default: "Cubott — We build systems that turn complexity into clarity",
+    template: "%s — Cubott",
+  },
   description: siteConfig.description,
+  applicationName: siteConfig.name,
   keywords: [
-    "dealership management",
-    "SaaS",
-    "service management",
-    "inventory management",
-    "sales management",
-    "finance",
-    "multi-tenant",
-    "precision intelligence",
+    "Cubott",
+    "product engineering",
+    "custom software",
+    "business systems",
+    "workflow software",
+    "dealer management software",
+    "software company",
   ],
-  authors: [{ name: "Cubott" }],
-  alternates: {
-    canonical: "/",
-  },
-  icons: {
-    icon: "/favicon.ico",
-    shortcut: "/favicon.ico",
-    apple: "/favicon.ico",
-  },
+  authors: [{ name: siteConfig.legalName }],
+  creator: siteConfig.legalName,
+  alternates: { canonical: "/" },
   openGraph: {
-    title: "Cubott - Dealership Management Platform",
-    description:
-      "Digitize your entire dealership workflow with complete traceability and role-based control.",
     type: "website",
-    url: siteConfig.url,
-    locale: "en_US",
     siteName: siteConfig.name,
-    images: ["/cubott-logo.webp"],
+    locale: "en_US",
+    url: siteConfig.url,
+    title: "Cubott — We build systems that turn complexity into clarity",
+    description: siteConfig.description,
   },
   twitter: {
     card: "summary_large_image",
-    title: "Cubott - Dealership Management Platform",
-    description:
-      "Digitize your entire dealership workflow with complete traceability and role-based control.",
-    images: ["/cubott-logo.webp"],
+    title: "Cubott — We build systems that turn complexity into clarity",
+    description: siteConfig.description,
   },
   robots: {
     index: true,
     follow: true,
-    googleBot: {
-      index: true,
-      follow: true,
-      "max-image-preview": "large",
-      "max-snippet": -1,
-      "max-video-preview": -1,
-    },
+    googleBot: { index: true, follow: true, "max-image-preview": "large", "max-snippet": -1 },
   },
 }
 
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#FFFFFF" },
+    { media: "(prefers-color-scheme: dark)", color: "#0B1F3B" },
+  ],
 }
 
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode
-}>) {
-  const structuredData = {
-    "@context": "https://schema.org",
-    "@type": "SoftwareApplication",
-    name: siteConfig.name,
-    url: siteConfig.url,
-    applicationCategory: "BusinessApplication",
-    operatingSystem: "Web",
-    description: siteConfig.description,
-    offers: {
-      "@type": "Offer",
-      price: "0",
-      priceCurrency: "USD",
-      availability: "https://schema.org/InStock",
-    },
-    publisher: {
-      "@type": "Organization",
-      name: siteConfig.name,
-      url: siteConfig.url,
-      email: siteConfig.contactEmail,
-      logo: `${siteConfig.url}/cubott-logo.webp`,
-    },
-  }
+const organizationLd = {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  name: siteConfig.name,
+  legalName: siteConfig.legalName,
+  url: siteConfig.url,
+  logo: `${siteConfig.url}/brand/cubott-mark.png`,
+  email: siteConfig.contactEmail,
+  description: siteConfig.description,
+  knowsAbout: ["Custom software", "Business systems", "Workflow software", "Dealer management software"],
+}
 
+export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className={`${inter.variable} scroll-smooth`}>
-      <head>
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
-        />
-      </head>
-      <body className={`${inter.className} antialiased grain-overlay`}>
+    <html lang="en" className={inter.variable}>
+      <body className="antialiased">
+        <a
+          href="#main"
+          className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded-full focus:bg-navy focus:px-4 focus:py-2 focus:text-white"
+        >
+          Skip to content
+        </a>
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationLd) }} />
         <Header />
         {children}
         <Footer />

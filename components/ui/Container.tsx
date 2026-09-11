@@ -1,25 +1,20 @@
 import { cn } from "@/lib/utils"
-import { HTMLAttributes } from "react"
+import type { HTMLAttributes } from "react"
 
 interface ContainerProps extends HTMLAttributes<HTMLDivElement> {
   size?: "sm" | "md" | "lg" | "xl"
 }
 
-export default function Container({ 
-  className, 
-  size = "lg", 
-  children, 
-  ...props 
-}: ContainerProps) {
+export default function Container({ className, size = "lg", children, ...props }: ContainerProps) {
   return (
     <div
       className={cn(
-        "mx-auto px-4 sm:px-6 lg:px-8",
+        "mx-auto w-full px-5 sm:px-8 lg:px-10",
         {
-          "max-w-4xl": size === "sm",
-          "max-w-6xl": size === "md",
-          "max-w-7xl": size === "lg",
-          "max-w-[1400px]": size === "xl",
+          "max-w-3xl": size === "sm",
+          "max-w-5xl": size === "md",
+          "max-w-content": size === "lg",
+          "max-w-wide": size === "xl",
         },
         className
       )}
@@ -29,4 +24,3 @@ export default function Container({
     </div>
   )
 }
-
