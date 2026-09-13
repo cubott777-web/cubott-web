@@ -1,34 +1,102 @@
 "use client"
 
 import { useEffect, useRef, useState } from "react"
+import Link from "next/link"
 import dynamic from "next/dynamic"
-import { ScrollTrigger, useGSAP } from "@/components/motion/gsap"
+import { ArrowRight } from "lucide-react"
 import { useMediaQuery, REDUCED_MOTION } from "@/components/motion/useMediaQuery"
-import { scrollStore, sceneAt, SCENES } from "@/components/three/scroll-store"
+import { scrollStore, sectionAt, ramp, smooth } from "@/components/three/scroll-store"
 import Container from "@/components/ui/Container"
+import Button from "@/components/ui/Button"
+import Eyebrow from "@/components/ui/Eyebrow"
+import BrowserFrame from "@/components/ui/BrowserFrame"
 import Reveal from "@/components/motion/Reveal"
 import CubottMark from "@/components/brand/CubottMark"
-import ContactForm from "@/components/contact/ContactForm"
 import SceneVideo from "@/components/home/SceneVideo"
 import StoryOverlay from "@/components/home/StoryOverlay"
+import { dealer } from "@/content/dealer"
+import { screens } from "@/content/screens"
+import { siteConfig } from "@/lib/site"
 import { cn } from "@/lib/utils"
 
 const CubeScene = dynamic(() => import("@/components/three/CubeScene"), { ssr: false })
 
-/** Dark scenes bookend the story: the chaos, the moment it becomes one system, and the close. */
-const DARK = new Set([0, 1, 6])
+/** Dark bookends: the hero and story open the page, the close ends it. Everything between is light. */
+const DARK = new Set([0, 1, 5])
 
-const RAIL = ["Moving things", "One system", "It does the work", "Your pain first", "Built around you", "We stay", "A call away"]
+/** The story's three beats. One blue phrase on the whole page — it lives here, in beat two. */
+const BEATS = [
+  {
+    key: "complexity",
+    label: "Complexity",
+    title: "Work lives in phones, spreadsheets, emails and memory.",
+    text: "Every business runs on moving things. Most of them are held together by people remembering.",
+  },
+  {
+    key: "connection",
+    label: "Connection",
+    title: (
+      <>
+        Cubott brings it into <span className="ink-sky">one system.</span>
+      </>
+    ),
+    text: "One place. One record. One version of the truth.",
+  },
+  {
+    key: "clarity",
+    label: "Clarity",
+    title: "The system does the routine work.",
+    text: "Tasks move themselves. The right person is told. Nothing waits on memory.",
+  },
+]
+
+const BUILDS = [
+  {
+    n: "01",
+    title: "Products",
+    text: "Software we design, build and run for a whole sector — multi-tenant, role-based, supported by the team that made it.",
+    href: "/products",
+    cta: "Our products",
+  },
+  {
+    n: "02",
+    title: "Business systems",
+    text: "Platforms that bring people, process and data into one place, with real gates: what can happen next, and who can make it happen.",
+    href: "/solutions",
+    cta: "Solutions",
+  },
+  {
+    n: "03",
+    title: "Custom software",
+    text: "Applications shaped by your roles, your rules and your exceptions. No template to fit inside.",
+    href: "/solutions",
+    cta: "How we approach it",
+  },
+]
+
+const STEPS = [
+  { n: "01", title: "Start with your pain", text: "We sit with your team and map how the work really happens — exceptions included." },
+  { n: "02", title: "Build around you", text: "Your roles, your rules, your language. Structure first, screens second." },
+  { n: "03", title: "Stay until it works", text: "Rollout, training, the first messy weeks. Then the years after." },
+]
+
+const PROOF_FACTS = [
+  "Nine roles across dealer, manufacturer and platform",
+  "Multi-tenant from the first release",
+  "Every parts movement on an immutable audit log",
+]
 
 /**
- * Homepage = the Cubott story, product-neutral:
- * moving things → one system → it does the work → we start with your pain → built around you →
- * we stay until it works → help is a call away.
+ * Homepage: hero → story (pinned, three beats) → what we build → how we work → proof → close.
+ * One cube, one journey; sections just tell it where to be.
  */
 export default function BrandStory() {
   const root = useRef<HTMLDivElement>(null)
+  const beatEls = useRef<(HTMLDivElement | null)[]>([])
+  const barEls = useRef<(HTMLSpanElement | null)[]>([])
+  const barsEl = useRef<HTMLOListElement>(null)
   const reduced = useMediaQuery(REDUCED_MOTION)
-  const [scene, setScene] = useState(0)
+  const [section, setSection] = useState(0)
   const [mounted, setMounted] = useState(false)
   useEffect(() => {
     const id = requestAnimationFrame(() => setMounted(true))
@@ -37,47 +105,81 @@ export default function BrandStory() {
   // Reduced motion gets the static mark; a device without WebGL falls back inside the Canvas itself.
   const live = mounted && !reduced
 
-  useGSAP(
-    () => {
-      if (!root.current) return
-      const st = ScrollTrigger.create({
-        trigger: root.current,
-        start: "top top",
-        end: "bottom bottom",
-        onUpdate: (self) => {
-          scrollStore.progress = self.progress
-          const { i } = sceneAt(self.progress)
-          setScene((prev) => (prev === i ? prev : i))
-        },
-      })
-      return () => st.kill()
-    },
-    { scope: root }
-  )
-
-  const dark = DARK.has(scene)
-
-  // Dev aid: jump the story to a scene from the console without scrolling.
+  // Page phase = section index + progress; the pinned story's progress spans the whole pin.
   useEffect(() => {
-    if (process.env.NODE_ENV === "production") return
-    ;(window as unknown as { __cubottScene: (n: number, t?: number) => void }).__cubottScene = (n, t = 0.7) => {
-      scrollStore.progress = (n + t) / SCENES
-      setScene(n)
+    const el = root.current
+    if (!el) return
+    const sections = Array.from(el.querySelectorAll<HTMLElement>("[data-section]"))
+    let current = -1
+    const update = () => {
+      const vh = window.innerHeight
+      const maxScroll = document.documentElement.scrollHeight - vh
+      let phase = 0
+      for (let k = 0; k < sections.length; k++) {
+        const r = sections[k].getBoundingClientRect()
+        if (r.top > 0 && k > 0) break
+        const pinned = sections[k].dataset.section === "story"
+        const last = k === sections.length - 1
+        // The pinned story's progress spans the pin; the last section's spans whatever scroll is left, so the
+        // cube can take its leave before the footer arrives.
+        const span = pinned ? r.height - vh : last ? Math.min(r.height, maxScroll - (r.top + window.scrollY)) : r.height
+        phase = k + Math.min(0.9999, Math.max(0, -r.top / Math.max(1, span)))
+      }
+      scrollStore.phase = phase
+      const { i, t } = sectionAt(phase)
+      // Palette follows whichever section sits under the middle of the viewport, so a dark section
+      // turns the ground dark as it arrives rather than once it reaches the top.
+      let mid = i
+      for (let k = 0; k < sections.length; k++) {
+        const r = sections[k].getBoundingClientRect()
+        if (r.top <= vh * 0.5 && r.bottom > vh * 0.5) mid = k
+      }
+      if (mid !== current) {
+        current = mid
+        setSection(mid)
+      }
+      // Story beats crossfade in place, driven straight from scroll.
+      if (i === 1 || beatEls.current.some(Boolean)) {
+        BEATS.forEach((_, b) => {
+          const beat = beatEls.current[b]
+          const bar = barEls.current[b]
+          const start = b / BEATS.length
+          const end = (b + 1) / BEATS.length
+          const leave = b === BEATS.length - 1 ? 1 - ramp(t, 0.93, 0.99) : 1 - ramp(t, end - 0.06, end - 0.01)
+          const on = i === 1 ? ramp(t, start, start + 0.05) * leave : b === 0 && i < 1 ? 1 : 0
+          const leaving = i === 1 && t > end - 0.06
+          if (beat) {
+            beat.style.opacity = String(on)
+            beat.style.transform = reduced ? "" : `translateY(${(1 - smooth(on)) * (leaving ? -10 : 14)}px)`
+            beat.style.visibility = on > 0.01 ? "visible" : "hidden"
+          }
+          if (bar) bar.style.transform = `scaleX(${i === 1 ? ramp(t, start, end) : i > 1 ? 1 : 0})`
+          if (barsEl.current) barsEl.current.style.opacity = String(i === 1 ? 1 - ramp(t, 0.93, 0.99) : i < 1 ? 1 : 0)
+        })
+      }
     }
-  }, [])
+    update()
+    window.addEventListener("scroll", update, { passive: true })
+    window.addEventListener("resize", update)
+    return () => {
+      window.removeEventListener("scroll", update)
+      window.removeEventListener("resize", update)
+    }
+  }, [reduced])
 
-  const jump = (n: number) => {
-    const el = root.current?.querySelectorAll("section")[n]
-    el?.scrollIntoView({ behavior: reduced ? "auto" : "smooth" })
-  }
+  const dark = DARK.has(section)
+  const proofScreen = screens.dashboard ?? screens.supervisor ?? Object.values(screens)[0]
 
   return (
     <div ref={root} className={cn("relative", dark && "dark-scene")}>
-      {/* Ground: colour, isometric grid, grain, vignette — one continuous surface under every scene */}
-      <div aria-hidden="true" className={cn("fixed inset-0 -z-10 transition-colors duration-1000", dark ? "bg-navy-900" : "bg-[#F4F7FB]")}>
-        <div className={cn("absolute inset-0 iso-grid transition-opacity duration-1000", dark ? "opacity-100" : "iso-grid-light opacity-100")} style={{ maskImage: "radial-gradient(ellipse at 50% 45%, black 30%, transparent 78%)", WebkitMaskImage: "radial-gradient(ellipse at 50% 45%, black 30%, transparent 78%)" }} />
-        <div className={cn("absolute inset-0 transition-opacity duration-1000", dark ? "opacity-100" : "opacity-0")} style={{ background: "radial-gradient(ellipse at 50% 120%, rgba(37,99,235,0.18), transparent 60%)" }} />
-        <div className="grain absolute inset-0 opacity-70 mix-blend-overlay" />
+      {/* Ground: one continuous surface under every section; colour follows the section, texture only in the dark */}
+      <div aria-hidden="true" className={cn("fixed inset-0 -z-10 transition-colors duration-700", dark ? "bg-navy-900" : "bg-[#F6F8FB]")}>
+        <div
+          className={cn("absolute inset-0 iso-grid transition-opacity duration-700", dark ? "opacity-100" : "opacity-0")}
+          style={{ maskImage: "radial-gradient(ellipse at 50% 45%, black 30%, transparent 78%)", WebkitMaskImage: "radial-gradient(ellipse at 50% 45%, black 30%, transparent 78%)" }}
+        />
+        <div className={cn("absolute inset-0 transition-opacity duration-700", dark ? "opacity-100" : "opacity-0")} style={{ background: "radial-gradient(ellipse at 50% 120%, rgba(37,99,235,0.18), transparent 60%)" }} />
+        <div className={cn("grain absolute inset-0 mix-blend-overlay transition-opacity duration-700", dark ? "opacity-60" : "opacity-0")} />
       </div>
       <div className="pointer-events-none absolute inset-x-0 top-0 z-0 h-screen opacity-50 [mask-image:linear-gradient(to_bottom,black_60%,transparent)]" aria-hidden="true">
         <SceneVideo src="/video/brand.mp4" />
@@ -85,184 +187,212 @@ export default function BrandStory() {
       {live && <CubeScene />}
       {live && <StoryOverlay />}
 
-      {/* Progress rail */}
-      <nav aria-label="Story progress" className="fixed right-6 top-1/2 z-20 hidden -translate-y-1/2 lg:block xl:right-10">
-        <ol className="flex flex-col gap-3">
-          {RAIL.map((label, n) => {
-            const on = n === scene
-            return (
-              <li key={label}>
-                <button
-                  type="button"
-                  onClick={() => jump(n)}
-                  aria-current={on ? "step" : undefined}
-                  className={cn("group flex items-center justify-end gap-3 text-right transition-colors", dark ? "text-white" : "text-navy")}
-                >
-                  <span className={cn("font-mono text-[10px] tracking-[0.2em] transition-opacity", on ? "opacity-100" : "opacity-0 group-hover:opacity-60")}>{label}</span>
-                  <span className={cn("block h-px transition-all duration-500", on ? "w-8 bg-blue" : cn("w-4", dark ? "bg-white/25" : "bg-navy/20"))} />
-                </button>
-              </li>
-            )
-          })}
-        </ol>
-      </nav>
-
-      <div className={cn("relative z-10 transition-colors duration-700", dark ? "text-white" : "text-navy")}>
-        {/* 1 — the chaos */}
-        <section aria-label="Scene 1 of 7" data-scene="dark" className="relative flex min-h-screen items-center justify-center py-28">
-          <Container className="relative w-full text-center">
-            <Reveal>
-              <p className="eyebrow text-blue-300/80">Cubott · Systems for complex businesses</p>
-              <h1 className="display-2xl mx-auto mt-8 max-w-[11ch]">
-                Every business runs on <span className="ink-sky">moving things.</span>
-              </h1>
-              <p className="mx-auto mt-8 max-w-xl text-lg text-blue-100/70 md:text-2xl">Spread across phones, spreadsheets, emails and memory.</p>
-            </Reveal>
+      <div className={cn("relative z-10 transition-colors duration-500", dark ? "text-white" : "text-navy")}>
+        {/* 0 — Hero. Copy left, cube right; nothing waits for a reveal. */}
+        <section data-section="hero" data-scene="dark" className="relative flex min-h-screen items-center pb-16 pt-[calc(var(--header-h)+3rem)] lg:pb-24 lg:pt-[calc(var(--header-h)+2rem)]" aria-labelledby="hero-title">
+          <Container className="w-full">
+            <div className="grid lg:grid-cols-12">
+              <div className="lg:col-span-7">
+                <Eyebrow tone="dark">Cubott · Technology for complex businesses</Eyebrow>
+                <h1 id="hero-title" className="display-2xl mt-7 max-w-[13ch]">
+                  Systems for businesses that don&apos;t fit a template.
+                </h1>
+                <p className="mt-7 max-w-xl text-lg text-blue-100/75 md:text-xl md:leading-relaxed">
+                  We build the software products, business systems and custom applications that run complex operations — around the way
+                  your business actually works.
+                </p>
+                <div className="mt-9 flex flex-wrap items-center gap-3">
+                  <Button href="/contact" size="lg" variant="primary-dark" arrow>
+                    Start a conversation
+                  </Button>
+                  <Button href="/work" size="lg" variant="ghost-dark" arrow>
+                    See our work
+                  </Button>
+                </div>
+                <ul className="mt-12 flex flex-wrap gap-x-8 gap-y-2 text-sm text-blue-100/60" aria-label="What to expect">
+                  <li>Multi-tenant platforms in production</li>
+                  <li>Designed around real workflows</li>
+                  <li>Built and supported by the same team</li>
+                </ul>
+              </div>
+            </div>
           </Container>
-          <div className="absolute bottom-8 left-1/2 flex -translate-x-1/2 flex-col items-center gap-2 text-blue-200/60" aria-hidden="true">
-            <span className="font-mono text-[10px] uppercase tracking-[0.3em]">Scroll</span>
-            <span className="scroll-cue block h-8 w-px bg-blue-300/60" />
+          {!live && <StaticMark side="right" />}
+          {/* Phones: reserve the bottom of the hero for the cube */}
+          <div aria-hidden="true" className="h-[38vh] w-full lg:hidden" />
+        </section>
+
+        {/* 1 — Story. Pinned for 3 beats; copy swaps in place, the cube and the overlay do the rest. */}
+        <section data-section="story" data-scene="dark" className="relative h-[290vh]" aria-label="Complexity, connection, clarity">
+          <div className="sticky top-0 flex h-screen items-start pt-[calc(var(--header-h)+1.5rem)] lg:items-center lg:pt-[var(--header-h)]">
+            <Container className="w-full">
+              <div className="grid lg:grid-cols-12">
+                <div className="relative min-h-[17rem] lg:col-span-6 lg:min-h-[19rem]">
+                  {BEATS.map((b, k) => (
+                    <div
+                      key={b.key}
+                      ref={(el) => {
+                        beatEls.current[k] = el
+                      }}
+                      className="absolute inset-x-0 top-0 will-change-transform"
+                      style={{ opacity: k === 0 ? 1 : 0, visibility: k === 0 ? "visible" : "hidden" }}
+                    >
+                      <Eyebrow tone="dark">{b.label}</Eyebrow>
+                      <h2 className="display-lg mt-6 max-w-[15ch]">{b.title}</h2>
+                      <p className="mt-6 max-w-md text-lg text-blue-100/70 md:text-xl">{b.text}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+              {/* Beat progress: three rules, filled by scroll */}
+              <ol ref={barsEl} className="mt-8 flex max-w-xs gap-2" aria-hidden="true">
+                {BEATS.map((b, k) => (
+                  <li key={b.key} className="h-px flex-1 overflow-hidden bg-white/15">
+                    <span
+                      ref={(el) => {
+                        barEls.current[k] = el
+                      }}
+                      className="block h-full w-full origin-left bg-blue-300"
+                      style={{ transform: "scaleX(0)" }}
+                    />
+                  </li>
+                ))}
+              </ol>
+            </Container>
+            {!live && <StaticMark side="right" />}
           </div>
         </section>
 
-        {/* 2 — one system */}
-        <Scene index={1} dark live={live} layout="top">
-          <Number n="02" dark />
-          <h2 className="display-xl mx-auto max-w-[12ch]">
-            Cubott brings it into <span className="ink-sky">one system.</span>
-          </h2>
-          <p className="mx-auto mt-6 max-w-md text-lg text-blue-100/70 md:text-2xl">One place. One record. One version of the truth.</p>
-        </Scene>
+        {/* 2 — What Cubott builds */}
+        <section data-section="what" className="relative py-24 md:py-32 lg:py-40" aria-labelledby="what-title">
+          <Container>
+            <Reveal>
+              <Eyebrow index="01">What Cubott builds</Eyebrow>
+              <h2 id="what-title" className="display-lg mt-5 max-w-[16ch]">
+                Three kinds of work. One way of building.
+              </h2>
+              <p className="lede mt-5 max-w-2xl">
+                Whether it&apos;s a product for a whole sector or an application for one team, we start with how the work actually happens.
+              </p>
+            </Reveal>
+            <ul className="mt-16 grid gap-10 border-t border-navy/10 pt-10 md:grid-cols-3 md:gap-8">
+              {BUILDS.map((b, k) => (
+                <Reveal as="li" key={b.n} delay={0.08 * k} className="flex flex-col">
+                  <span className="font-mono text-xs text-blue">{b.n}</span>
+                  <h3 className="mt-4 text-2xl font-semibold tracking-tight">{b.title}</h3>
+                  <p className="mt-3 max-w-sm text-[15px] leading-relaxed text-slate md:text-base">{b.text}</p>
+                  <Link href={b.href} className="group mt-6 inline-flex items-center gap-1.5 text-sm font-semibold text-navy transition-colors hover:text-blue">
+                    {b.cta}
+                    <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" aria-hidden="true" />
+                  </Link>
+                </Reveal>
+              ))}
+            </ul>
+          </Container>
+        </section>
 
-        {/* 3 — it does the work */}
-        <Scene index={2} live={live} layout="left">
-          <Number n="03" />
-          <p className="eyebrow text-blue">Then</p>
-          <h2 className="display-xl mt-6">
-            The system does the <span className="ink-blue">routine work</span> for you.
-          </h2>
-          <p className="mt-6 max-w-md text-lg text-slate md:text-xl">Tasks move themselves. The right person is told. Nothing waits on memory.</p>
-        </Scene>
-
-        {/* 4 — your pain first: a pull-quote, not a headline */}
-        <Scene index={3} live={live} layout="right">
-          <Number n="04" align="right" />
-          <span aria-hidden="true" className="mb-8 block h-3 w-3 rotate-45 bg-blue" />
-          <p className="display-lg">
-            It starts with <span className="ink-blue">your pain,</span> not our software.
-          </p>
-          <p className="mt-6 max-w-md text-lg text-slate md:text-xl">We sit with your team and map how the work really happens — exceptions included.</p>
-          <span aria-hidden="true" className="mt-10 block h-px w-24 bg-navy/20" />
-        </Scene>
-
-        {/* 5 — built around you */}
-        <Scene index={4} live={live} layout="left" narrow>
-          <Number n="05" />
-          <h2 className="display-xl">
-            Then we build <span className="ink-blue">around you.</span>
-          </h2>
-          <p className="mt-6 max-w-sm text-lg text-slate md:text-xl">Your roles, your rules, your language. No template.</p>
-        </Scene>
-
-        {/* 6 — we stay */}
-        <Scene index={5} live={live} layout="left">
-          <Number n="06" />
-          <h2 className="display-xl">
-            We stay <span className="ink-blue">until it works.</span>
-          </h2>
-          <p className="mt-6 max-w-md text-lg text-slate md:text-xl">Rollout, training, the first messy weeks — we&apos;re in the room.</p>
-        </Scene>
-
-        {/* 7 — a call away: the dark bookend. Copy left, the cube settles beneath it, the form on the right. */}
-        <section id="start" data-scene="dark" aria-label="Scene 7 of 7" className="relative flex min-h-screen items-center pb-24 pt-32 lg:py-28">
-          <Container className="w-full">
-            <div className="grid gap-12 lg:grid-cols-12 lg:gap-16">
-              <Reveal className="relative lg:col-span-5">
-                <Number n="07" dark />
-                <h2 className="display-xl">
-                  After that, help is <span className="ink-sky">a call away.</span>
+        {/* 3 — How we work */}
+        <section data-section="how" className="relative py-24 md:py-32" aria-labelledby="how-title">
+          <Container>
+            <div className="grid gap-10 lg:grid-cols-12 lg:gap-16">
+              <Reveal className="lg:col-span-4">
+                <Eyebrow index="02">How we work</Eyebrow>
+                <h2 id="how-title" className="display-md mt-5">
+                  Your pain first. Our software second.
                 </h2>
-                <p className="mt-6 max-w-sm text-lg text-blue-100/70 md:text-xl">Support is the people who built it.</p>
-                <p className="mt-8 text-sm text-blue-100/60">
-                  Prefer to see the work first?{" "}
-                  <a href="/products" className="font-semibold text-white underline-offset-4 hover:underline">
-                    See what we&apos;ve built →
-                  </a>
-                </p>
+                <Link href="/solutions" className="group mt-6 inline-flex items-center gap-1.5 text-sm font-semibold text-navy transition-colors hover:text-blue">
+                  The full process
+                  <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" aria-hidden="true" />
+                </Link>
               </Reveal>
-              <Reveal delay={0.1} className="lg:col-span-6 lg:col-start-7">
-                <div className="rounded-2xl border border-white/10 bg-white p-6 text-navy shadow-[0_40px_100px_rgba(0,0,0,0.5)] md:p-8">
-                  <ContactForm />
+              <ol className="relative grid gap-8 md:grid-cols-3 md:gap-6 lg:col-span-8">
+                <span aria-hidden="true" className="absolute left-0 right-0 top-[7px] hidden h-px bg-navy/15 md:block" />
+                {STEPS.map((s, k) => (
+                  <Reveal as="li" key={s.n} delay={0.1 * k} className="relative md:pt-8">
+                    <span aria-hidden="true" className="absolute left-0 top-0 hidden h-[15px] w-[15px] rounded-full border-2 border-blue bg-[#F6F8FB] md:block" />
+                    <span className="font-mono text-xs text-blue">{s.n}</span>
+                    <h3 className="mt-3 text-xl font-semibold tracking-tight">{s.title}</h3>
+                    <p className="mt-2 text-[15px] leading-relaxed text-slate">{s.text}</p>
+                  </Reveal>
+                ))}
+              </ol>
+            </div>
+          </Container>
+        </section>
+
+        {/* 4 — Proof: one real system, shown as it is */}
+        <section data-section="proof" className="relative py-24 md:py-32 lg:py-40" aria-labelledby="proof-title">
+          <Container>
+            <div className="grid gap-12 lg:grid-cols-12 lg:gap-16">
+              <Reveal className="lg:col-span-4">
+                <Eyebrow index="03">Proof</Eyebrow>
+                <h2 id="proof-title" className="display-md mt-5">
+                  {dealer.name}, in production.
+                </h2>
+                <p className="mt-5 text-[15px] leading-relaxed text-slate md:text-base">{dealer.summary}</p>
+                <ul className="mt-6 space-y-2.5 text-[15px] text-navy/80">
+                  {PROOF_FACTS.map((f) => (
+                    <li key={f} className="flex gap-3">
+                      <span aria-hidden="true" className="mt-[9px] h-1.5 w-1.5 shrink-0 rounded-full bg-blue" />
+                      {f}
+                    </li>
+                  ))}
+                </ul>
+                <div className="mt-8 flex flex-wrap gap-3">
+                  <Button href="/products/dealer-management" variant="secondary" arrow>
+                    See the product
+                  </Button>
+                  <Button href="/work" variant="ghost" arrow>
+                    Our work
+                  </Button>
+                </div>
+              </Reveal>
+              <Reveal delay={0.1} className="lg:col-span-8">
+                <BrowserFrame
+                  src={proofScreen?.src}
+                  alt={proofScreen?.alt ?? "Dealer Management supervisor dashboard"}
+                  caption={proofScreen?.caption ?? "Captured from the running application. No redesign for the website."}
+                  ratio="16 / 10"
+                />
+              </Reveal>
+            </div>
+          </Container>
+        </section>
+
+        {/* 5 — Close. Copy left, cube right, one action. */}
+        <section id="start" data-section="cta" data-scene="dark" className="relative flex min-h-[85vh] items-center py-24 pt-[calc(var(--header-h)+4rem)] lg:py-32" aria-labelledby="cta-title">
+          <Container className="w-full">
+            <div className="grid lg:grid-cols-12">
+              <Reveal className="lg:col-span-6">
+                <Eyebrow tone="dark">After launch</Eyebrow>
+                <h2 id="cta-title" className="display-xl mt-6 max-w-[12ch]">
+                  Help is a call away.
+                </h2>
+                <p className="mt-6 max-w-md text-lg text-blue-100/70 md:text-xl">Support is the people who built it. Tell us what isn&apos;t working, and we&apos;ll tell you what we&apos;d build.</p>
+                <div className="mt-9 flex flex-wrap items-center gap-4">
+                  <Button href="/contact" size="lg" variant="primary-dark" arrow>
+                    Start a conversation
+                  </Button>
+                  <a href={`mailto:${siteConfig.contactEmail}`} className="text-sm font-medium text-blue-100/70 underline-offset-4 hover:text-white hover:underline">
+                    {siteConfig.contactEmail}
+                  </a>
                 </div>
               </Reveal>
             </div>
           </Container>
+          {!live && <StaticMark side="right" />}
+          <div aria-hidden="true" className="h-[34vh] w-full lg:hidden" />
         </section>
       </div>
     </div>
   )
 }
 
-/** Large editorial scene number set behind the headline. */
-function Number({ n, dark, align = "left" }: { n: string; dark?: boolean; align?: "left" | "right" }) {
+/** Reduced-motion / pre-mount stand-in for the 3D object. */
+function StaticMark({ side }: { side: "right" }) {
   return (
-    <span
-      aria-hidden="true"
-      className={cn(
-        "scene-number absolute -top-[0.55em] font-mono",
-        align === "right" ? "-right-4" : "-left-4",
-        dark ? "text-white/[0.045]" : "text-navy/[0.05]"
-      )}
-    >
-      {n}
-    </span>
-  )
-}
-
-function Scene({
-  children,
-  index,
-  dark,
-  live,
-  layout,
-  narrow,
-  id,
-}: {
-  children: React.ReactNode
-  index: number
-  dark?: boolean
-  live: boolean
-  layout: "top" | "left" | "right"
-  narrow?: boolean
-  id?: string
-}) {
-  const centred = layout === "top"
-  return (
-    <section
-      id={id}
-      data-scene={dark ? "dark" : undefined}
-      aria-label={`Scene ${index + 1} of ${SCENES}`}
-      className={cn("relative flex min-h-screen", centred ? "items-start pt-36 md:pt-44" : "items-center pb-20 pt-56 lg:py-24")}
-    >
-      <Container className="w-full">
-        <div className={cn("grid gap-10", !centred && "lg:grid-cols-12")}>
-          <Reveal
-            className={cn(
-              "relative",
-              centred && "mx-auto max-w-3xl text-center",
-              layout === "left" && (narrow ? "lg:col-span-5" : "lg:col-span-6"),
-              layout === "right" && "lg:col-span-6 lg:col-start-7"
-            )}
-          >
-            {children}
-          </Reveal>
-          {!live && !centred && (
-            <div className={cn("hidden lg:flex lg:justify-center", layout === "right" ? "lg:col-span-6 lg:col-start-1 lg:row-start-1" : "lg:col-span-6")}>
-              <CubottMark className="h-64 w-auto" />
-            </div>
-          )}
-        </div>
-      </Container>
-    </section>
+    <div aria-hidden="true" className={cn("pointer-events-none absolute inset-y-0 hidden w-5/12 items-center justify-center lg:flex", side === "right" && "right-0")}>
+      <CubottMark className="h-56 w-auto" />
+    </div>
   )
 }

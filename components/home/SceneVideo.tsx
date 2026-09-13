@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { useMediaQuery, REDUCED_MOTION } from "@/components/motion/useMediaQuery"
 import { cn } from "@/lib/utils"
 
@@ -8,18 +8,30 @@ interface SceneVideoProps {
   src: string
   poster?: string
   className?: string
-  /** Renders nothing at all when the file is missing, so scenes work before the clips exist. */
+  /** Rendered instead when the file is missing, so scenes work before the clips exist. */
   children?: React.ReactNode
 }
 
 /**
  * Optional cinematic clip (generated in Higgsfield, dropped into /public/video).
- * Muted, looped, autoplay; hidden entirely if the file is absent or the visitor prefers reduced motion.
+ * Muted, looped, autoplay. The file is probed first so a missing clip costs one HEAD request,
+ * not a failed media load; hidden entirely under reduced motion.
  */
 export default function SceneVideo({ src, poster, className, children }: SceneVideoProps) {
   const reduced = useMediaQuery(REDUCED_MOTION)
-  const [missing, setMissing] = useState(false)
-  if (reduced || missing) return <>{children ?? null}</>
+  const [available, setAvailable] = useState<boolean | null>(null)
+
+  useEffect(() => {
+    let cancelled = false
+    fetch(src, { method: "HEAD" })
+      .then((r) => !cancelled && setAvailable(r.ok && (r.headers.get("content-type") ?? "").startsWith("video/")))
+      .catch(() => !cancelled && setAvailable(false))
+    return () => {
+      cancelled = true
+    }
+  }, [src])
+
+  if (reduced || !available) return <>{children ?? null}</>
   return (
     <video
       className={cn("h-full w-full object-cover", className)}
@@ -30,7 +42,7 @@ export default function SceneVideo({ src, poster, className, children }: SceneVi
       loop
       playsInline
       preload="metadata"
-      onError={() => setMissing(true)}
+      onError={() => setAvailable(false)}
       aria-hidden="true"
     />
   )

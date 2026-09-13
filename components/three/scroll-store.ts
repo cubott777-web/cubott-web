@@ -1,20 +1,22 @@
 "use client"
 
 /**
- * Shared store for the homepage story — written by ScrollTrigger (progress) and by the 3D scene
- * (where the cube is on screen), read every frame by the cube and the HTML overlays. No React re-renders.
+ * Shared store for the homepage — written by the page's scroll listener (phase) and by the 3D scene
+ * (where the cube is on screen), read every frame by the cube and the HTML overlay. No React re-renders.
  */
 export const scrollStore = {
-  progress: 0,
-  /** Cube centre on screen, as fractions of the viewport. */
+  /** Section index + progress within it (0..SECTIONS). Section 1 (the story) is pinned, so its progress spans the pin. */
+  phase: 0,
+  /** Cube centre on screen, as fractions of the viewport, and its half-height as a fraction of viewport height. */
   cube: { x: 0.5, y: 0.5, r: 0.12 },
 }
 
-export const SCENES = 7
+/** hero · story · what · how · proof · cta */
+export const SECTIONS = 6
 
-/** Scene index and progress within it (0..1). */
-export function sceneAt(p: number) {
-  const raw = Math.min(SCENES - 1e-6, Math.max(0, p * SCENES))
+/** Section index and progress within it (0..1). */
+export function sectionAt(p: number) {
+  const raw = Math.min(SECTIONS - 1e-6, Math.max(0, p))
   const i = Math.floor(raw)
   return { i, t: raw - i }
 }
