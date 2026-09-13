@@ -48,7 +48,7 @@ function Panel({
 export default function SystemStories({ tone = "light", variant = "compact" }: Props) {
   const dark = tone === "dark"
   return (
-    <section className={cn(dark ? "bg-navy text-white" : "bg-white", "py-20 md:py-28")} aria-labelledby="stories-title">
+    <section className={cn(dark ? "bg-navy text-white" : "bg-white", "py-14 md:py-20")} aria-labelledby="stories-title">
       <Container>
         <Reveal>
           <h2 id="stories-title" className={cn("display-md max-w-2xl", dark ? "text-white" : "text-navy")}>
@@ -56,7 +56,7 @@ export default function SystemStories({ tone = "light", variant = "compact" }: P
           </h2>
         </Reveal>
 
-        <div className="mt-14 flex flex-col gap-16">
+        <div className="mt-10 flex flex-col gap-12">
           <Panel
             index="A"
             title="Service lifecycle"

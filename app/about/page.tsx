@@ -1,10 +1,8 @@
 import type { Metadata } from "next"
 import Container from "@/components/ui/Container"
-import SectionHeading from "@/components/ui/SectionHeading"
 import Button from "@/components/ui/Button"
 import Reveal from "@/components/motion/Reveal"
 import CubottMark from "@/components/brand/CubottMark"
-import WhyCubott from "@/components/home/WhyCubott"
 
 export const metadata: Metadata = {
   title: "About",
@@ -30,7 +28,7 @@ const approach = [
 export default function AboutPage() {
   return (
     <main id="main">
-      <section data-scene="dark" className="bg-navy-900 pb-20 pt-36 text-white md:pb-28 md:pt-44">
+      <section data-scene="dark" className="bg-navy-900 pb-16 pt-28 text-white md:pb-20 md:pt-32">
         <Container>
           <Reveal>
             <CubottMark tone="reverse" className="h-12 w-12" />
@@ -42,45 +40,58 @@ export default function AboutPage() {
         </Container>
       </section>
 
-      <section className="bg-white py-20 md:py-28" aria-labelledby="beliefs-title">
+      <section className="bg-white py-14 md:py-20" aria-labelledby="beliefs-title">
         <Container>
           <Reveal>
-            <SectionHeading eyebrow="What we believe" title={<span id="beliefs-title">What we believe.</span>} />
+            <h2 id="beliefs-title" className="display-lg max-w-2xl text-navy">
+              What we believe.
+            </h2>
           </Reveal>
-          <ol className="mt-12 grid gap-x-12 gap-y-10 md:grid-cols-2">
+          <ol className="mt-10 border-t border-navy/10">
             {beliefs.map((b, i) => (
-              <Reveal as="li" key={b.title} delay={0.06 * i} className="border-t border-navy/10 pt-6">
-                <span className="font-mono text-xs text-blue">{String(i + 1).padStart(2, "0")}</span>
-                <h3 className="mt-3 text-2xl font-semibold tracking-tight text-navy">{b.title}</h3>
-                <p className="mt-3 text-[15px] leading-relaxed text-slate md:text-base">{b.text}</p>
+              <Reveal
+                as="li"
+                key={b.title}
+                delay={0.06 * i}
+                className="group relative grid gap-3 border-b border-navy/10 py-7 transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] hover:translate-x-1.5 md:grid-cols-12 md:gap-8 md:py-8"
+              >
+                <span aria-hidden="true" className="absolute -left-4 top-0 h-full w-0.5 origin-top scale-y-0 bg-blue transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-y-100 md:-left-6" />
+                <h3 className="text-2xl font-semibold tracking-tight text-navy transition-colors duration-300 group-hover:text-blue md:col-span-4 md:text-[1.75rem] md:leading-tight">{b.title}</h3>
+                <p className="max-w-lg text-[15px] leading-relaxed text-slate md:col-span-8 md:pt-1.5 md:text-base">{b.text}</p>
               </Reveal>
             ))}
           </ol>
         </Container>
       </section>
 
-      <section className="border-t border-navy/10 bg-surface py-20 md:py-28" aria-labelledby="approach-title">
+      <section className="bg-surface py-14 md:py-20" aria-labelledby="approach-title">
         <Container>
           <Reveal>
-            <SectionHeading eyebrow="How we work" title={<span id="approach-title">How we work.</span>} size="md" />
+            <h2 id="approach-title" className="display-lg max-w-2xl text-navy">
+              How we work.
+            </h2>
           </Reveal>
-          <dl className="mt-12 divide-y divide-navy/10 border-y border-navy/10">
-            {approach.map((a) => (
-              <Reveal as="div" key={a.k} className="grid gap-2 py-6 md:grid-cols-12 md:gap-8">
-                <dt className="eyebrow text-navy/60 md:col-span-3 md:pt-1">{a.k}</dt>
-                <dd className="text-[15px] leading-relaxed text-navy/85 md:col-span-9 md:text-base">{a.v}</dd>
+          <dl className="mt-10 border-t border-navy/10">
+            {approach.map((a, i) => (
+              <Reveal
+                as="div"
+                key={a.k}
+                delay={0.06 * i}
+                className="group relative grid gap-2 border-b border-navy/10 py-7 transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] hover:translate-x-1.5 md:grid-cols-12 md:gap-8 md:py-8"
+              >
+                <span aria-hidden="true" className="absolute -left-4 top-0 h-full w-0.5 origin-top scale-y-0 bg-blue transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-y-100 md:-left-6" />
+                <dt className="eyebrow text-navy/60 transition-colors duration-300 group-hover:text-blue md:col-span-4 md:pt-1">{a.k}</dt>
+                <dd className="max-w-lg text-[15px] leading-relaxed text-navy/85 md:col-span-8 md:text-base">{a.v}</dd>
               </Reveal>
             ))}
           </dl>
         </Container>
       </section>
 
-      <WhyCubott />
-
-      <section className="bg-white py-20 md:py-28">
+      <section data-scene="dark" className="bg-navy-900 py-14 text-white md:py-20">
         <Container className="flex flex-col items-start justify-between gap-6 md:flex-row md:items-center">
-          <p className="max-w-xl text-xl text-navy/85">Have a complex problem? Tell us how your business works.</p>
-          <Button href="/contact" arrow>
+          <p className="max-w-xl text-xl text-blue-100/85">Have a complex problem? Tell us how your business works.</p>
+          <Button href="/contact" variant="primary-dark" size="lg" arrow>
             Let&apos;s build
           </Button>
         </Container>

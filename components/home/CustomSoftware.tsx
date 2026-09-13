@@ -20,7 +20,7 @@ export default function CustomSoftware() {
   const core = { x: 82, y: 50 }
 
   return (
-    <section id="custom-software" className="bg-white py-28 md:py-44" aria-labelledby="custom-title">
+    <section id="custom-software" className="bg-white py-16 md:py-24" aria-labelledby="custom-title">
       <Container>
         <div className="max-w-4xl">
           <Reveal>
@@ -39,15 +39,15 @@ export default function CustomSoftware() {
               <Button href="/contact" size="lg" arrow>
                 Build something with Cubott
               </Button>
-              <Button href="/work" variant="ghost" size="lg" arrow>
-                Explore our work
+              <Button href="/products/dealer-management" variant="ghost" size="lg" arrow>
+                See Dealer Management
               </Button>
             </div>
           </Reveal>
         </div>
 
         {/* System builder */}
-        <div className="mt-24 md:mt-32">
+        <div className="mt-16 md:mt-20">
           <Reveal>
             <p className="eyebrow text-blue">The system builder</p>
           </Reveal>
@@ -66,7 +66,7 @@ export default function CustomSoftware() {
                   initial={reduce ? { pathLength: 1 } : { pathLength: 0 }}
                   whileInView={{ pathLength: 1 }}
                   viewport={{ once: true, margin: "-20% 0px" }}
-                  transition={{ duration: 1.2, delay: 0.25 + i * 0.18, ease: [0.22, 1, 0.36, 1] }}
+                  transition={{ duration: 1.2, delay: 0.25 + i * 0.18, ease: [0.16, 1, 0.3, 1] }}
                 />
               ))}
             </svg>

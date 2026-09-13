@@ -40,7 +40,7 @@ export default function DealerManagementPage() {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(productLd) }} />
 
       {/* Hero */}
-      <section data-scene="dark" className="bg-navy-900 pb-20 pt-36 text-white md:pb-28 md:pt-44">
+      <section data-scene="dark" className="bg-navy-900 pb-16 pt-28 text-white md:pb-20 md:pt-32">
         <Container>
           <div className="grid gap-12 lg:grid-cols-12 lg:items-end">
             <div className="lg:col-span-6">
@@ -61,14 +61,14 @@ export default function DealerManagementPage() {
               </Reveal>
             </div>
           </div>
-          <Reveal className="mt-16">
+          <Reveal className="mt-12">
             <FlowStepper tone="dark" steps={serviceLifecycle.map((s) => s.key)} code />
           </Reveal>
         </Container>
       </section>
 
       {/* The problem */}
-      <section className="bg-white py-20 md:py-28" aria-labelledby="problem-title">
+      <section className="bg-white py-14 md:py-20" aria-labelledby="problem-title">
         <Container>
           <div className="grid gap-10 lg:grid-cols-12 lg:gap-16">
             <div className="lg:col-span-5">
@@ -93,12 +93,12 @@ export default function DealerManagementPage() {
       <MachineJourney />
 
       {/* Modules */}
-      <section className="bg-white py-20 md:py-28" aria-labelledby="modules-title">
+      <section className="bg-white py-14 md:py-20" aria-labelledby="modules-title">
         <Container>
           <Reveal>
             <SectionHeading eyebrow="The system" title={<span id="modules-title">Every role gets a working surface. Every action leaves a record.</span>} />
           </Reveal>
-          <div className="mt-16 flex flex-col gap-20 md:gap-28">
+          <div className="mt-12 flex flex-col gap-14 md:gap-20">
             {modules.map((m, i) => {
               const shot = screens[m.screen]
               const flip = i % 2 === 1
@@ -130,7 +130,7 @@ export default function DealerManagementPage() {
       <SystemStories variant="full" />
 
       {/* Roles */}
-      <section className="border-t border-navy/10 bg-surface py-20 md:py-28" aria-labelledby="roles-title">
+      <section className="border-t border-navy/10 bg-surface py-14 md:py-20" aria-labelledby="roles-title">
         <Container>
           <Reveal>
             <SectionHeading eyebrow="Roles" title={<span id="roles-title">Nine roles. Two levels.</span>} lede="Platform roles work across dealers; tenant roles work inside one." size="md" />
@@ -151,7 +151,7 @@ export default function DealerManagementPage() {
 
       {/* Screens */}
       {gallery.length > 0 && (
-        <section className="bg-surface py-20 md:py-28" aria-labelledby="screens-title">
+        <section className="bg-surface py-14 md:py-20" aria-labelledby="screens-title">
           <Container>
             <Reveal>
               <SectionHeading eyebrow="Screens" title={<span id="screens-title">The real application.</span>} size="md" />
@@ -167,7 +167,7 @@ export default function DealerManagementPage() {
         </section>
       )}
 
-      <section className="bg-navy-900 py-20 text-white md:py-28" data-scene="dark">
+      <section className="bg-navy-900 py-14 text-white md:py-20" data-scene="dark">
         <Container className="text-center">
           <Reveal>
             <h2 className="display-lg">Run a dealership? Let&apos;s talk.</h2>

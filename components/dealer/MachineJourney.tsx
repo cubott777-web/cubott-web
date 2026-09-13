@@ -88,7 +88,7 @@ export default function MachineJourney({ tone = "light" }: { tone?: "light" | "d
 
   if (!pinned) {
     return (
-      <section ref={section} className={cn(dark ? "bg-navy text-white" : "bg-surface", "py-20 md:py-28")} aria-labelledby="journey-title">
+      <section ref={section} className={cn(dark ? "bg-navy text-white" : "bg-surface", "py-14 md:py-20")} aria-labelledby="journey-title">
         <Container>
           <Eyebrow tone={tone} index="04">One machine&apos;s journey</Eyebrow>
           <h2 id="journey-title" className={cn("display-lg mt-5", dark ? "text-white" : "text-navy")}>
@@ -179,7 +179,7 @@ export default function MachineJourney({ tone = "light" }: { tone?: "light" | "d
                     initial={{ opacity: 0, y: 14 }}
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -10 }}
-                    transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+                    transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
                   >
                     <Stage index={active} tone={tone} />
                   </motion.div>

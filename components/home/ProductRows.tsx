@@ -16,7 +16,7 @@ import { cn } from "@/lib/utils"
  */
 export default function ProductRows() {
   return (
-    <section id="products" className="relative scroll-mt-16 bg-white py-20 md:py-24 lg:py-28" aria-labelledby="products-title">
+    <section id="products" className="relative scroll-mt-16 bg-white py-14 md:py-20 lg:py-24" aria-labelledby="products-title">
       <Container>
         {/* Heading left, lede right and bottom-aligned — the same header rhythm as What we do */}
         <div className="grid gap-6 lg:grid-cols-12 lg:gap-8">
@@ -33,7 +33,7 @@ export default function ProductRows() {
           </Reveal>
         </div>
 
-        <ol className="mt-16 space-y-20 md:mt-20 md:space-y-28 lg:space-y-32">
+        <ol className="mt-12 space-y-14 md:mt-16 md:space-y-20 lg:space-y-24">
           {products.map((p, i) => (
             <Reveal as="li" key={p.key} delay={0.05 * i}>
               <div className="grid items-center gap-6 lg:grid-cols-12 lg:gap-12">
@@ -58,7 +58,7 @@ export default function ProductRows() {
       </Container>
 
       <Container>
-        <p className="mt-14 text-center text-sm text-slate md:mt-16">
+        <p className="mt-10 text-center text-sm text-slate md:mt-12">
           Something else entirely?{" "}
           <Link href="/contact" className="font-semibold text-navy underline-offset-4 hover:text-blue hover:underline">
             That&apos;s usually where we start.

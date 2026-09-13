@@ -41,7 +41,7 @@ export default function LetsTalk() {
           if (e.pointerType === "mouse") setHover(true)
         }}
         onPointerLeave={() => setHover(false)}
-        className="group relative block overflow-hidden px-5 py-24 text-center outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-blue-300 md:py-32 lg:py-40"
+        className="group relative block overflow-hidden px-5 py-16 text-center outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-blue-300 md:py-20 lg:py-24"
         data-hover={hover ? "true" : "false"}
       >
         <p className="font-mono text-sm uppercase tracking-[0.28em] text-blue-300/80 md:text-base">Got a problem?</p>

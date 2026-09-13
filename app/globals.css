@@ -67,7 +67,7 @@
   }
 
   .eyebrow {
-    @apply text-[11px] font-semibold uppercase tracking-[0.18em];
+    @apply text-xs font-semibold uppercase tracking-[0.16em];
   }
 
   .lede {

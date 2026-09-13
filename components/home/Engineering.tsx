@@ -19,7 +19,7 @@ export default function Engineering({ tone = "dark" }: { tone?: "light" | "dark"
   return (
     <section
       data-scene={dark ? "dark" : undefined}
-      className={cn(dark ? "bg-navy text-white" : "bg-surface", "py-24 md:py-36")}
+      className={cn(dark ? "bg-navy text-white" : "bg-surface", "py-14 md:py-20")}
       aria-labelledby="eng-title"
     >
       <Container>
@@ -33,7 +33,7 @@ export default function Engineering({ tone = "dark" }: { tone?: "light" | "dark"
           />
         </Reveal>
 
-        <div className="mt-16 grid gap-12 lg:grid-cols-12 lg:gap-16">
+        <div className="mt-10 grid gap-12 lg:grid-cols-12 lg:gap-16">
           <div className="lg:col-span-7">
             <ol className="relative" aria-label="System layers">
               {layers.map((l, i) => (
@@ -42,7 +42,7 @@ export default function Engineering({ tone = "dark" }: { tone?: "light" | "dark"
                   initial={reduce ? false : { opacity: 0, y: -18 * (layers.length - i) }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true, margin: "-15% 0px" }}
-                  transition={{ duration: 0.7, delay: 0.08 * i, ease: [0.22, 1, 0.36, 1] }}
+                  transition={{ duration: 0.7, delay: 0.08 * i, ease: [0.16, 1, 0.3, 1] }}
                   className="relative"
                 >
                   <div

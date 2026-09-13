@@ -12,7 +12,7 @@ export default function Trust({ tone = "light" }: { tone?: "light" | "dark" }) {
   const reduce = useReducedMotion()
   const dark = tone === "dark"
   return (
-    <section className={cn(dark ? "bg-navy-900 text-white" : "bg-white", "py-24 md:py-36")} aria-labelledby="trust-title">
+    <section className={cn(dark ? "bg-navy-900 text-white" : "bg-white", "py-14 md:py-20")} aria-labelledby="trust-title">
       <Container>
         <div className="grid gap-12 lg:grid-cols-12 lg:gap-16">
           <div className="lg:col-span-5">

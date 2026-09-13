@@ -19,7 +19,7 @@ const ROWS = [
   },
 ]
 
-const EASE = [0.22, 1, 0.36, 1] as const
+const EASE = [0.16, 1, 0.3, 1] as const
 const view = { once: true, margin: "-20% 0px -20% 0px" } as const
 
 /**
@@ -37,7 +37,7 @@ export default function WhatWeDo() {
   })
 
   return (
-    <section className="relative overflow-hidden bg-[#F6F8FB] py-20 md:py-24 lg:py-28" aria-labelledby="what-title">
+    <section className="relative overflow-hidden bg-[#F6F8FB] py-14 md:py-20 lg:py-24" aria-labelledby="what-title">
       <Container>
         <h2 id="what-title" className="stack-title relative" aria-label="What we do">
           <motion.span aria-hidden="true" {...enter({ x: -80 }, 0)} className="stack-outline block">
@@ -55,10 +55,16 @@ export default function WhatWeDo() {
           We turn complex business problems into working technology.
         </motion.p>
 
-        <ol className="mt-12 border-t border-navy/10 md:mt-16">
+        <ol className="mt-10 border-t border-navy/10 md:mt-12">
           {ROWS.map((r, k) => (
-            <Reveal as="li" key={r.title} delay={0.08 * k} className="grid gap-4 border-b border-navy/10 py-7 md:grid-cols-12 md:gap-8 md:py-8">
-              <h3 className="text-2xl font-semibold tracking-tight text-navy md:col-span-5 md:text-[2rem] md:leading-tight">{r.title}</h3>
+            <Reveal
+              as="li"
+              key={r.title}
+              delay={0.08 * k}
+              className="group relative grid gap-4 border-b border-navy/10 py-7 transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] hover:translate-x-1.5 md:grid-cols-12 md:gap-8 md:py-8"
+            >
+              <span aria-hidden="true" className="absolute -left-4 top-0 h-full w-0.5 origin-top scale-y-0 bg-blue transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-y-100 md:-left-6" />
+              <h3 className="text-2xl font-semibold tracking-tight text-navy transition-colors duration-300 group-hover:text-blue md:col-span-5 md:text-[2rem] md:leading-tight">{r.title}</h3>
               <p className="max-w-lg text-[15px] leading-relaxed text-slate md:col-span-6 md:col-start-7 md:pt-1.5 md:text-base">{r.text}</p>
             </Reveal>
           ))}
