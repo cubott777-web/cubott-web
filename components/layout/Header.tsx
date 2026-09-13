@@ -75,7 +75,7 @@ export default function Header() {
       <Container size="xl">
         <nav className="flex h-[72px] items-center justify-between" aria-label="Primary">
           <Link href="/" className="rounded-md" aria-label="Cubott home">
-            <CubottLogo variant={dark ? "dark" : "light"} />
+            <CubottLogo variant={dark ? "dark" : "light"} showMark={false} />
           </Link>
 
           <ul className="hidden items-center gap-1 md:flex">
@@ -87,18 +87,20 @@ export default function Header() {
                     href={item.href}
                     aria-current={active ? "page" : undefined}
                     className={cn(
-                      "relative rounded-full px-3.5 py-2 text-[15px] font-medium transition-colors",
+                      "group/nav relative rounded-full px-3.5 py-2 text-[14.5px] font-semibold tracking-tight transition-colors duration-300",
                       dark ? "text-white/75 hover:text-white" : "text-navy/70 hover:text-navy",
                       active && (dark ? "text-white" : "text-navy")
                     )}
                   >
                     {item.label}
-                    {active && (
-                      <span
-                        aria-hidden="true"
-                        className={cn("absolute inset-x-3.5 -bottom-0.5 h-0.5 rounded-full", dark ? "bg-blue-400" : "bg-blue")}
-                      />
-                    )}
+                    <span
+                      aria-hidden="true"
+                      className={cn(
+                        "absolute inset-x-3.5 -bottom-0.5 h-0.5 origin-left scale-x-0 rounded-full transition-transform duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover/nav:scale-x-100",
+                        active && "scale-x-100",
+                        dark ? "bg-blue-400" : "bg-blue"
+                      )}
+                    />
                   </Link>
                 </li>
               )

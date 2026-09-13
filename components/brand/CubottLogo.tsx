@@ -6,6 +6,7 @@ interface CubottLogoProps {
   className?: string
   markClassName?: string
   showWordmark?: boolean
+  showMark?: boolean
 }
 
 /** Horizontal lockup: mark + wordmark. `variant="dark"` is the reverse version for navy backgrounds. */
@@ -14,15 +15,18 @@ export default function CubottLogo({
   className,
   markClassName,
   showWordmark = true,
+  showMark = true,
 }: CubottLogoProps) {
   const onDark = variant === "dark"
   return (
     <span className={cn("inline-flex items-center gap-2.5", className)}>
-      <CubottMark
-        tone={onDark ? "reverse" : "color"}
-        className={cn("h-9 w-auto", markClassName)}
-        title="Cubott"
-      />
+      {showMark && (
+        <CubottMark
+          tone={onDark ? "reverse" : "color"}
+          className={cn("h-9 w-auto", markClassName)}
+          title="Cubott"
+        />
+      )}
       {showWordmark && (
         <span
           className={cn(

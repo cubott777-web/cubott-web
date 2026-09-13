@@ -2,7 +2,7 @@ import type { Metadata, Viewport } from "next"
 import { Inter } from "next/font/google"
 import "./globals.css"
 import Header from "@/components/layout/Header"
-import Footer from "@/components/layout/Footer"
+import SiteFooter from "@/components/layout/SiteFooter"
 import { siteConfig } from "@/lib/site"
 
 const inter = Inter({
@@ -85,7 +85,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationLd) }} />
         <Header />
         {children}
-        <Footer />
+        <SiteFooter />
       </body>
     </html>
   )

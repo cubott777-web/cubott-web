@@ -1,10 +1,16 @@
-import BrandStory from "@/components/home/BrandStory"
+import Hero from "@/components/home/Hero"
+import WhatWeDo from "@/components/home/WhatWeDo"
+import ProductRows from "@/components/home/ProductRows"
+import LetsTalk from "@/components/home/LetsTalk"
 
-/** Homepage = the Cubott brand. Seven scenes, one 3D object. Product detail lives on its own pages. */
+/** Homepage: hero (the signature) → what we do → our products → let's talk (the close). */
 export default function HomePage() {
   return (
     <main id="main">
-      <BrandStory />
+      <Hero />
+      <WhatWeDo />
+      <ProductRows />
+      <LetsTalk />
     </main>
   )
 }

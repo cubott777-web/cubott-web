@@ -1,17 +1,19 @@
 "use client"
 
-import { useMemo, useRef } from "react"
+import { useMemo, useRef, type RefObject } from "react"
 import { useFrame, useThree } from "@react-three/fiber"
-import { ContactShadows } from "@react-three/drei"
 import * as THREE from "three"
-import { scrollStore, sectionAt, lerp, smooth, clamp01, ramp } from "./scroll-store"
+import { heroClock, BEATS, DURATION, lerp, smooth, clamp01 } from "./hero-clock"
 
 /**
  * The Cubott robot cube as a real object: six plates (navy body, blue top and front), two eyes on the
  * front face and an antenna on top — the same character as the logo.
  *
- * One object, one journey down the page: awake beside the hero copy, the centre of the story, parked
- * small in the corner while the page talks, back at full size to close.
+ * No scripted "things flying in" — the object itself is the whole story. Loose, independent plates
+ * drift with their own mass, then seat with one decisive mechanical lock (spring physics, not an
+ * eased tween, so each plate arrives slightly out of sync and overshoots before settling — that
+ * desync is what reads as physical rather than animated). After that it idles, powered on: a slow
+ * breathing core light, a highlight that tracks the cursor from frame one.
  */
 
 const T = 0.09 // plate thickness
@@ -36,51 +38,36 @@ function plateGeometry(w: number, h: number, d: number) {
 }
 
 interface Pose {
-  at: number // page phase this key sits at (section index + progress)
-  x: number // horizontal, as a fraction of half the viewport width (−1 left edge … 1 right edge)
-  y: number // vertical, as a fraction of half the viewport height
-  z: number
+  at: number // seconds
+  y: number
   rx: number
   ry: number
   scale: number
   fade: number // 1 = solid, 0 = ghost
-  explode: number // plates separate along their normals
-  open: number // front face swings open on its left hinge
-  glow: number // core light
-  signal: number // antenna light
+  explode: number // plates separate along their normals (target for the per-plate springs)
+  glow: number // core light baseline
+  signal: number // antenna baseline light
 }
 
-const BASE: Omit<Pose, "at"> = { x: 0.5, y: -0.02, z: 0, rx: 0.38, ry: 0.45, scale: 1.05, fade: 1, explode: 0, open: 0, glow: 0.5, signal: 0 }
+const BASE: Omit<Pose, "at"> = { y: 0, rx: 0.4, ry: 0.35, scale: 1.3, fade: 1, explode: 0, glow: 0.35, signal: 0.3 }
 const K = (at: number, o: Partial<Pose>): Pose => ({ ...BASE, at, ...o })
 
-/** Keys are placed at page phases; the spline is continuous through every one. Rotation only accumulates. */
-const POSES: Pose[] = [
-  // 0 — hero: awake, solid, beside the copy
-  K(0, { scale: 0.98, x: 0.48 }),
-  K(0.8, { ry: 0.95, scale: 0.98, x: 0.48 }),
-  // 1 — story, beat 1 (complexity): loosens and dims among the moving things
-  K(1.0, { ry: 1.6, scale: 0.95, fade: 0.5, explode: 0.3, glow: 0.25 }),
-  K(1.28, { ry: 2.1, scale: 0.95, fade: 0.55, explode: 0.4, glow: 0.3 }),
-  // beat 2 (connection): pulls together and lights
-  K(1.5, { ry: 3.1, scale: 1.02, fade: 1, explode: 0, glow: 1 }),
-  // beat 3 (clarity): opens and works
-  K(1.7, { ry: 3.9, rx: 0.3, scale: 1.02, open: 1, glow: 0.85 }),
-  K(1.95, { ry: 4.15, rx: 0.3, scale: 1.02, open: 1, glow: 0.85 }),
-  // 2–4 — what · how · proof: parks small in the top-right corner
-  K(2.3, { x: 0.87, y: 0.56, ry: 5.6, rx: 0.42, scale: 0.34, glow: 0.2, fade: 0.92 }),
-  K(3.0, { x: 0.87, y: 0.56, ry: 6.4, rx: 0.42, scale: 0.34, glow: 0.2, fade: 0.92 }),
-  K(4.0, { x: 0.87, y: 0.56, ry: 7.3, rx: 0.42, scale: 0.34, glow: 0.2, fade: 0.92 }),
-  K(4.8, { x: 0.87, y: 0.56, ry: 8.0, rx: 0.42, scale: 0.34, glow: 0.2, fade: 0.92 }),
-  // 5 — cta: returns to full size beside the closing copy and signals
-  K(5.35, { x: 0.45, y: 0.05, ry: 9.8, rx: 0.42, scale: 0.95, glow: 0.4, signal: 1 }),
-  K(5.7, { x: 0.45, y: 0.05, ry: 10.0, rx: 0.42, scale: 0.95, glow: 0.4, signal: 1 }),
-  // …and leaves before the footer: rises and fades
-  K(6, { x: 0.45, y: 0.35, ry: 10.3, rx: 0.42, scale: 0.9, glow: 0, signal: 0, fade: 0 }),
-]
-const KEYS = (Object.keys(BASE) as (keyof Omit<Pose, "at">)[])
-const SPATIAL = new Set<keyof Pose>(["x", "y", "z", "rx", "ry", "scale"])
+/** Time keys; the spline is continuous through every one. Rotation only accumulates. */
+const FRONT = 0.46 // ry that faces the eyes toward camera, logo's isometric 3/4 view
 
-/** Catmull-Rom across the keys at page phase p. Keys are non-uniform in phase; each segment is parameterised 0..1. */
+const POSES: Pose[] = [
+  // loose: dim, apart, drifting — no rush
+  K(0, { ry: FRONT - 0.35, rx: 0.55, y: 0.04, fade: 0.88, explode: 1, glow: 0.15, scale: 1.2, signal: 0.18 }),
+  // the lock: one decisive beat, handled by the per-plate springs below
+  K(BEATS.snap, { ry: FRONT + 0.3, rx: 0.4, y: 0, fade: 1, explode: 0, glow: 0.5, scale: 1.3, signal: 0.45 }),
+  // idle: settled facing front, powered on
+  K(BEATS.rest, { ry: FRONT, rx: 0.4, y: 0, glow: 0.35, signal: 0.3 }),
+  K(BEATS.rest + 1, { ry: FRONT, rx: 0.4, y: 0, glow: 0.35, signal: 0.3 }),
+]
+const KEYS = Object.keys(BASE) as (keyof Omit<Pose, "at">)[]
+const SPATIAL = new Set<keyof Pose>(["y", "rx", "ry", "scale"])
+
+/** Catmull-Rom across the keys at time p; each segment parameterised 0..1. */
 function poseAt(p: number, out: Omit<Pose, "at">) {
   const last = POSES.length - 1
   let i = 0
@@ -97,28 +84,33 @@ function poseAt(p: number, out: Omit<Pose, "at">) {
     if (SPATIAL.has(k)) {
       out[k] = 0.5 * (2 * p1[k] + (-p0[k] + p2[k]) * t + (2 * p0[k] - 5 * p1[k] + 4 * p2[k] - p3[k]) * t2 + (-p0[k] + 3 * p1[k] - 3 * p2[k] + p3[k]) * t3)
     } else {
-      // State channels (assembly, opening, light, opacity) must never overshoot their keys
+      // State channels (assembly, light, opacity) must never overshoot their keys
       out[k] = p1[k] + (p2[k] - p1[k]) * st
     }
   }
 }
 
+/** Per-plate spring tuning — different stiffness/damping per plate so the lock desyncs and overshoots. */
+const PLATE_SPRINGS = [
+  { k: 130, d: 13 }, // top
+  { k: 95, d: 11 }, // bottom
+  { k: 150, d: 15 }, // left
+  { k: 105, d: 12 }, // right
+  { k: 120, d: 12.5 }, // back
+  { k: 138, d: 14 }, // front
+]
+
 const _v = new THREE.Vector3()
 const _w = new THREE.Vector3()
 
-export default function CubottCube() {
+export default function CubottCube({ reduced }: { reduced: boolean }) {
   const outer = useRef<THREE.Group>(null)
   const group = useRef<THREE.Group>(null)
-  const top = useRef<THREE.Mesh>(null)
-  const bottom = useRef<THREE.Mesh>(null)
-  const left = useRef<THREE.Mesh>(null)
-  const right = useRef<THREE.Mesh>(null)
-  const back = useRef<THREE.Mesh>(null)
-  const frontPivot = useRef<THREE.Group>(null)
+  const plateRefs = [useRef<THREE.Mesh>(null), useRef<THREE.Mesh>(null), useRef<THREE.Mesh>(null), useRef<THREE.Mesh>(null), useRef<THREE.Mesh>(null), useRef<THREE.Mesh>(null)]
+  const [top, bottom, left, right, back, front] = plateRefs
   const core = useRef<THREE.PointLight>(null)
   const ball = useRef<THREE.Mesh>(null)
-  const shadow = useRef<THREE.Group>(null)
-  const { viewport, camera } = useThree()
+  const { camera } = useThree()
 
   const geos = useMemo(
     () => ({
@@ -134,68 +126,97 @@ export default function CubottCube() {
 
   const cur = useRef<Omit<Pose, "at">>({ ...BASE })
   const target = useRef<Omit<Pose, "at">>({ ...BASE })
+  const seenRestart = useRef<number>(-1)
+  const springs = useRef(PLATE_SPRINGS.map(() => ({ x: 1, v: 0 })))
+  const lockedAt = useRef<number>(-1)
+  const flash = useRef(0)
 
   useFrame((state, dt) => {
-    poseAt(scrollStore.phase, target.current)
-    const { i } = sectionAt(scrollStore.phase)
-    const tg = target.current
-
-    // Phones: the copy owns the top of the screen, the cube the bottom; parked sections keep it tiny in the corner.
-    const narrow = viewport.width < 5
-    if (narrow) {
-      const p = scrollStore.phase
-      if (i <= 1 || i === 5) {
-        tg.x = 0
-        tg.y = -0.55
-        tg.scale = 0.55
-      } else {
-        tg.x = 0.7
-        tg.y = 0.62
-        tg.scale = 0.28
-      }
-      // Sections stack vertically here, so the cube steps out while copy passes through its spot
-      tg.fade *= (1 - ramp(p, 0.45, 0.8)) + ramp(p, 1.02, 1.14)
-      tg.fade *= 1 - ramp(p, 4.55, 4.85) * (1 - ramp(p, 5.05, 5.3))
-      tg.fade = Math.min(1, tg.fade)
+    // The clock accumulates by (clamped) frame delta, not wall time — a slow first frame (environment
+    // baking, shader compile) must never eat into the macro-reveal story before it's ever painted.
+    if (seenRestart.current !== heroClock.restartAt) {
+      seenRestart.current = heroClock.restartAt
+      heroClock.t = 0
+      springs.current.forEach((s) => {
+        s.x = 1
+        s.v = 0
+      })
+      lockedAt.current = -1
     }
+    if (!reduced) heroClock.t += Math.min(dt, 0.05)
+    else heroClock.t = DURATION + 1
+    const t = heroClock.t
+    poseAt(t, target.current)
 
     const c = cur.current
-    const e = 1 - Math.pow(0.002, Math.min(dt, 0.1)) // ease toward the spline so scroll feels weighty
-    for (const key of KEYS) c[key] = lerp(c[key], tg[key], e)
+    const e = 1 - Math.pow(0.001, Math.min(dt, 0.1)) // ease toward the spline: weight, not lag
+    for (const key of KEYS) c[key] = lerp(c[key], target.current[key], e)
+
+    // One decisive lock, once per run: a hard specular flash instead of a soft glow ramp.
+    if (t >= BEATS.snap && lockedAt.current !== heroClock.restartAt) {
+      lockedAt.current = heroClock.restartAt
+      flash.current = 1
+    }
+    flash.current = Math.max(0, flash.current - dt / 0.16)
+
+    // Pointer parallax — live from frame one, not gated on the story finishing. That's what makes the
+    // highlight feel like it belongs to the viewer rather than to a script.
+    const pt = heroClock.pointer
+    pt.x += (pt.tx - pt.x) * 0.05
+    pt.y += (pt.ty - pt.y) * 0.05
 
     const o = outer.current!
-    o.position.set(c.x * (viewport.width / 2), c.y * (viewport.height / 2), c.z)
-    o.scale.setScalar(c.scale)
+    o.position.set(0, c.y, 0)
+    o.scale.setScalar(c.scale * (1 + flash.current * 0.012))
     const g = group.current!
-    // A slow perpetual turn on top of the spline: the object is never frozen.
-    g.rotation.set(c.rx + Math.sin(state.clock.elapsedTime * 0.35) * 0.015, c.ry + state.clock.elapsedTime * 0.04, 0)
+    // Idle: a slow sway around the logo pose so the object is never frozen but never turns away.
+    const idle = Math.max(0, t - DURATION)
+    g.rotation.set(
+      c.rx + Math.sin(state.clock.elapsedTime * 0.35) * 0.015 + pt.y * 0.1,
+      c.ry + Math.sin(idle * 0.3) * 0.22 * smooth(clamp01(idle)) + pt.x * 0.18,
+      0
+    )
 
-    // Where the cube is on screen (viewport fractions), for the HTML overlay.
+    // Where the cube is in the canvas (fractions), for the ground-glow overlay.
     _v.copy(o.position).project(camera)
     _w.set(o.position.x, o.position.y + 0.8 * c.scale, o.position.z).project(camera)
-    scrollStore.cube.x = (_v.x + 1) / 2
-    scrollStore.cube.y = (1 - _v.y) / 2
-    scrollStore.cube.r = Math.abs(_w.y - _v.y) / 2
+    heroClock.cube.x = (_v.x + 1) / 2
+    heroClock.cube.y = (1 - _v.y) / 2
+    heroClock.cube.r = Math.abs(_w.y - _v.y) / 2
 
-    const ex = c.explode * 0.55
-    top.current!.position.set(0, 0.5 + ex, 0)
-    bottom.current!.position.set(0, -0.5 - ex, 0)
-    left.current!.position.set(-0.5 - ex, 0, 0)
-    right.current!.position.set(0.5 + ex, 0, 0)
-    back.current!.position.set(0, 0, -0.5 - ex)
-    const fp = frontPivot.current!
-    fp.position.set(-L / 2, 0, 0.5 + ex)
-    fp.rotation.y = -smooth(clamp01(c.open)) * 1.9
-
-    if (core.current) core.current.intensity = 0.4 + c.glow * 3.2
-    if (ball.current) {
-      ;(ball.current.material as THREE.MeshPhysicalMaterial).emissiveIntensity = c.signal * (1.6 + Math.sin(state.clock.elapsedTime * 4) * 0.6)
+    // Each plate is its own spring toward the shared explode target, with its own stiffness and
+    // damping — that desync (and the slight overshoot as an underdamped spring settles) is what
+    // separates a physical object from six meshes on one eased tween.
+    const s = state.clock.elapsedTime
+    const dtc = Math.min(dt, 1 / 30)
+    const dirs: [RefObject<THREE.Mesh | null>, [number, number, number], number][] = [
+      [top, [0, 1, 0], 0],
+      [bottom, [0, -1, 0], 1],
+      [left, [-1, 0, 0], 2],
+      [right, [1, 0, 0], 3],
+      [back, [0, 0, -1], 4],
+      [front, [0, 0, 1], 5],
+    ]
+    for (const [ref, dir, i] of dirs) {
+      const cfg = PLATE_SPRINGS[i]
+      const sp = springs.current[i]
+      sp.v += (c.explode - sp.x) * cfg.k * dtc - sp.v * cfg.d * dtc
+      sp.x += sp.v * dtc
+      const ex = sp.x * 0.5
+      const b = Math.max(0, sp.x) * 0.06
+      const jitter = Math.sin(s * (0.6 + i * 0.12) + i) * b
+      const mesh = ref.current
+      if (mesh) mesh.position.set(dir[0] * (0.5 + ex) + (dir[0] === 0 ? jitter : 0), dir[1] * (0.5 + ex) + (dir[1] === 0 ? jitter : 0), dir[2] * (0.5 + ex) + (dir[2] === 0 ? jitter : 0))
     }
-    if (shadow.current) shadow.current.visible = c.fade > 0.85 && c.explode < 0.2
 
+    // Powered-on breathing, always present — the object never reads as switched off after the intro.
+    const breathe = Math.sin(s * 1.15) * 0.5 + 0.5
+    if (core.current) core.current.intensity = 0.3 + c.glow * 3.4 + breathe * 0.18 + flash.current * 4.2
+    if (ball.current) {
+      ;(ball.current.material as THREE.MeshPhysicalMaterial).emissiveIntensity = c.signal * (0.7 + breathe * 0.5) + flash.current * 1.6
+    }
     // Solid ↔ ghost. Materials are created transparent (three bakes an OPAQUE define into a shader that
-    // starts opaque, so toggling later would need a recompile); walked every frame rather than cached
-    // because fast refresh and StrictMode remount them.
+    // starts opaque); walked every frame because fast refresh and StrictMode remount them.
     g.traverse((obj) => {
       const mesh = obj as THREE.Mesh
       if (mesh.isMesh) (mesh.material as THREE.MeshPhysicalMaterial).opacity = c.fade
@@ -229,23 +250,16 @@ export default function CubottCube() {
         <mesh ref={back} geometry={geos.face}>
           {mat(COLORS.navy)}
         </mesh>
-        {/* Front face on a hinge at its left edge */}
-        <group ref={frontPivot}>
-          <mesh geometry={geos.face} position={[L / 2, 0, 0]}>
-            {mat(COLORS.blue)}
-            <mesh geometry={geos.eye} position={[-0.17, -0.06, T / 2 + 0.01]} scale={[1, 1.25, 1]}>
-              {mat(COLORS.navy)}
-            </mesh>
-            <mesh geometry={geos.eye} position={[0.17, -0.06, T / 2 + 0.01]} scale={[1, 1.25, 1]}>
-              {mat(COLORS.navy)}
-            </mesh>
+        <mesh ref={front} geometry={geos.face}>
+          {mat(COLORS.blue)}
+          <mesh geometry={geos.eye} position={[-0.17, -0.06, T / 2 + 0.01]} scale={[1, 1.25, 1]}>
+            {mat(COLORS.navy)}
           </mesh>
-        </group>
+          <mesh geometry={geos.eye} position={[0.17, -0.06, T / 2 + 0.01]} scale={[1, 1.25, 1]}>
+            {mat(COLORS.navy)}
+          </mesh>
+        </mesh>
         <pointLight ref={core} color="#93C5FD" intensity={1} distance={2.4} decay={2} position={[0, 0, 0]} />
-      </group>
-      {/* Grounding: a soft contact shadow that travels with the object */}
-      <group ref={shadow} position={[0, -0.78, 0]}>
-        <ContactShadows opacity={0.32} scale={3.2} blur={2.6} far={1.6} resolution={256} color="#071427" />
       </group>
     </group>
   )

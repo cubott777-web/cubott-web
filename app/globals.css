@@ -116,6 +116,12 @@
 
 /* ---------- Homepage story: visual system ---------- */
 @layer utilities {
+  /* Hero statement — sized so a ~55-character line holds to three lines beside the signature */
+  .display-hero {
+    @apply font-bold tracking-tightest leading-[0.98];
+    font-size: clamp(2.6rem, 5.4vw, 4.9rem);
+  }
+
   /* Hero scale — one size up from display-xl, for a single line of intent */
   .display-2xl {
     @apply font-bold tracking-tightest leading-[0.92];
@@ -124,14 +130,24 @@
 
   /* Isometric grid — the cube's own geometry, laid on the ground */
   .iso-grid {
-    --iso-line: rgba(96, 165, 250, 0.09);
+    --iso-line: rgba(96, 165, 250, 0.13);
     background-image:
       repeating-linear-gradient(60deg, var(--iso-line) 0 1px, transparent 1px 56px),
       repeating-linear-gradient(-60deg, var(--iso-line) 0 1px, transparent 1px 56px),
       repeating-linear-gradient(0deg, var(--iso-line) 0 1px, transparent 1px 48px);
+    animation: iso-drift 26s linear infinite;
   }
   .iso-grid-light {
     --iso-line: rgba(11, 31, 59, 0.065);
+  }
+
+  /* A very slow parallax crawl — enough to read as "alive," never busy */
+  @keyframes iso-drift {
+    0% { background-position: 0 0, 0 0, 0 0; }
+    100% { background-position: 112px 0, -112px 0, 0 96px; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .iso-grid { animation: none; }
   }
 
   /* Film grain — takes the flatness out of large colour fields */
@@ -154,12 +170,98 @@
     color: transparent;
   }
 
+  /* The brand name in the hero: a slow, permanent sheen sweeping through the gradient — the one
+     thing on the page still quietly drawing the eye once the entrance animation is long over. */
+  .ink-sky-live {
+    background: linear-gradient(100deg, #bfdbfe 0%, #60a5fa 20%, #3b82f6 40%, #bfdbfe 55%, #60a5fa 75%, #3b82f6 100%);
+    background-size: 240% 100%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    animation: sky-sweep 6s ease-in-out infinite;
+  }
+  @keyframes sky-sweep {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .ink-sky-live { animation: none; }
+  }
 
-  @keyframes ripple {
-    0% { transform: translate(-50%, -50%) scale(0.35); opacity: 0.55; }
+  /* A soft breathing halo behind the name — reinforces it without a badge or a border. */
+  @keyframes name-glow {
+    0%, 100% { opacity: 0.3; transform: translateY(-50%) scale(0.94); }
+    50% { opacity: 0.55; transform: translateY(-50%) scale(1.05); }
+  }
+  .name-glow {
+    animation: name-glow 4.5s ease-in-out infinite;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .name-glow { animation: none; opacity: 0.4; }
+  }
+
+
+  /* Hero signature: one ring on connection */
+  @keyframes ring-pulse {
+    0% { transform: translate(-50%, -50%) scale(0.2); opacity: 0.9; }
     100% { transform: translate(-50%, -50%) scale(1); opacity: 0; }
   }
-  .ripple {
-    animation: ripple 2.4s cubic-bezier(0.22, 1, 0.36, 1) infinite;
+  .ring-pulse-el { opacity: 0; transform: translate(-50%, -50%) scale(0.2); }
+  .ring-pulse .ring-pulse-el { animation: ring-pulse 1.3s cubic-bezier(0.22, 1, 0.36, 1) 1 both; }
+
+  /* Let's talk: the word, its letters, its brackets */
+  .talk-word {
+    font-size: clamp(3.2rem, 12vw, 12rem);
+  }
+  .talk-word h2 { letter-spacing: -0.04em; }
+  /* Letters leave by dropping (or rising) out and come back the same way, each on its own delay —
+     slow and eased like the rest of the page, not a quick flick. */
+  .talk-letter {
+    transition:
+      transform 0.85s cubic-bezier(0.16, 1, 0.3, 1),
+      opacity 0.6s ease-out,
+      color 0.6s ease-out,
+      filter 0.6s ease-out;
+    transition-delay: var(--d);
+  }
+  [data-on="false"] .talk-letter {
+    transform: translateY(calc(var(--dir) * 0.6em));
+    opacity: 0;
+    color: #94a3b8;
+    filter: blur(2px);
+    pointer-events: none;
+  }
+  .talk-bracket { color: #60a5fa; }
+  .talk-arc {
+    opacity: calc(1 - var(--k) * 0.5);
+    transform: translateX(0);
+    transition: transform 0.7s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.5s ease;
+    transition-delay: calc(var(--k) * 60ms);
+  }
+  .talk-arc:not(:first-child) { opacity: 0; }
+  .group[data-hover="true"] .talk-arc { transform: translateX(calc(var(--k) * -0.34em)); }
+  .group[data-hover="true"] .talk-arc:not(:first-child) { opacity: calc(0.7 - var(--k) * 0.25); }
+
+  /* What we do: an outlined italic WHAT, WE dropped over its right half, DO out to the right */
+  .stack-title {
+    @apply relative font-bold leading-[0.82] tracking-tightest text-navy;
+    font-size: clamp(3.5rem, 12vw, 11rem);
+  }
+  .stack-outline {
+    @apply italic font-medium text-transparent;
+    -webkit-text-stroke: 1.5px rgba(11, 31, 59, 0.3);
+    letter-spacing: -0.01em;
+  }
+  .stack-solid {
+    margin-top: -0.5em;
+    margin-left: 1.55em;
+  }
+  .stack-do {
+    margin-top: -0.12em;
+    margin-left: 2.9em;
+  }
+  @media (max-width: 767px) {
+    .stack-solid { margin-left: 0.9em; }
+    .stack-do { margin-left: 1.6em; }
   }
 }

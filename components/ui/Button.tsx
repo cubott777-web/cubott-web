@@ -27,7 +27,8 @@ const variants: Record<Variant, string> = {
   ghost: "text-navy hover:text-blue",
   "primary-dark":
     "bg-white text-navy hover:bg-blue-50",
-  "ghost-dark": "text-white/80 hover:text-white",
+  "ghost-dark":
+    "border border-white/20 text-white/85 hover:text-white hover:border-white/40 hover:bg-white/[0.06]",
 }
 
 const sizes: Record<Size, string> = {
@@ -46,10 +47,10 @@ export default function Button({
 }: ButtonProps) {
   const isGhost = variant === "ghost" || variant === "ghost-dark"
   const classes = cn(
-    "group/btn inline-flex items-center justify-center rounded-full font-semibold transition-colors duration-200",
+    "group/btn inline-flex items-center justify-center rounded-full font-semibold transition-[color,background-color,border-color,transform,box-shadow] duration-300 ease-[cubic-bezier(0.16,1,0.3,1)]",
     "disabled:opacity-50 disabled:pointer-events-none",
     variants[variant],
-    isGhost ? sizes[size].replace(/px-\d+/, "px-1") : sizes[size],
+    variant === "ghost-dark" ? sizes[size] : isGhost ? sizes[size].replace(/px-\d+/, "px-1") : sizes[size],
     className
   )
   const content = (
