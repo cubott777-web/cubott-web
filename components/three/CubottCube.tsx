@@ -56,7 +56,7 @@ const POSES: Pose[] = [
   { x: -1.55, y: 0, rx: 0.3, ry: 12.9, scale: 1.0, fade: 1, explode: 0, open: 1, glow: 0.8, signal: 0 }, // 4 pain: opens up
   { x: 0.9, y: -0.1, rx: 0.5, ry: 14.4, scale: 0.9, fade: 1, explode: 0.9, open: 0, glow: 0.2, signal: 0 }, // 5 built around you: faces
   { x: 1.55, y: -0.2, rx: 0.42, ry: 19.45, scale: 1.0, fade: 1, explode: 0, open: 0, glow: 0.4, signal: 0 }, // 6 stay: settled
-  { x: 1.55, y: 0, rx: 0.42, ry: 19.45, scale: 1.0, fade: 1, explode: 0, open: 0, glow: 0.3, signal: 1 }, // 7 call away: signal
+  { x: -1.7, y: -1.05, rx: 0.42, ry: 19.45, scale: 0.6, fade: 1, explode: 0, open: 0, glow: 0.3, signal: 1 }, // 7 call away: signal
 ]
 
 const _v = new THREE.Vector3()

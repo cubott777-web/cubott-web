@@ -113,3 +113,63 @@
     transition-duration: 0.01ms !important;
   }
 }
+
+/* ---------- Homepage story: visual system ---------- */
+@layer utilities {
+  /* Hero scale — one size up from display-xl, for a single line of intent */
+  .display-2xl {
+    @apply font-bold tracking-tightest leading-[0.92];
+    font-size: clamp(3rem, 8.4vw, 7.75rem);
+  }
+
+  /* Isometric grid — the cube's own geometry, laid on the ground */
+  .iso-grid {
+    --iso-line: rgba(96, 165, 250, 0.09);
+    background-image:
+      repeating-linear-gradient(60deg, var(--iso-line) 0 1px, transparent 1px 56px),
+      repeating-linear-gradient(-60deg, var(--iso-line) 0 1px, transparent 1px 56px),
+      repeating-linear-gradient(0deg, var(--iso-line) 0 1px, transparent 1px 48px);
+  }
+  .iso-grid-light {
+    --iso-line: rgba(11, 31, 59, 0.065);
+  }
+
+  /* Film grain — takes the flatness out of large colour fields */
+  .grain {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.06 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    background-size: 160px 160px;
+  }
+
+  /* Accent words in headlines */
+  .ink-sky {
+    background: linear-gradient(92deg, #93c5fd 0%, #60a5fa 45%, #3b82f6 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  .ink-blue {
+    background: linear-gradient(92deg, #2563eb 0%, #3b82f6 60%, #60a5fa 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  /* Big editorial scene number behind a headline */
+  .scene-number {
+    @apply pointer-events-none select-none font-bold leading-none tracking-tightest;
+    font-size: clamp(7rem, 22vw, 20rem);
+  }
+
+  @keyframes ripple {
+    0% { transform: translate(-50%, -50%) scale(0.35); opacity: 0.55; }
+    100% { transform: translate(-50%, -50%) scale(1); opacity: 0; }
+  }
+  .ripple {
+    animation: ripple 2.4s cubic-bezier(0.22, 1, 0.36, 1) infinite;
+  }
+  @keyframes scroll-cue {
+    0%, 100% { transform: translateY(0); opacity: 0.35; }
+    50% { transform: translateY(10px); opacity: 1; }
+  }
+  .scroll-cue { animation: scroll-cue 1.8s ease-in-out infinite; }
+}
