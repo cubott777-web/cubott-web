@@ -3,6 +3,7 @@
 import { motion, useReducedMotion } from "framer-motion"
 import Container from "@/components/ui/Container"
 import Reveal from "@/components/motion/Reveal"
+import RowRule from "@/components/motion/RowRule"
 
 const ROWS = [
   {
@@ -55,14 +56,16 @@ export default function WhatWeDo() {
           We turn complex business problems into working technology.
         </motion.p>
 
-        <ol className="mt-10 border-t border-navy/10 md:mt-12">
+        <ol className="relative mt-10 md:mt-12">
+          <RowRule position="top" />
           {ROWS.map((r, k) => (
             <Reveal
               as="li"
               key={r.title}
               delay={0.08 * k}
-              className="group relative grid gap-4 border-b border-navy/10 py-7 transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] hover:translate-x-1.5 md:grid-cols-12 md:gap-8 md:py-8"
+              className="group relative grid gap-4 py-7 transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] hover:translate-x-1.5 md:grid-cols-12 md:gap-8 md:py-8"
             >
+              <RowRule delay={0.08 * k + 0.2} />
               <span aria-hidden="true" className="absolute -left-4 top-0 h-full w-0.5 origin-top scale-y-0 bg-blue transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-y-100 md:-left-6" />
               <h3 className="text-2xl font-semibold tracking-tight text-navy transition-colors duration-300 group-hover:text-blue md:col-span-5 md:text-[2rem] md:leading-tight">{r.title}</h3>
               <p className="max-w-lg text-[15px] leading-relaxed text-slate md:col-span-6 md:col-start-7 md:pt-1.5 md:text-base">{r.text}</p>

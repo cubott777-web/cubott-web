@@ -48,6 +48,7 @@ export default function Button({
   const isGhost = variant === "ghost" || variant === "ghost-dark"
   const classes = cn(
     "group/btn inline-flex items-center justify-center rounded-full font-semibold transition-[color,background-color,border-color,transform,box-shadow] duration-300 ease-[cubic-bezier(0.16,1,0.3,1)]",
+    "hover:-translate-y-px active:translate-y-0 active:scale-[0.985] motion-reduce:transform-none",
     "disabled:opacity-50 disabled:pointer-events-none",
     variants[variant],
     variant === "ghost-dark" ? sizes[size] : isGhost ? sizes[size].replace(/px-\d+/, "px-1") : sizes[size],

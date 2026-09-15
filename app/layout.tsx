@@ -68,13 +68,15 @@ const organizationLd = {
   url: siteConfig.url,
   logo: `${siteConfig.url}/brand/cubott-mark.png`,
   email: siteConfig.contactEmail,
+  telephone: siteConfig.contactPhone,
+  sameAs: [siteConfig.linkedin],
   description: siteConfig.description,
   knowsAbout: ["Custom software", "Business systems", "Workflow software", "Dealer management software"],
 }
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className={inter.variable}>
+    <html lang="en" className={inter.variable} data-scroll-behavior="smooth">
       <body className="antialiased">
         <a
           href="#main"

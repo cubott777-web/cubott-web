@@ -4,6 +4,7 @@ import { motion, useReducedMotion } from "framer-motion"
 import Container from "@/components/ui/Container"
 import Button from "@/components/ui/Button"
 import Reveal from "@/components/motion/Reveal"
+import TextReveal from "@/components/motion/TextReveal"
 import NodeChip from "@/components/core/NodeChip"
 import CubottMark from "@/components/brand/CubottMark"
 import { builderInputs } from "@/content/company"
@@ -23,15 +24,13 @@ export default function CustomSoftware() {
     <section id="custom-software" className="bg-white py-16 md:py-24" aria-labelledby="custom-title">
       <Container>
         <div className="max-w-4xl">
-          <Reveal>
-            <h2 id="custom-title" className="display-xl text-navy">Your business isn&apos;t standard.</h2>
-          </Reveal>
-          <Reveal delay={0.35}>
-            <p className="display-xl mt-4 text-navy/35" role="heading" aria-level={3}>
-              Your software shouldn&apos;t be either.
-            </p>
-          </Reveal>
-          <Reveal delay={0.5}>
+          <TextReveal as="h2" id="custom-title" className="display-xl text-navy">
+            Your business isn&apos;t standard.
+          </TextReveal>
+          <TextReveal as="p" className="display-xl mt-4 text-navy/35" delay={0.3}>
+            Your software shouldn&apos;t be either.
+          </TextReveal>
+          <Reveal delay={0.6}>
             <p className="mt-10 max-w-xl text-xl leading-relaxed text-slate md:text-2xl">
               Tell us how your business actually works.
             </p>

@@ -23,15 +23,14 @@ export default function Engineering({ tone = "dark" }: { tone?: "light" | "dark"
       aria-labelledby="eng-title"
     >
       <Container>
-        <Reveal>
-          <SectionHeading
-            index="07"
-            eyebrow="Engineering"
-            tone={tone}
-            title={<span id="eng-title">Beautiful software needs strong foundations.</span>}
-            lede="What a user sees is the top layer. Underneath: APIs, rules, data and infrastructure."
-          />
-        </Reveal>
+        <SectionHeading
+          index="07"
+          eyebrow="Engineering"
+          tone={tone}
+          id="eng-title"
+          title="Beautiful software needs strong foundations."
+          lede="What a user sees is the top layer. Underneath: APIs, rules, data and infrastructure."
+        />
 
         <div className="mt-10 grid gap-12 lg:grid-cols-12 lg:gap-16">
           <div className="lg:col-span-7">
@@ -47,7 +46,8 @@ export default function Engineering({ tone = "dark" }: { tone?: "light" | "dark"
                 >
                   <div
                     className={cn(
-                      "grid grid-cols-[120px_1fr] items-center gap-4 rounded-lg border px-5 py-4 md:grid-cols-[160px_1fr] md:px-6",
+                      "grid grid-cols-[120px_1fr] items-center gap-4 rounded-lg border px-5 py-4 transition-[transform,border-color,box-shadow] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-0.5 md:grid-cols-[160px_1fr] md:px-6",
+                      dark ? "hover:border-blue-400/50" : "hover:border-blue/40 hover:shadow-frame",
                       dark ? "border-white/10 bg-navy-800/80" : "border-navy/10 bg-white shadow-card",
                       i === 0 && (dark ? "border-blue-400/40" : "border-blue/40")
                     )}

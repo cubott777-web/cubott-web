@@ -63,7 +63,10 @@ export default function Header() {
   const dark = onDark && !open
 
   return (
-    <header
+    <motion.header
+      initial={reduce ? false : { y: -12, opacity: 0 }}
+      animate={{ y: 0, opacity: 1 }}
+      transition={{ duration: 0.7, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
       className={cn(
         "fixed inset-x-0 top-0 z-50 transition-colors duration-500",
         scrolled && !open && (dark ? "bg-navy/80 backdrop-blur-md" : "bg-white/85 backdrop-blur-md"),
@@ -170,6 +173,6 @@ export default function Header() {
           </motion.div>
         )}
       </AnimatePresence>
-    </header>
+    </motion.header>
   )
 }

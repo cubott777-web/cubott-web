@@ -6,6 +6,8 @@ import { gsap, ScrollTrigger, useGSAP } from "@/components/motion/gsap"
 import { useMediaQuery, REDUCED_MOTION } from "@/components/motion/useMediaQuery"
 import Container from "@/components/ui/Container"
 import Eyebrow from "@/components/ui/Eyebrow"
+import TextReveal from "@/components/motion/TextReveal"
+import Reveal from "@/components/motion/Reveal"
 import BrowserFrame from "@/components/ui/BrowserFrame"
 import MachineGlyph from "@/components/core/MachineGlyph"
 import { journey } from "@/content/dealer"
@@ -90,13 +92,15 @@ export default function MachineJourney({ tone = "light" }: { tone?: "light" | "d
     return (
       <section ref={section} className={cn(dark ? "bg-navy text-white" : "bg-surface", "py-14 md:py-20")} aria-labelledby="journey-title">
         <Container>
-          <Eyebrow tone={tone} index="04">One machine&apos;s journey</Eyebrow>
-          <h2 id="journey-title" className={cn("display-lg mt-5", dark ? "text-white" : "text-navy")}>
+          <Reveal y={8}>
+            <Eyebrow tone={tone} index="04">One machine&apos;s journey</Eyebrow>
+          </Reveal>
+          <TextReveal as="h2" id="journey-title" className={cn("display-lg mt-5", dark ? "text-white" : "text-navy")} delay={0.1}>
             Follow one machine through the whole system.
-          </h2>
+          </TextReveal>
           <ol className="relative mt-12 flex flex-col gap-14 border-l border-navy/15 pl-8 md:pl-10">
             {journey.map((s, i) => (
-              <li key={s.key} className="relative">
+              <Reveal as="li" key={s.key} className="relative">
                 <span
                   aria-hidden="true"
                   className={cn("absolute -left-[41px] top-1 grid h-5 w-5 place-items-center rounded-full border bg-white md:-left-[49px]", dark ? "border-blue-400" : "border-blue")}
@@ -104,7 +108,7 @@ export default function MachineJourney({ tone = "light" }: { tone?: "light" | "d
                   <span className="h-1.5 w-1.5 rounded-full bg-blue" />
                 </span>
                 <Stage index={i} tone={tone} />
-              </li>
+              </Reveal>
             ))}
           </ol>
         </Container>

@@ -1,13 +1,11 @@
 import Link from "next/link"
-import { Github, Twitter } from "lucide-react"
+import { Linkedin } from "lucide-react"
 import Container from "@/components/ui/Container"
 import CubottLogo from "@/components/brand/CubottLogo"
+import Reveal from "@/components/motion/Reveal"
 import { nav, siteConfig } from "@/lib/site"
 
-const social = [
-  { label: "Twitter", href: "https://twitter.com/cubott", Icon: Twitter },
-  { label: "GitHub", href: "https://github.com/cubott", Icon: Github },
-]
+const social = [{ label: "Cubott on LinkedIn", href: siteConfig.linkedin, Icon: Linkedin }]
 
 // No dedicated pages yet — shown as static labels rather than dead links.
 const legal = ["Privacy", "Terms"]
@@ -20,7 +18,7 @@ export default function Footer() {
   return (
     <footer className="border-t border-navy/10 bg-white">
       <Container size="xl">
-        <div className="flex items-center justify-between gap-6 py-5">
+        <Reveal y={10} className="flex items-center justify-between gap-6 py-5">
           <Link href="/" aria-label="Cubott home" className="rounded-md">
             <CubottLogo markClassName="h-8" />
           </Link>
@@ -32,19 +30,19 @@ export default function Footer() {
                   target="_blank"
                   rel="noreferrer noopener"
                   aria-label={label}
-                  className="grid h-9 w-9 place-items-center rounded-full text-navy/60 transition-colors hover:bg-surface hover:text-navy"
+                  className="grid h-9 w-9 place-items-center rounded-full text-navy/60 transition-[color,background-color,transform] duration-300 hover:-translate-y-px hover:bg-surface hover:text-navy"
                 >
                   <Icon className="h-[18px] w-[18px]" strokeWidth={1.75} aria-hidden="true" />
                 </a>
               </li>
             ))}
           </ul>
-        </div>
+        </Reveal>
       </Container>
 
       <div className="border-t border-navy/10">
         <Container size="xl">
-          <div className="flex flex-col gap-3 py-5 text-sm text-slate sm:flex-row sm:items-center sm:justify-between">
+          <Reveal y={8} delay={0.1} className="flex flex-col gap-3 py-5 text-sm text-slate sm:flex-row sm:items-center sm:justify-between">
             <p>
               © {new Date().getFullYear()} {siteConfig.name}
               <span className="mx-2 text-navy/15">·</span>
@@ -65,7 +63,7 @@ export default function Footer() {
                 </li>
               ))}
             </ul>
-          </div>
+          </Reveal>
         </Container>
       </div>
     </footer>

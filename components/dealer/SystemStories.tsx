@@ -3,6 +3,8 @@
 import Container from "@/components/ui/Container"
 import Eyebrow from "@/components/ui/Eyebrow"
 import Reveal from "@/components/motion/Reveal"
+import TextReveal from "@/components/motion/TextReveal"
+import RowRule from "@/components/motion/RowRule"
 import FlowStepper from "@/components/core/FlowStepper"
 import WorkshopStory from "./WorkshopStory"
 import WarrantyStory from "./WarrantyStory"
@@ -32,7 +34,8 @@ function Panel({
 }) {
   const dark = tone === "dark"
   return (
-    <Reveal as="div" className={cn("border-t pt-8", dark ? "border-white/10" : "border-navy/10", className)}>
+    <Reveal as="div" className={cn("relative pt-8", className)}>
+      <RowRule position="top" tone={tone} />
       <div className="grid gap-8 lg:grid-cols-12">
         <div className="min-w-0 lg:col-span-4">
           <Eyebrow tone={tone} index={index}>{title}</Eyebrow>
@@ -50,11 +53,9 @@ export default function SystemStories({ tone = "light", variant = "compact" }: P
   return (
     <section className={cn(dark ? "bg-navy text-white" : "bg-white", "py-14 md:py-20")} aria-labelledby="stories-title">
       <Container>
-        <Reveal>
-          <h2 id="stories-title" className={cn("display-md max-w-2xl", dark ? "text-white" : "text-navy")}>
-            One connected operational story.
-          </h2>
-        </Reveal>
+        <TextReveal as="h2" id="stories-title" className={cn("display-md max-w-2xl", dark ? "text-white" : "text-navy")}>
+          One connected operational story.
+        </TextReveal>
 
         <div className="mt-10 flex flex-col gap-12">
           <Panel

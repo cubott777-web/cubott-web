@@ -7,6 +7,7 @@ export const siteConfig = {
     "Cubott is a product engineering company. We build software products, business systems and custom applications around the way businesses actually work.",
   contactEmail: "contact@cubott.com",
   contactPhone: "+91 99599 12812",
+  linkedin: "https://www.linkedin.com/company/cubott/",
 }
 
 export const nav = [

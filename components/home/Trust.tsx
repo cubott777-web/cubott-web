@@ -3,7 +3,6 @@
 import { motion, useReducedMotion } from "framer-motion"
 import Container from "@/components/ui/Container"
 import SectionHeading from "@/components/ui/SectionHeading"
-import Reveal from "@/components/motion/Reveal"
 import { trust } from "@/content/dealer"
 import { cn } from "@/lib/utils"
 
@@ -16,15 +15,14 @@ export default function Trust({ tone = "light" }: { tone?: "light" | "dark" }) {
       <Container>
         <div className="grid gap-12 lg:grid-cols-12 lg:gap-16">
           <div className="lg:col-span-5">
-            <Reveal>
-              <SectionHeading
-                index="08"
-                eyebrow="Trust"
-                tone={tone}
-                title={<span id="trust-title">Systems people can rely on.</span>}
-                lede="Not a promise about security — a chain of controls you can follow."
-              />
-            </Reveal>
+            <SectionHeading
+              index="08"
+              eyebrow="Trust"
+              tone={tone}
+              id="trust-title"
+              title="Systems people can rely on."
+              lede="Not a promise about security — a chain of controls you can follow."
+            />
           </div>
           <div className="lg:col-span-7">
             <ol className="relative border-l border-blue/30 pl-8 md:pl-10" aria-label="Chain of controls">
@@ -34,7 +32,7 @@ export default function Trust({ tone = "light" }: { tone?: "light" | "dark" }) {
                   initial={reduce ? false : { opacity: 0, x: -10 }}
                   whileInView={{ opacity: 1, x: 0 }}
                   viewport={{ once: true, margin: "-15% 0px" }}
-                  transition={{ duration: 0.5, delay: 0.12 * i }}
+                  transition={{ duration: 0.6, delay: 0.1 * i, ease: [0.16, 1, 0.3, 1] }}
                   className="relative pb-9 last:pb-0"
                 >
                   <span

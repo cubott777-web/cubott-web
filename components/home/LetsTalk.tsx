@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react"
 import Link from "next/link"
 import { useMediaQuery, REDUCED_MOTION } from "@/components/motion/useMediaQuery"
+import Reveal from "@/components/motion/Reveal"
 import { siteConfig } from "@/lib/site"
 import { cn } from "@/lib/utils"
 
@@ -44,9 +45,11 @@ export default function LetsTalk() {
         className="group relative block overflow-hidden px-5 py-16 text-center outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-blue-300 md:py-20 lg:py-24"
         data-hover={hover ? "true" : "false"}
       >
-        <p className="font-mono text-sm uppercase tracking-[0.28em] text-blue-300/80 md:text-base">Got a problem?</p>
+        <Reveal as="p" y={10} className="font-mono text-sm uppercase tracking-[0.28em] text-blue-300/80 md:text-base">
+          Got a problem?
+        </Reveal>
 
-        <div className="talk-word relative mt-6 inline-flex max-w-full items-center justify-center md:mt-8">
+        <Reveal as="div" delay={0.15} y={24} className="talk-word relative mt-6 inline-flex max-w-full items-center justify-center md:mt-8">
           <Bracket side="left" />
           {/* Both words share one grid cell, so the box is as wide as the longer one and never shifts */}
           <h2 id="talk-title" className="relative grid whitespace-nowrap font-bold leading-none" aria-label="Let's talk.">
@@ -65,12 +68,12 @@ export default function LetsTalk() {
             ))}
           </h2>
           <Bracket side="right" />
-        </div>
+        </Reveal>
 
-        <p className="mt-8 text-sm text-blue-100/60 md:mt-10 md:text-base">
+        <Reveal as="p" delay={0.35} y={10} className="mt-8 text-sm text-blue-100/60 md:mt-10 md:text-base">
           Tell us what isn&apos;t working. We&apos;ll tell you what we&apos;d build.{" "}
           <span className="font-medium text-white/90">{siteConfig.contactEmail}</span>
-        </p>
+        </Reveal>
       </Link>
     </section>
   )
