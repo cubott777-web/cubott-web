@@ -29,7 +29,7 @@ export const products: Product[] = [
     title: "Clinic Management",
     sector: "Clinics and practices",
     line: "Patient, appointment and clinic operations brought into one connected workflow.",
-    href: "/work",
+    href: "/products",
     video: "/video/clinic.webm",
   },
   {
@@ -37,7 +37,7 @@ export const products: Product[] = [
     title: "School Management",
     sector: "Schools",
     line: "Students, attendance, fees and day-to-day school operations in one system.",
-    href: "/work",
+    href: "/products",
     video: "/video/School.webm",
   },
 ]

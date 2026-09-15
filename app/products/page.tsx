@@ -13,12 +13,34 @@ import CustomSoftware from "@/components/home/CustomSoftware"
 import { solutionCategories } from "@/content/company"
 import { serviceLifecycle } from "@/content/dealer"
 import { screens } from "@/content/screens"
+import { siteConfig } from "@/lib/site"
 
 export const metadata: Metadata = {
-  title: "Work",
+  title: "Custom software development in Hyderabad",
   description:
-    "What Cubott builds and what it's built. Custom software and business platforms, shaped around the way businesses actually work — and Dealer Management, the fullest example of that discipline.",
-  alternates: { canonical: "/work" },
+    "Custom software, business platforms and workflow systems built around the way your business actually works. Cubott is a product engineering company in Hyderabad serving Andhra Pradesh, Telangana and clients worldwide — see Dealer Management, our fullest example.",
+  alternates: { canonical: "/products" },
+}
+
+const serviceLd = {
+  "@context": "https://schema.org",
+  "@type": "Service",
+  "@id": `${siteConfig.url}/products#service`,
+  name: "Custom software development",
+  serviceType: "Custom software development and product engineering",
+  provider: { "@id": `${siteConfig.url}/#organization` },
+  areaServed: [...siteConfig.areaServed.map((name) => ({ "@type": "AdministrativeArea", name })), { "@type": "Place", name: "Worldwide" }],
+  description:
+    "Custom software, multi-role business platforms, state-driven workflow systems, internal applications and integrations, built around a business's own roles, rules and exceptions.",
+  hasOfferCatalog: {
+    "@type": "OfferCatalog",
+    name: "What we build",
+    itemListElement: solutionCategories.map((c) => ({
+      "@type": "Offer",
+      itemOffered: { "@type": "Service", name: c.title, description: c.text },
+    })),
+  },
+  url: `${siteConfig.url}/products`,
 }
 
 const caseStudy = {
@@ -30,20 +52,21 @@ const caseStudy = {
 }
 
 /**
- * Work: what Cubott builds (in general) and what it's built (in particular) — one page instead of
- * three, since for a single-product company "Products," "Solutions" and "Work" all answered the
+ * Products: what Cubott builds (in general) and what it's built (in particular) — one page instead
+ * of three, since for a single-product company "Products," "Solutions" and "Work" all answered the
  * same question from slightly different angles.
  */
-export default function WorkPage() {
+export default function ProductsPage() {
   const hero = screens["dashboard"]
 
   return (
     <main id="main">
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceLd) }} />
       <section data-scene="dark" className="relative isolate overflow-hidden bg-navy-900 pb-16 pt-28 text-white md:pb-20 md:pt-32">
         <HeroGlow />
         <Container>
           <Reveal as="p" y={8} className="eyebrow text-blue-300">
-            Work
+            Products
           </Reveal>
           <TextReveal as="h1" className="display-xl mt-5 max-w-3xl" delay={0.15} immediate>
             Technology for businesses that don&apos;t fit inside a template.

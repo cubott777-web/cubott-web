@@ -16,23 +16,30 @@ import Trust from "@/components/home/Trust"
 import { dealer, roles, serviceLifecycle } from "@/content/dealer"
 import { modules, problem } from "@/content/dealer-modules"
 import { screens } from "@/content/screens"
+import { siteConfig } from "@/lib/site"
 import { cn } from "@/lib/utils"
 
 export const metadata: Metadata = {
-  title: "Dealer Management",
+  title: "Dealer Management software for agricultural machinery dealerships",
   description:
-    "Dealer Management by Cubott: a multi-tenant service management platform for agricultural machinery dealerships — service requests, job cards, parts, store, warranty, manufacturer warehouse, finance and vehicle release.",
+    "Dealer Management by Cubott: a multi-tenant service management platform for tractor and agricultural machinery dealerships — service requests, job cards, parts, store, warranty, manufacturer warehouse, finance and vehicle release. Built in Hyderabad for dealers across Andhra Pradesh and Telangana.",
   alternates: { canonical: "/products/dealer-management" },
 }
 
 const productLd = {
   "@context": "https://schema.org",
   "@type": "SoftwareApplication",
+  "@id": `${siteConfig.url}/products/dealer-management#software`,
   name: "Dealer Management",
+  url: `${siteConfig.url}/products/dealer-management`,
   applicationCategory: "BusinessApplication",
+  applicationSubCategory: "Dealer management system",
   operatingSystem: "Web",
   description: dealer.summary,
-  author: { "@type": "Organization", name: "Cubott" },
+  featureList: dealer.manages,
+  audience: { "@type": "BusinessAudience", audienceType: "Agricultural machinery dealerships" },
+  author: { "@id": `${siteConfig.url}/#organization` },
+  provider: { "@id": `${siteConfig.url}/#organization` },
 }
 
 export default function DealerManagementPage() {

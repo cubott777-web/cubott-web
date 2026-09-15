@@ -6,11 +6,12 @@ import TextReveal from "@/components/motion/TextReveal"
 import RowRule from "@/components/motion/RowRule"
 import HeroGlow from "@/components/motion/HeroGlow"
 import CubottMark from "@/components/brand/CubottMark"
+import { siteConfig } from "@/lib/site"
 
 export const metadata: Metadata = {
-  title: "About",
+  title: "About — product engineering company in Hyderabad",
   description:
-    "Cubott is a product engineering company. We build systems that turn business complexity into clarity — products, business platforms and custom software built around the way businesses actually work.",
+    "Cubott is a Hyderabad-based product engineering company founded in 2025 by Prakash Chelluri, Nimmu Vinay and Lakshmi Krishna. We help founders shape their product — building and supporting our own systems, and custom software for businesses across Andhra Pradesh, Telangana and beyond.",
   alternates: { canonical: "/about" },
 }
 
@@ -26,6 +27,13 @@ const approach = [
   { k: "Systems for others", v: "The same discipline for businesses that need software shaped around their own workflow." },
   { k: "Engineering", v: "TypeScript across the stack, PostgreSQL, state-driven workflows, role-based access, audit built in." },
   { k: "Relationship", v: "Few clients, close attention, and support after launch." },
+]
+
+const facts = [
+  { k: "Founded", v: siteConfig.foundingDate },
+  { k: "Founders", v: siteConfig.founders.join(", ") },
+  { k: "Based in", v: `${siteConfig.address.street}, ${siteConfig.address.city} ${siteConfig.address.postalCode}` },
+  { k: "Working across", v: "Andhra Pradesh and Telangana today; clients anywhere." },
 ]
 
 const row =
@@ -83,6 +91,24 @@ export default function AboutPage() {
                 <span aria-hidden="true" className={accent} />
                 <dt className="eyebrow text-navy/60 transition-colors duration-300 group-hover:text-blue md:col-span-4 md:pt-1">{a.k}</dt>
                 <dd className="max-w-lg text-[15px] leading-relaxed text-navy/85 md:col-span-8 md:text-base">{a.v}</dd>
+              </Reveal>
+            ))}
+          </dl>
+        </Container>
+      </section>
+
+      <section className="bg-white py-14 md:py-20" aria-labelledby="facts-title">
+        <Container>
+          <TextReveal as="h2" id="facts-title" className="display-lg max-w-2xl text-navy">
+            The company.
+          </TextReveal>
+          <dl className="relative mt-10">
+            <RowRule position="top" />
+            {facts.map((f, i) => (
+              <Reveal as="div" key={f.k} delay={0.06 * i} className="relative grid gap-2 py-6 md:grid-cols-12 md:gap-8">
+                <RowRule delay={0.06 * i + 0.2} />
+                <dt className="eyebrow text-navy/60 md:col-span-4 md:pt-1">{f.k}</dt>
+                <dd className="max-w-lg text-[15px] leading-relaxed text-navy/85 md:col-span-8 md:text-base">{f.v}</dd>
               </Reveal>
             ))}
           </dl>

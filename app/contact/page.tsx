@@ -5,11 +5,12 @@ import TextReveal from "@/components/motion/TextReveal"
 import Stagger, { StaggerItem } from "@/components/motion/Stagger"
 import ContactForm from "@/components/contact/ContactForm"
 import CubottMark from "@/components/brand/CubottMark"
-import { siteConfig } from "@/lib/site"
+import { siteConfig, phoneHref } from "@/lib/site"
 
 export const metadata: Metadata = {
-  title: "Contact",
-  description: "Have a complex problem? Tell us how your business works. Let's see what we can build.",
+  title: "Contact — custom software company in Hyderabad",
+  description:
+    "Talk to Cubott about custom software for your business. Call +91 99599 12812 or email contact@cubott.com. Based in Miyapur, Hyderabad; working with businesses across Andhra Pradesh, Telangana and worldwide.",
   alternates: { canonical: "/contact" },
 }
 
@@ -38,10 +39,7 @@ export default function ContactPage() {
                 </StaggerItem>
                 <StaggerItem>
                   <p className="eyebrow text-navy/50">Phone</p>
-                  <a
-                    href={`tel:${siteConfig.contactPhone.replace(/\s+/g, "")}`}
-                    className="mt-2 inline-block text-lg font-medium text-navy transition-colors hover:text-blue"
-                  >
+                  <a href={`tel:${phoneHref}`} className="mt-2 inline-block text-lg font-medium text-navy transition-colors hover:text-blue">
                     {siteConfig.contactPhone}
                   </a>
                 </StaggerItem>
