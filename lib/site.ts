@@ -1,7 +1,9 @@
 export const siteConfig = {
   name: "Cubott",
   legalName: "Cubott Technologies",
-  url: "https://cubott.com",
+  // The www host is the one Vercel serves; the apex redirects to it. Every canonical, sitemap
+  // entry and schema @id derives from this, so it must match what actually returns 200.
+  url: "https://www.cubott.com",
   tagline: "We help founders shape their product, not just build it.",
   description:
     "Cubott is a custom software and product engineering company in Hyderabad. We help founders shape their product — business platforms, workflow systems and custom applications built around the way a business actually works. Serving Andhra Pradesh and Telangana, working globally.",
