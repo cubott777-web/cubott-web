@@ -20,7 +20,7 @@ export const products: Product[] = [
     title: "Dealership Management",
     sector: "Agricultural machinery dealers",
     line: "Service operations, parts, warranty and workshop workflows — connected in one system.",
-    href: "/products/dealer-management",
+    href: "/products",
     video: "/video/dealer.mp4",
     poster: "/video/dealer.jpg",
   },

@@ -11,7 +11,6 @@ export const siteConfig = {
   contactPhone: "+91 99599 12812",
   linkedin: "https://www.linkedin.com/company/cubott/",
   foundingDate: "2025",
-  founders: ["Prakash Chelluri", "Nimmu Vinay", "Lakshmi Krishna"],
   address: {
     street: "Flat 403, Kavuries Laasya Heights, Road No. 3/9, Mathrusree Nagar, Miyapur",
     city: "Hyderabad",

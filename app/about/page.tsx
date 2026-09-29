@@ -11,7 +11,7 @@ import { siteConfig } from "@/lib/site"
 export const metadata: Metadata = {
   title: "About — product engineering company in Hyderabad",
   description:
-    "Cubott is a Hyderabad-based product engineering company founded in 2025 by Prakash Chelluri, Nimmu Vinay and Lakshmi Krishna. We help founders shape their product — building and supporting our own systems, and custom software for businesses across Andhra Pradesh, Telangana and beyond.",
+    "Cubott is a Hyderabad-based product engineering company founded in 2025. We help founders shape their product — building and supporting our own systems, and custom software for businesses across Andhra Pradesh, Telangana and beyond.",
   alternates: { canonical: "/about" },
 }
 
@@ -31,7 +31,6 @@ const approach = [
 
 const facts = [
   { k: "Founded", v: siteConfig.foundingDate },
-  { k: "Founders", v: siteConfig.founders.join(", ") },
   { k: "Based in", v: `${siteConfig.address.street}, ${siteConfig.address.city} ${siteConfig.address.postalCode}` },
   { k: "Working across", v: "Andhra Pradesh and Telangana today; clients anywhere." },
 ]

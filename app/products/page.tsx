@@ -3,16 +3,11 @@ import Container from "@/components/ui/Container"
 import Button from "@/components/ui/Button"
 import Reveal from "@/components/motion/Reveal"
 import TextReveal from "@/components/motion/TextReveal"
-import MediaReveal from "@/components/motion/MediaReveal"
 import RowRule from "@/components/motion/RowRule"
 import HeroGlow from "@/components/motion/HeroGlow"
 import Stagger, { StaggerItem } from "@/components/motion/Stagger"
-import BrowserFrame from "@/components/ui/BrowserFrame"
-import FlowStepper from "@/components/core/FlowStepper"
 import CustomSoftware from "@/components/home/CustomSoftware"
 import { solutionCategories } from "@/content/company"
-import { serviceLifecycle } from "@/content/dealer"
-import { screens } from "@/content/screens"
 import { siteConfig } from "@/lib/site"
 
 export const metadata: Metadata = {
@@ -46,10 +41,19 @@ const serviceLd = {
 const caseStudy = {
   name: "Dealer Management",
   sector: "Agricultural machinery dealerships",
-  line: "Servicing a machine used to run across seven parties with no shared record. Warranty approvals either blocked service or drifted out of sync with it. Parts were issued, used, returned and claimed with no single trail.",
-  result:
-    "Now it's one record per machine visit — where it is, what was done, who did it. Service no longer waits for the manufacturer, and billing is classified from what was actually used, approved and returned.",
+  line: "One platform that runs a dealership end to end — from the first service call to the sale, the stock and the payroll.",
 }
+
+const modules = [
+  { title: "Service management", text: "Service requests, job cards and technicians, tracked from intake to release." },
+  { title: "Inventory management", text: "Parts and stock across the store, with every issue and return recorded." },
+  { title: "Warranty management", text: "Warranty claims and manufacturer approvals, running alongside service." },
+  { title: "Finance", text: "Billing, invoices and payments, with release only once paid." },
+  { title: "Warehouse", text: "Manufacturer warehouse issues and dealer receipts, verified end to end." },
+  { title: "POS", text: "Counter sales of parts and accessories, billed on the spot." },
+  { title: "Sales", text: "Enquiries, quotations and machine sales in one pipeline." },
+  { title: "HR", text: "Staff, attendance and roles for everyone in the dealership." },
+]
 
 /**
  * Products: what Cubott builds (in general) and what it's built (in particular) — one page instead
@@ -57,8 +61,6 @@ const caseStudy = {
  * same question from slightly different angles.
  */
 export default function ProductsPage() {
-  const hero = screens["dashboard"]
-
   return (
     <main id="main">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceLd) }} />
@@ -110,29 +112,27 @@ export default function ProductsPage() {
             {caseStudy.name}
           </TextReveal>
 
-          <div className="mt-10 grid items-center gap-10 lg:grid-cols-12 lg:gap-16">
-            <Stagger as="div" gap={0.12} className="lg:col-span-5">
-              <StaggerItem>
-                <p className="text-lg leading-relaxed text-navy/85">{caseStudy.line}</p>
-              </StaggerItem>
-              <StaggerItem>
-                <p className="mt-5 text-lg leading-relaxed text-navy/85">{caseStudy.result}</p>
-              </StaggerItem>
-              <StaggerItem className="mt-8 flex flex-wrap gap-3">
-                <Button href="/products/dealer-management" arrow>
-                  Explore Dealer Management
-                </Button>
-              </StaggerItem>
-            </Stagger>
-            <div className="lg:col-span-7">
-              <MediaReveal delay={0.15}>
-                <BrowserFrame src={hero?.src} alt={hero?.alt ?? "Dealer Management — dealer overview dashboard"} caption={hero?.caption} />
-              </MediaReveal>
-            </div>
-          </div>
+          <Reveal as="p" delay={0.2} className="mt-5 max-w-2xl text-lg leading-relaxed text-navy/80">
+            {caseStudy.line}
+          </Reveal>
 
-          <Reveal delay={0.15} className="mt-10">
-            <FlowStepper label="Service request lifecycle" steps={serviceLifecycle.map((s) => s.key)} code />
+          <Stagger as="ul" gap={0.05} className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+            {modules.map((m) => (
+              <StaggerItem
+                as="li"
+                key={m.title}
+                className="group rounded-2xl border border-navy/10 bg-white p-6 transition-[transform,box-shadow,border-color] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-1 hover:border-blue/30 hover:shadow-card"
+              >
+                <h3 className="text-xl font-semibold tracking-tight text-navy transition-colors duration-300 group-hover:text-blue">{m.title}</h3>
+                <p className="mt-2 text-[15px] leading-relaxed text-slate">{m.text}</p>
+              </StaggerItem>
+            ))}
+          </Stagger>
+
+          <Reveal delay={0.1} className="mt-10">
+            <Button href="/contact" arrow>
+              Ask for a demo
+            </Button>
           </Reveal>
         </Container>
       </section>

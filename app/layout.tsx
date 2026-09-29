@@ -30,7 +30,7 @@ export const metadata: Metadata = {
     "dealer management software",
     "software for agricultural machinery dealers",
   ],
-  authors: siteConfig.founders.map((name) => ({ name })),
+  authors: [{ name: siteConfig.legalName }],
   creator: siteConfig.legalName,
   alternates: { canonical: "/" },
   openGraph: {
@@ -64,7 +64,7 @@ export const viewport: Viewport = {
 
 /**
  * One entity graph for the whole site: the company (as both an Organization and a local
- * ProfessionalService, so it qualifies for Knowledge Graph and local results), its founders, and
+ * ProfessionalService, so it qualifies for Knowledge Graph and local results) and
  * the website itself. Every page's own schema points back at these @ids.
  */
 const organizationLd = {
@@ -84,7 +84,6 @@ const organizationLd = {
       email: siteConfig.contactEmail,
       telephone: phoneHref,
       foundingDate: siteConfig.foundingDate,
-      founder: siteConfig.founders.map((name) => ({ "@type": "Person", name })),
       address: {
         "@type": "PostalAddress",
         streetAddress: siteConfig.address.street,

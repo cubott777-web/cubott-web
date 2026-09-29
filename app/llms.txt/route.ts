@@ -18,7 +18,6 @@ ${siteConfig.description}
 
 - Legal name: ${siteConfig.legalName}
 - Founded: ${siteConfig.foundingDate}
-- Founders: ${siteConfig.founders.join(", ")}
 - Location: ${siteConfig.address.street}, ${siteConfig.address.city}, ${siteConfig.address.region} ${siteConfig.address.postalCode}, India
 - Area served: ${siteConfig.areaServed.join(", ")}; works with clients worldwide
 - Phone: ${phoneHref}
@@ -43,7 +42,6 @@ ${dealer.summary} It manages: ${dealer.manages.join("; ")}.
 - Products — what we build and what we've built: ${siteConfig.url}/products
 - About: ${siteConfig.url}/about
 - Contact: ${siteConfig.url}/contact
-- Dealer Management: ${siteConfig.url}/products/dealer-management
 - Privacy: ${siteConfig.url}/privacy
 - Terms: ${siteConfig.url}/terms
 `

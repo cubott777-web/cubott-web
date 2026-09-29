@@ -38,9 +38,6 @@ export default function CustomSoftware() {
               <Button href="/contact" size="lg" arrow>
                 Build something with Cubott
               </Button>
-              <Button href="/products/dealer-management" variant="ghost" size="lg" arrow>
-                See Dealer Management
-              </Button>
             </div>
           </Reveal>
         </div>
