@@ -24,7 +24,8 @@ app/                      routes (home, products, products/dealer-management, so
   api/contact/route.ts    contact form delivery
   icon.svg · apple-icon.tsx · opengraph-image.tsx · sitemap.ts · robots.ts
 components/
-  brand/                  CubottMark (single source of the mark geometry), CubottLogo
+  brand/                  CubottMark (inline SVG, mirrors public/brand/cubott-mark.svg), CubottLogo
+                          Brand kit: public/brand (BRAND.md, tokens, logo/) — rebuild with `node scripts/brand-kit.mjs`; browse at /brand
   core/                   Core visual language: NodeChip, FlowStepper, MachineGlyph
   home/                   homepage scenes (Opening, WhatWeBuild, ThePoint, HowWeBuild, Engineering, Trust, CustomSoftware, FinalScene …)
   dealer/                 Dealer Management story: MachineJourney, SystemStories, WorkshopStory, WarrantyStory

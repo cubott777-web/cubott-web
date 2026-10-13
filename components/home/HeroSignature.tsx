@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from "react"
 import dynamic from "next/dynamic"
 import { useMediaQuery, REDUCED_MOTION } from "@/components/motion/useMediaQuery"
-import { heroClock, DURATION, replay } from "@/components/three/hero-clock"
+import { heroClock } from "@/components/three/hero-clock"
 import CubottMark from "@/components/brand/CubottMark"
 import { cn } from "@/lib/utils"
 
@@ -56,21 +56,18 @@ export default function HeroSignature({ className }: { className?: string }) {
     return () => cancelAnimationFrame(raf)
   }, [inView])
 
-  const onMove = (e: React.PointerEvent) => {
-    const r = box.current?.getBoundingClientRect()
-    if (!r) return
-    heroClock.pointer.tx = ((e.clientX - r.left) / r.width - 0.5) * 2
-    heroClock.pointer.ty = ((e.clientY - r.top) / r.height - 0.5) * 2
-  }
-  const onLeave = () => {
-    heroClock.pointer.tx = 0
-    heroClock.pointer.ty = 0
-  }
-  const onEnter = () => {
-    // Replay only once the story has finished, so a passing cursor never interrupts it.
-    if (!reduced && heroClock.t > DURATION + 0.8) replay()
-  }
-
+  // The cube watches the cursor anywhere on the page, not only inside its own box — relative to the box,
+  // clamped so a cursor far away still reads as "over there" without flinging the eyes off the face.
+  useEffect(() => {
+    const onMove = (e: PointerEvent) => {
+      const r = box.current?.getBoundingClientRect()
+      if (!r) return
+      heroClock.pointer.tx = Math.max(-1, Math.min(1, ((e.clientX - r.left) / r.width - 0.5) * 2))
+      heroClock.pointer.ty = Math.max(-1, Math.min(1, ((e.clientY - r.top) / r.height - 0.5) * 2))
+    }
+    window.addEventListener("pointermove", onMove, { passive: true })
+    return () => window.removeEventListener("pointermove", onMove)
+  }, [])
   const live = !reduced && inView
   const fallback = (
     <div className="absolute inset-0 grid place-items-center">
@@ -82,9 +79,6 @@ export default function HeroSignature({ className }: { className?: string }) {
     <div
       ref={box}
       className={cn("absolute inset-0 select-none", className)}
-      onPointerMove={onMove}
-      onPointerLeave={onLeave}
-      onPointerEnter={onEnter}
       role="img"
       aria-label="The Cubott cube: a macro shot of a single seam pulls back to reveal the whole object as its plates lock into place."
     >

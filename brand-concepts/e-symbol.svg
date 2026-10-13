@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" width="256" height="256" role="img" aria-labelledby="t">
+  <title id="t">Cubott concept E — One line</title>
+  <!-- Complexity into clarity: a single line enters as a loose loop, passes through the loop (the knot) and then
+       draws a perfect cube in one unbroken stroke. The loop is also the bot's antenna. Exploration uses a stroke;
+       expand to outlines for the master. -->
+  <path fill="none" stroke="#111" stroke-width="18" stroke-linecap="round" stroke-linejoin="round" d="
+    M110 22 A18 18 0 1 1 128 40
+    L128 70
+    L200.7 112 L200.7 196 L128 238 L55.3 196 L55.3 112 L128 70
+    M128 154 L200.7 112
+    M128 154 L55.3 112
+    M128 154 L128 238
+  " />
+</svg>

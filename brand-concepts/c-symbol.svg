@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" width="256" height="256" role="img" aria-labelledby="t">
+  <title id="t">Cubott concept C — Three plates</title>
+  <!-- The cube as three plates that have not quite met: a system assembled from parts, the moment before it
+       locks. Each rhombus is the cube face scaled 0.84 about its own centroid; the gap is the seam. -->
+  <g fill="#111" transform="translate(0,-22)">
+    <polygon points="128,50.9 194.9,89.6 128,128.3 61.1,89.6" />
+    <polygon points="54.4,135.8 121.3,174.5 121.3,251.8 54.4,213.1" />
+    <polygon points="134.7,174.5 201.6,135.8 201.6,213.1 134.7,251.8" />
+  </g>
+</svg>

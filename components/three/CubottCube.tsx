@@ -110,6 +110,14 @@ export default function CubottCube({ reduced }: { reduced: boolean }) {
   const [top, bottom, left, right, back, front] = plateRefs
   const core = useRef<THREE.PointLight>(null)
   const ball = useRef<THREE.Mesh>(null)
+  const eyeL = useRef<THREE.Mesh>(null)
+  const eyeR = useRef<THREE.Mesh>(null)
+  const glintL = useRef<THREE.Mesh>(null)
+  const glintR = useRef<THREE.Mesh>(null)
+  // Gaze is eased on its own, straight from the raw pointer target — one smoothing stage, not two.
+  const gaze = useRef({ x: 0, y: 0 })
+  // Blink schedule: next blink time (s), how far into the current blink we are (-1 = none), and whether a second blink follows.
+  const blink = useRef({ next: 2.5, at: -1, double: false })
   const { camera } = useThree()
 
   const geos = useMemo(
@@ -118,6 +126,7 @@ export default function CubottCube({ reduced }: { reduced: boolean }) {
       side: plateGeometry(L, L, T).rotateY(Math.PI / 2),
       face: plateGeometry(L, L, T),
       eye: new THREE.CylinderGeometry(0.075, 0.075, 0.03, 24).rotateX(Math.PI / 2),
+      glint: new THREE.CylinderGeometry(0.02, 0.02, 0.01, 16).rotateX(Math.PI / 2),
       stem: new THREE.CylinderGeometry(0.035, 0.035, 0.34, 16),
       ball: new THREE.SphereGeometry(0.1, 24, 16),
     }),
@@ -215,6 +224,50 @@ export default function CubottCube({ reduced }: { reduced: boolean }) {
     if (ball.current) {
       ;(ball.current.material as THREE.MeshPhysicalMaterial).emissiveIntensity = c.signal * (0.7 + breathe * 0.5) + flash.current * 1.6
     }
+    // Eyes: they look at the cursor wherever it is on the page (eased pointer, so the glance lags like a
+    // real look), and blink every few seconds — a quick close, sometimes twice, never while the plates are loose.
+    const look = !reduced
+    const b = blink.current
+    if (c.explode < 0.2 && !reduced) {
+      if (b.at < 0 && s >= b.next) {
+        b.at = 0
+        b.double = Math.random() < 0.25
+      }
+      if (b.at >= 0) {
+        b.at += dt
+        if (b.at > 0.14) {
+          b.at = -1
+          b.next = s + (b.double ? 0.22 : 2.8 + Math.random() * 3.5)
+          b.double = false
+        }
+      }
+    }
+    const lid = b.at < 0 ? 1 : Math.max(0.08, Math.abs(Math.cos((b.at / 0.14) * Math.PI))) // 1 → shut → 1 over the blink
+    // Frame-rate independent ease toward the raw pointer: quick enough to feel attentive, slow enough to glide.
+    const gz = gaze.current
+    const ge = 1 - Math.exp(-9 * dt)
+    gz.x += ((look ? pt.tx : 0) - gz.x) * ge
+    gz.y += ((look ? pt.ty : 0) - gz.y) * ge
+    const gx = gz.x * 0.16
+    const gy = -gz.y * 0.12
+    for (const [eye, glint, x0] of [
+      [eyeL, glintL, -0.17],
+      [eyeR, glintR, 0.17],
+    ] as const) {
+      const m = eye.current
+      if (!m) continue
+      m.position.x = x0 + gx
+      m.position.y = -0.06 + gy
+      m.scale.set(1, 1.25 * lid, 1)
+      // the catchlight sits on the side of the eye the gaze points to — that's what makes the look readable
+      const gl = glint.current
+      if (gl) {
+        gl.position.x = m.position.x + gz.x * 0.035
+        gl.position.y = m.position.y + 0.04 - gz.y * 0.03
+        gl.scale.set(1, lid, 1)
+      }
+    }
+
     // Solid ↔ ghost. Materials are created transparent (three bakes an OPAQUE define into a shader that
     // starts opaque); walked every frame because fast refresh and StrictMode remount them.
     g.traverse((obj) => {
@@ -252,11 +305,17 @@ export default function CubottCube({ reduced }: { reduced: boolean }) {
         </mesh>
         <mesh ref={front} geometry={geos.face}>
           {mat(COLORS.blue)}
-          <mesh geometry={geos.eye} position={[-0.17, -0.06, T / 2 + 0.01]} scale={[1, 1.25, 1]}>
+          <mesh ref={eyeL} geometry={geos.eye} position={[-0.17, -0.06, T / 2 + 0.01]} scale={[1, 1.25, 1]}>
             {mat(COLORS.navy)}
           </mesh>
-          <mesh geometry={geos.eye} position={[0.17, -0.06, T / 2 + 0.01]} scale={[1, 1.25, 1]}>
+          <mesh ref={eyeR} geometry={geos.eye} position={[0.17, -0.06, T / 2 + 0.01]} scale={[1, 1.25, 1]}>
             {mat(COLORS.navy)}
+          </mesh>
+          <mesh ref={glintL} geometry={geos.glint} position={[-0.17, -0.02, T / 2 + 0.03]}>
+            <meshBasicMaterial color="#EAF4FF" transparent />
+          </mesh>
+          <mesh ref={glintR} geometry={geos.glint} position={[0.17, -0.02, T / 2 + 0.03]}>
+            <meshBasicMaterial color="#EAF4FF" transparent />
           </mesh>
         </mesh>
         <pointLight ref={core} color="#93C5FD" intensity={1} distance={2.4} decay={2} position={[0, 0, 0]} />

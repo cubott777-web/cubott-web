@@ -1,0 +1,80 @@
+/* Cubott brand tokens — the single source for the website AND the applications.
+   Import this file (or copy the values) wherever a product carries the Cubott name.
+   Logo colours are fixed and only used inside the logo. UI colours are for everything else. */
+
+:root {
+  /* --- Logo (never used for UI) --- */
+  --cubott-logo-navy: #0a2f47;
+  --cubott-logo-blue: #379ecf;
+  --cubott-logo-blue-top: #3aa5d8;
+  --cubott-logo-shade: #0a3f5e;
+
+  /* --- Brand palette --- */
+  --cubott-navy-900: #071427; /* canvas (dark surfaces) */
+  --cubott-navy-800: #0b1f3b; /* primary navy: headings on light, stage cards on dark */
+  --cubott-navy-700: #122b4f;
+  --cubott-navy-600: #1b3a66;
+  --cubott-blue-600: #2563eb; /* action: primary buttons, links, focus */
+  --cubott-blue-700: #1d4ed8; /* action hover */
+  --cubott-blue-500: #3b82f6;
+  --cubott-blue-400: #60a5fa; /* accent text on dark */
+  --cubott-blue-300: #93c5fd;
+  --cubott-blue-200: #bfdbfe;
+  --cubott-blue-100: #dbeafe;
+  --cubott-blue-50: #eff6ff;
+  --cubott-slate-500: #64748b; /* secondary text on light */
+  --cubott-slate-200: #e2e8f0; /* borders on light */
+  --cubott-surface: #f8fafc; /* page background, light mode */
+  --cubott-surface-2: #f1f5f9;
+  --cubott-white: #ffffff;
+
+  /* --- Status (applications) --- */
+  --cubott-success: #16a34a;
+  --cubott-warning: #d97706;
+  --cubott-danger: #dc2626;
+  --cubott-info: #2563eb;
+
+  /* --- Semantic: light theme (applications default) --- */
+  --bg: var(--cubott-surface);
+  --bg-elevated: var(--cubott-white);
+  --fg: var(--cubott-navy-800);
+  --fg-muted: var(--cubott-slate-500);
+  --border: var(--cubott-slate-200);
+  --primary: var(--cubott-blue-600);
+  --primary-hover: var(--cubott-blue-700);
+  --primary-fg: var(--cubott-white);
+  --focus-ring: rgba(37, 99, 235, 0.25);
+
+  /* --- Type --- */
+  --font-sans: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  --tracking-display: -0.03em;
+  --tracking-tight: -0.02em;
+
+  /* --- Shape --- */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+  --radius-stage: 32px;
+  --radius-pill: 999px;
+
+  /* --- Motion --- */
+  --ease-house: cubic-bezier(0.16, 1, 0.3, 1);
+  --dur-fast: 0.3s;
+  --dur-base: 0.5s;
+  --dur-slow: 0.8s;
+}
+
+/* Semantic: dark theme (website default; applications may opt in) */
+[data-theme="dark"] {
+  --bg: var(--cubott-navy-900);
+  --bg-elevated: var(--cubott-navy-800);
+  --fg: var(--cubott-white);
+  --fg-muted: rgba(255, 255, 255, 0.6);
+  --border: rgba(255, 255, 255, 0.08);
+  --primary: var(--cubott-white);
+  --primary-hover: var(--cubott-blue-50);
+  --primary-fg: var(--cubott-navy-800);
+  --focus-ring: rgba(96, 165, 250, 0.35);
+}

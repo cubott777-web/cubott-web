@@ -1,0 +1,31 @@
+{
+  "brand": "Cubott",
+  "tagline": "We help founders shape their product, not just build it.",
+  "brief": "A product engineering company in Hyderabad that builds and runs business systems — Dealer Management, Clinic Management, School Management — and custom software for businesses that don't fit a template. It should feel precise, dependable, calm and human.",
+  "adjectives": ["precise", "dependable", "calm", "human"],
+  "criteria": "Success: keeps the cube-and-bot equity, reads at 16 px, works in one colour and reversed, feels like a systems company rather than a toy.",
+  "industry": "saas",
+  "nav": ["Work", "About", "Contact"],
+  "brand_color": "#0A2F47",
+  "greyscale": false,
+  "designer": "Cubott",
+  "round": 2,
+  "concepts": [
+    {
+      "name": "Bot in the box",
+      "symbol": "../public/brand/logo/cubott-mark.svg",
+      "lockup": "../public/brand/logo/cubott-logo-horizontal.svg",
+      "symbol_on_tile": "../public/brand/logo/cubott-mark.svg",
+      "lockup_on_dark": "../public/brand/logo/cubott-logo-horizontal-white.svg",
+      "tile_color": "#0B1F3B",
+      "idea": "One silhouette: cube, eyes and antenna survive one colour and 16 px.",
+      "rationale": [
+        "Keeps every piece of existing equity — cube, eyes, antenna, the Cubott pun",
+        "Three faces a seam apart: a system built from parts",
+        "Small-size cut for favicons; true one-colour and reversed versions"
+      ]
+    }
+  ],
+  "recommendation": "Bot in the box — the current idea, drawn so it finally works everywhere.",
+  "next_steps": ["Roll out to website, app, documents", "Trademark search", "Retire the old PNG artwork"]
+}

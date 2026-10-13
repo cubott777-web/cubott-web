@@ -30,12 +30,12 @@ export default function CubottLogo({
       {showWordmark && (
         <span
           className={cn(
-            "text-[1.35rem] font-bold leading-none tracking-tight",
+            "text-[1.35rem] font-bold leading-none tracking-[-0.02em]",
             onDark ? "text-white" : "text-navy"
           )}
           aria-hidden="true"
         >
-          Cub<span className={onDark ? "text-blue-400" : "text-blue"}>o</span>tt
+          Cub<span className="text-[#379ECF]">o</span>tt
         </span>
       )}
     </span>

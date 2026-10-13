@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 512" width="400" height="512" role="img" aria-label="Cubott">
+<g stroke="#FFFFFF" stroke-width="22" stroke-linejoin="round" stroke-linecap="round">
+    
+    <polygon points="22,193 200,286 200,500 22,407" fill="#FFFFFF" fill-opacity="0.25" />
+    
+    <polygon points="200,286 378,193 378,407 200,500" fill="none" />
+    
+    <polygon points="200,100 378,193 200,286 22,193" fill="none" />
+    
+    <line x1="200" y1="193" x2="200" y2="56" stroke-width="26" stroke-linecap="butt" />
+    <circle cx="200" cy="40" r="30" fill="#FFFFFF" />
+  </g>
+  
+  <g fill="#FFFFFF" transform="skewY(-27.5)">
+    <ellipse cx="246" cy="474" rx="21" ry="31" />
+    <ellipse cx="328" cy="474" rx="21" ry="31" />
+  </g>
+</svg>

@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" width="256" height="256" role="img" aria-labelledby="t">
+  <title id="t">Cubott concept A — Bot in the box</title>
+  <!-- Isometric cube (hexagon R=92, centre 128,148) built as three faces separated by a 6-unit seam, with the two
+       eyes cut as real holes from the front face and the antenna rising from the top face's centre. One colour. -->
+  <g fill="#111">
+    <!-- antenna: stem from the top-face centre, ball above the apex -->
+    <rect x="121" y="34" width="14" height="70" />
+    <circle cx="128" cy="28" r="16" />
+    <!-- top face -->
+    <polygon points="128,58 201.5,100.4 128,142.8 54.5,100.4" />
+    <!-- left face -->
+    <polygon points="51,106.5 124.5,148.9 124.5,233.8 51,191.4" />
+    <!-- front face with eye holes (ellipses tilted 15° to follow the face) -->
+    <path fill-rule="evenodd" d="
+      M131.5 148.9 L205 106.5 L205 191.4 L131.5 233.8 Z
+      M153 170 A9 15 -15 1 0 153.1 170 Z
+      M185 152 A9 15 -15 1 0 185.1 152 Z
+    " />
+  </g>
+</svg>

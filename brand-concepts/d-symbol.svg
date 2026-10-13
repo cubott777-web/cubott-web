@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" width="256" height="256" role="img" aria-labelledby="t">
+  <title id="t">Cubott concept D — Cub in the box</title>
+  <!-- The name, literally: a cub peeking out of an open box. The box is the lower two faces of an isometric cube;
+       the head sits behind its V-shaped rim, so only eyes and ears show. One silhouette, two eye holes. -->
+  <g fill="#111">
+    <!-- ears -->
+    <circle cx="100" cy="70" r="13" />
+    <circle cx="156" cy="70" r="13" />
+    <!-- head with eye holes -->
+    <path fill-rule="evenodd" d="
+      M128 58 A46 46 0 1 0 128.1 58 Z
+      M114 102 A7 7 0 1 0 114.1 102 Z
+      M142 102 A7 7 0 1 0 142.1 102 Z
+    " />
+    <!-- rim gap: the head sits behind the box, so a slice of air separates them -->
+    <polyline fill="none" stroke="#fff" stroke-width="12" stroke-linejoin="round" points="55.3,110 128,152 200.7,110" />
+    <!-- open box: left and front faces, rim is the V -->
+    <polygon points="55.3,110 128,152 200.7,110 200.7,194 128,236 55.3,194" />
+  </g>
+</svg>

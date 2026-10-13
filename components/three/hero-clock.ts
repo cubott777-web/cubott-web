@@ -24,10 +24,6 @@ export const heroClock = {
 export const BEATS = { reveal: 2.0, snap: 3.0, rest: 4.0 } as const
 export const DURATION = BEATS.rest
 
-export function replay() {
-  heroClock.restartAt = performance.now()
-}
-
 export const lerp = (a: number, b: number, t: number) => a + (b - a) * t
 export const smooth = (t: number) => t * t * (3 - 2 * t)
 export const clamp01 = (t: number) => Math.min(1, Math.max(0, t))

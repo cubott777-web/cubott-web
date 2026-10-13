@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" width="256" height="256" role="img" aria-labelledby="t">
+  <title id="t">Cubott concept F — Kolam cube</title>
+  <!-- A pulli kolam: seven dots on the Telugu dot grid, joined into a cube. Dots are the people and roles
+       (nine roles on one platform), lines are the connections, the whole is the system. Hyderabad, not Silicon Valley. -->
+  <g fill="#111">
+    <!-- edges -->
+    <g stroke="#111" stroke-width="9" stroke-linecap="round">
+      <polygon fill="none" points="128,50 206,95 206,185 128,230 50,185 50,95" />
+      <line x1="128" y1="140" x2="206" y2="95" />
+      <line x1="128" y1="140" x2="50" y2="95" />
+      <line x1="128" y1="140" x2="128" y2="230" />
+    </g>
+    <!-- dots -->
+    <circle cx="128" cy="50" r="17" />
+    <circle cx="206" cy="95" r="17" />
+    <circle cx="206" cy="185" r="17" />
+    <circle cx="128" cy="230" r="17" />
+    <circle cx="50" cy="185" r="17" />
+    <circle cx="50" cy="95" r="17" />
+    <circle cx="128" cy="140" r="17" />
+  </g>
+</svg>

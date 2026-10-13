@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" width="256" height="256" role="img" aria-labelledby="t">
+  <title id="t">Cubott concept B — Open C</title>
+  <!-- An isometric cube with its front face removed. The two remaining faces, drawn as 28-unit bands, form a C
+       (the initial) that opens toward the viewer: the system is open to the people who use it. All edges at 30°/90°. -->
+  <path fill="#111" fill-rule="evenodd" d="
+    M128 24 L216 74.8 L216 106 L128 55.2 L68 89.8 L68 166 L128 200.6 L216 149.8 L216 181 L128 231.8 L40 181 L40 74.8 Z
+  " />
+</svg>

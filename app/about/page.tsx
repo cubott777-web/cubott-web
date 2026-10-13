@@ -4,7 +4,6 @@ import Button from "@/components/ui/Button"
 import Reveal from "@/components/motion/Reveal"
 import TextReveal from "@/components/motion/TextReveal"
 import Stagger, { StaggerItem } from "@/components/motion/Stagger"
-import CubottMark from "@/components/brand/CubottMark"
 import Ambient from "@/components/ui/Ambient"
 import { siteConfig } from "@/lib/site"
 import { process } from "@/content/company"
@@ -38,10 +37,7 @@ export default function AboutPage() {
       <section className="stage py-16 md:py-24">
         <Ambient src="/video/cube.mp4" poster="/video/cube.jpg" className="opacity-90 [mask-image:linear-gradient(to_right,transparent_30%,black_60%)]" />
         <Container>
-          <Reveal y={10}>
-            <CubottMark tone="reverse" className="h-12 w-12" />
-          </Reveal>
-          <TextReveal as="h1" className="display-xl mt-8 max-w-4xl" delay={0.15} immediate>
+          <TextReveal as="h1" className="display-xl max-w-4xl" delay={0.15} immediate>
             We build systems that turn complexity into clarity.
           </TextReveal>
           <Reveal as="p" delay={0.6} className="mt-8 max-w-2xl text-xl leading-relaxed text-blue-100/80 md:text-2xl">
