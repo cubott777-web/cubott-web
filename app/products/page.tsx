@@ -2,6 +2,7 @@ import type { Metadata } from "next"
 import Container from "@/components/ui/Container"
 import Button from "@/components/ui/Button"
 import ProductMedia from "@/components/ui/ProductMedia"
+import Ambient from "@/components/ui/Ambient"
 import Reveal from "@/components/motion/Reveal"
 import TextReveal from "@/components/motion/TextReveal"
 import MediaReveal from "@/components/motion/MediaReveal"
@@ -46,7 +47,7 @@ export default function ProductsPage() {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceLd) }} />
 
       <section className="stage py-16 md:py-24">
-        <div aria-hidden="true" className="absolute inset-0 -z-10 iso-grid [mask-image:radial-gradient(ellipse_at_80%_40%,black_10%,transparent_70%)]" />
+        <Ambient src="/video/ambient.mp4" poster="/video/ambient.jpg" className="opacity-70 [mask-image:linear-gradient(to_right,transparent_0%,black_35%)]" />
         <Container>
           <Reveal as="p" y={8} className="eyebrow text-blue-400">
             Work

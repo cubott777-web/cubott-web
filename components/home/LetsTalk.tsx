@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react"
 import Link from "next/link"
 import { useMediaQuery, REDUCED_MOTION } from "@/components/motion/useMediaQuery"
 import Reveal from "@/components/motion/Reveal"
+import Ambient from "@/components/ui/Ambient"
 import { siteConfig } from "@/lib/site"
 import { cn } from "@/lib/utils"
 
@@ -35,6 +36,7 @@ export default function LetsTalk() {
 
   return (
     <section className="stage text-white" aria-labelledby="talk-title">
+      <Ambient src="/video/nodes.mp4" poster="/video/nodes.jpg" className="opacity-40 [mask-image:radial-gradient(ellipse_at_center,black_20%,transparent_75%)]" />
       <Link
         ref={box}
         href="/contact"

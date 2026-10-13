@@ -5,6 +5,7 @@ import Reveal from "@/components/motion/Reveal"
 import TextReveal from "@/components/motion/TextReveal"
 import Stagger, { StaggerItem } from "@/components/motion/Stagger"
 import CubottMark from "@/components/brand/CubottMark"
+import Ambient from "@/components/ui/Ambient"
 import { siteConfig } from "@/lib/site"
 import { process } from "@/content/company"
 
@@ -35,7 +36,7 @@ export default function AboutPage() {
   return (
     <main id="main" className="space-y-3 pt-[calc(var(--header-h)+12px)] lg:space-y-6">
       <section className="stage py-16 md:py-24">
-        <div aria-hidden="true" className="absolute inset-0 -z-10 iso-grid [mask-image:radial-gradient(ellipse_at_80%_40%,black_10%,transparent_70%)]" />
+        <Ambient src="/video/cube.mp4" poster="/video/cube.jpg" className="opacity-90 [mask-image:linear-gradient(to_right,transparent_30%,black_60%)]" />
         <Container>
           <Reveal y={10}>
             <CubottMark tone="reverse" className="h-12 w-12" />
