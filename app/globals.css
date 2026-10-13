@@ -26,7 +26,7 @@
   }
 
   body {
-    @apply bg-white text-navy;
+    @apply bg-navy-900 text-white;
     font-family: var(--font-inter), system-ui, sans-serif;
     font-feature-settings: "cv11", "ss01", "ss03";
     overflow-x: hidden;
@@ -37,13 +37,32 @@
   }
 
   :focus-visible {
-    outline: 2px solid var(--blue);
+    outline: 2px solid var(--sky);
     outline-offset: 3px;
     border-radius: 2px;
   }
+}
 
-  .dark-scene :focus-visible {
-    outline-color: var(--sky);
+/* ---------- Stage system: the page is one dark canvas; every section is an inset rounded stage ---------- */
+@layer components {
+  .stage {
+    @apply relative mx-3 overflow-hidden rounded-[28px] border border-line bg-navy md:rounded-[32px] lg:mx-6;
+  }
+  .stage + .stage {
+    @apply mt-3 lg:mt-6;
+  }
+  .card {
+    @apply relative rounded-3xl border border-line bg-white/[0.03] transition-[transform,border-color,background-color] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)];
+  }
+  .card-hover {
+    @apply hover:-translate-y-1 hover:border-line-strong hover:bg-white/[0.06] motion-reduce:hover:transform-none;
+  }
+  .pill {
+    @apply inline-flex items-center gap-2 rounded-full border border-line bg-white/[0.04] px-3 py-1.5 text-[13px] font-medium text-white/75;
+  }
+  .pill::before {
+    content: "";
+    @apply h-1.5 w-1.5 shrink-0 rounded-full bg-blue-400;
   }
 }
 
@@ -244,12 +263,12 @@
 
   /* What we do: an outlined italic WHAT, WE dropped over its right half, DO out to the right */
   .stack-title {
-    @apply relative font-bold leading-[0.82] tracking-tightest text-navy;
+    @apply relative font-bold leading-[0.82] tracking-tightest text-white;
     font-size: clamp(3.5rem, 12vw, 11rem);
   }
   .stack-outline {
     @apply italic font-medium text-transparent;
-    -webkit-text-stroke: 1.5px rgba(11, 31, 59, 0.3);
+    -webkit-text-stroke: 1.5px rgba(255, 255, 255, 0.3);
     letter-spacing: -0.01em;
   }
   .stack-solid {

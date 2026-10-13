@@ -11,13 +11,14 @@ import { cn } from "@/lib/utils"
 type Status = "idle" | "sending" | "sent" | "error" | "fallback"
 
 const field =
-  "w-full rounded-lg border border-navy/20 bg-white px-4 py-3 text-[15px] text-navy placeholder:text-navy/35 transition-[border-color,box-shadow] duration-300 hover:border-navy/35 focus:border-blue focus:outline-none focus:ring-4 focus:ring-blue/15"
+  "w-full rounded-xl border border-line bg-white/[0.04] px-4 py-3 text-[15px] text-white placeholder:text-white/35 transition-[border-color,box-shadow,background-color] duration-300 hover:border-line-strong focus:border-blue-400 focus:bg-white/[0.06] focus:outline-none focus:ring-4 focus:ring-blue/20"
+const label = "mb-1.5 block text-sm font-medium text-white/80"
 
-export default function ContactForm() {
+export default function ContactForm({ initialMessage = "" }: { initialMessage?: string }) {
   const reduce = useReducedMotion()
   const [status, setStatus] = useState<Status>("idle")
   const [error, setError] = useState<string>("")
-  const [values, setValues] = useState({ name: "", email: "", company: "", message: "", website: "" })
+  const [values, setValues] = useState({ name: "", email: "", company: "", message: initialMessage, website: "" })
 
   const update = (k: keyof typeof values) => (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
     setValues((v) => ({ ...v, [k]: e.target.value }))
@@ -56,43 +57,43 @@ export default function ContactForm() {
         initial={reduce ? false : { opacity: 0, scale: 0.98, y: 8 }}
         animate={{ opacity: 1, scale: 1, y: 0 }}
         transition={{ duration: DUR.base, ease: EASE }}
-        className="rounded-2xl border border-navy/10 bg-surface p-8"
+        className="card p-8"
       >
-        <p className="text-2xl font-semibold tracking-tight text-navy">Thanks — we&apos;ve got it.</p>
-        <p className="mt-3 text-slate">We read every message and reply personally. Expect to hear from us soon.</p>
+        <p className="text-2xl font-semibold tracking-tight">Thanks — we&apos;ve got it.</p>
+        <p className="mt-3 text-white/60">We read every message and reply ourselves. Expect to hear from us soon.</p>
       </motion.div>
     )
   }
 
   return (
-    <form onSubmit={onSubmit} noValidate aria-describedby="contact-help">
+    <form onSubmit={onSubmit} noValidate aria-describedby="contact-help" className="card p-6 md:p-8">
       <p id="contact-help" className="sr-only">
         Name, email and a message are required.
       </p>
       <Stagger as="div" gap={0.08} className="grid gap-5">
         <div className="grid gap-5 sm:grid-cols-2">
           <StaggerItem>
-            <label htmlFor="name" className="mb-1.5 block text-sm font-medium text-navy">
+            <label htmlFor="name" className={label}>
               Name
             </label>
             <input id="name" name="name" autoComplete="name" required minLength={2} className={field} value={values.name} onChange={update("name")} />
           </StaggerItem>
           <StaggerItem>
-            <label htmlFor="email" className="mb-1.5 block text-sm font-medium text-navy">
+            <label htmlFor="email" className={label}>
               Email
             </label>
             <input id="email" name="email" type="email" autoComplete="email" required className={field} value={values.email} onChange={update("email")} />
           </StaggerItem>
         </div>
         <StaggerItem>
-          <label htmlFor="company" className="mb-1.5 block text-sm font-medium text-navy">
-            Company <span className="font-normal text-slate">(optional)</span>
+          <label htmlFor="company" className={label}>
+            Company <span className="font-normal text-white/45">(optional)</span>
           </label>
           <input id="company" name="company" autoComplete="organization" className={field} value={values.company} onChange={update("company")} />
         </StaggerItem>
         <StaggerItem>
-          <label htmlFor="message" className="mb-1.5 block text-sm font-medium text-navy">
-            How does your business work — and what isn&apos;t working?
+          <label htmlFor="message" className={label}>
+            What are you building — and what isn&apos;t working today?
           </label>
           <textarea id="message" name="message" required minLength={10} rows={6} className={cn(field, "resize-y")} value={values.message} onChange={update("message")} />
         </StaggerItem>
@@ -101,9 +102,9 @@ export default function ContactForm() {
           <label htmlFor="website">Website</label>
           <input id="website" name="website" tabIndex={-1} autoComplete="off" value={values.website} onChange={update("website")} />
         </div>
-  
+
         {status === "error" && (
-          <p role="alert" className="text-sm text-red-700">
+          <p role="alert" className="text-sm text-red-300">
             {error}{" "}
             <a className="font-medium underline underline-offset-4" href={mailto}>
               Email us instead
@@ -112,20 +113,20 @@ export default function ContactForm() {
           </p>
         )}
         {status === "fallback" && (
-          <p role="status" className="rounded-lg border border-blue/20 bg-blue-50 p-4 text-sm text-navy">
+          <p role="status" className="rounded-xl border border-blue-400/30 bg-blue/10 p-4 text-sm text-white/85">
             The form isn&apos;t connected to a mailbox yet.{" "}
-            <a className="font-semibold text-blue underline underline-offset-4" href={mailto}>
+            <a className="font-semibold text-blue-300 underline underline-offset-4" href={mailto}>
               Send this message by email
             </a>{" "}
             — it&apos;s already written for you.
           </p>
         )}
-  
+
         <StaggerItem className="flex flex-wrap items-center gap-4">
-          <Button type="submit" size="lg" arrow disabled={status === "sending"}>
+          <Button type="submit" size="lg" variant="primary-dark" arrow disabled={status === "sending"}>
             {status === "sending" ? "Sending…" : "Send"}
           </Button>
-          <a href={`mailto:${siteConfig.contactEmail}`} className="text-sm text-slate underline-offset-4 hover:text-navy hover:underline">
+          <a href={`mailto:${siteConfig.contactEmail}`} className="text-sm text-white/50 underline-offset-4 hover:text-white hover:underline">
             or email {siteConfig.contactEmail}
           </a>
         </StaggerItem>

@@ -3,8 +3,7 @@ import Container from "@/components/ui/Container"
 import Button from "@/components/ui/Button"
 import Reveal from "@/components/motion/Reveal"
 import TextReveal from "@/components/motion/TextReveal"
-import RowRule from "@/components/motion/RowRule"
-import HeroGlow from "@/components/motion/HeroGlow"
+import Stagger, { StaggerItem } from "@/components/motion/Stagger"
 import CubottMark from "@/components/brand/CubottMark"
 import { siteConfig } from "@/lib/site"
 
@@ -16,35 +15,26 @@ export const metadata: Metadata = {
 }
 
 const beliefs = [
-  { title: "Complexity is normal.", text: "Real businesses have exceptions and parallel approvals. We model them instead of flattening them." },
-  { title: "The system should already know.", text: "If someone has to ring around to find out what happened, the software has failed." },
-  { title: "Whole systems, not screens.", text: "A screen is the top of a stack. We build the stack." },
-  { title: "Launch is the middle.", text: "Software changes because the business changes. We stay with it." },
+  "Complexity is normal. We model it instead of flattening it.",
+  "If someone has to ring around to find out what happened, the software has failed.",
+  "A screen is the top of a stack. We build the stack.",
+  "Launch is the middle. We stay with it.",
 ]
 
-const approach = [
-  { k: "Products", v: "We build our own — starting with Dealer Management — so our judgement stays honest about what works in operation." },
-  { k: "Systems for others", v: "The same discipline for businesses that need software shaped around their own workflow." },
-  { k: "Engineering", v: "TypeScript across the stack, PostgreSQL, state-driven workflows, role-based access, audit built in." },
-  { k: "Relationship", v: "Few clients, close attention, and support after launch." },
-]
+const stack = ["TypeScript across the stack", "PostgreSQL", "State-driven workflows", "Role-based access", "Audit built in", "Multi-tenant"]
 
 const facts = [
   { k: "Founded", v: siteConfig.foundingDate },
-  { k: "Based in", v: `${siteConfig.address.street}, ${siteConfig.address.city} ${siteConfig.address.postalCode}` },
+  { k: "Based in", v: `${siteConfig.address.city}, ${siteConfig.address.region}` },
   { k: "Working across", v: "Andhra Pradesh and Telangana today; clients anywhere." },
 ]
 
-const row =
-  "group relative grid gap-3 py-7 transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] hover:translate-x-1.5 md:grid-cols-12 md:gap-8 md:py-8"
-const accent =
-  "absolute -left-4 top-0 h-full w-0.5 origin-top scale-y-0 bg-blue transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-y-100 md:-left-6"
-
+/** About: one manifesto, one stack strip, three facts. Nothing that isn't true. */
 export default function AboutPage() {
   return (
-    <main id="main">
-      <section data-scene="dark" className="relative isolate overflow-hidden bg-navy-900 pb-16 pt-28 text-white md:pb-20 md:pt-32">
-        <HeroGlow />
+    <main id="main" className="space-y-3 pt-[calc(var(--header-h)+12px)] lg:space-y-6">
+      <section className="stage py-16 md:py-24">
+        <div aria-hidden="true" className="absolute inset-0 -z-10 iso-grid [mask-image:radial-gradient(ellipse_at_80%_40%,black_10%,transparent_70%)]" />
         <Container>
           <Reveal y={10}>
             <CubottMark tone="reverse" className="h-12 w-12" />
@@ -53,70 +43,69 @@ export default function AboutPage() {
             We build systems that turn complexity into clarity.
           </TextReveal>
           <Reveal as="p" delay={0.6} className="mt-8 max-w-2xl text-xl leading-relaxed text-blue-100/80 md:text-2xl">
-            A product engineering company that builds and supports its own systems.
+            A product engineering company that builds and supports its own systems — and yours.
           </Reveal>
         </Container>
       </section>
 
-      <section className="bg-white py-14 md:py-20" aria-labelledby="beliefs-title">
+      <section className="stage py-14 md:py-20" aria-labelledby="beliefs-title">
         <Container>
-          <TextReveal as="h2" id="beliefs-title" className="display-lg max-w-2xl text-navy">
-            What we believe.
-          </TextReveal>
-          <ol className="relative mt-10">
-            <RowRule position="top" />
-            {beliefs.map((b, i) => (
-              <Reveal as="li" key={b.title} delay={0.06 * i} className={row}>
-                <RowRule delay={0.06 * i + 0.2} />
-                <span aria-hidden="true" className={accent} />
-                <h3 className="text-2xl font-semibold tracking-tight text-navy transition-colors duration-300 group-hover:text-blue md:col-span-4 md:text-[1.75rem] md:leading-tight">{b.title}</h3>
-                <p className="max-w-lg text-[15px] leading-relaxed text-slate md:col-span-8 md:pt-1.5 md:text-base">{b.text}</p>
+          <div className="grid gap-10 lg:grid-cols-12 lg:gap-8">
+            <div className="lg:col-span-5">
+              <Reveal as="p" y={8} className="eyebrow text-blue-400">
+                What we believe
               </Reveal>
-            ))}
-          </ol>
+              <TextReveal as="h2" id="beliefs-title" className="display-lg mt-3 max-w-[12ch]" delay={0.1}>
+                Four lines we work by.
+              </TextReveal>
+            </div>
+            <Stagger as="ul" gap={0.1} className="grid gap-4 sm:grid-cols-2 lg:col-span-7">
+              {beliefs.map((b, i) => (
+                <StaggerItem as="li" key={b} className="card card-hover p-6 md:p-7">
+                  <span aria-hidden="true" className="text-sm font-semibold tabular-nums text-blue-400">
+                    0{i + 1}
+                  </span>
+                  <p className="mt-3 text-lg font-semibold leading-snug tracking-tight md:text-xl">{b}</p>
+                </StaggerItem>
+              ))}
+            </Stagger>
+          </div>
         </Container>
       </section>
 
-      <section className="bg-surface py-14 md:py-20" aria-labelledby="approach-title">
+      <section className="stage py-14 md:py-20" aria-labelledby="company-title">
         <Container>
-          <TextReveal as="h2" id="approach-title" className="display-lg max-w-2xl text-navy">
-            How we work.
-          </TextReveal>
-          <dl className="relative mt-10">
-            <RowRule position="top" />
-            {approach.map((a, i) => (
-              <Reveal as="div" key={a.k} delay={0.06 * i} className={row}>
-                <RowRule delay={0.06 * i + 0.2} />
-                <span aria-hidden="true" className={accent} />
-                <dt className="eyebrow text-navy/60 transition-colors duration-300 group-hover:text-blue md:col-span-4 md:pt-1">{a.k}</dt>
-                <dd className="max-w-lg text-[15px] leading-relaxed text-navy/85 md:col-span-8 md:text-base">{a.v}</dd>
+          <div className="grid gap-10 lg:grid-cols-12 lg:gap-8">
+            <div className="lg:col-span-5">
+              <Reveal as="p" y={8} className="eyebrow text-blue-400">
+                The company
               </Reveal>
-            ))}
-          </dl>
+              <TextReveal as="h2" id="company-title" className="display-lg mt-3 max-w-[12ch]" delay={0.1}>
+                Small, close, and in production.
+              </TextReveal>
+              <Reveal as="div" delay={0.3} className="mt-6 flex flex-wrap gap-2">
+                {stack.map((s) => (
+                  <span key={s} className="pill">
+                    {s}
+                  </span>
+                ))}
+              </Reveal>
+            </div>
+            <Stagger as="dl" gap={0.1} className="grid gap-4 lg:col-span-7">
+              {facts.map((f) => (
+                <StaggerItem key={f.k} className="card grid gap-1 p-6 sm:grid-cols-[10rem_1fr] sm:items-baseline">
+                  <dt className="eyebrow text-white/45">{f.k}</dt>
+                  <dd className="text-lg font-medium">{f.v}</dd>
+                </StaggerItem>
+              ))}
+            </Stagger>
+          </div>
         </Container>
       </section>
 
-      <section className="bg-white py-14 md:py-20" aria-labelledby="facts-title">
-        <Container>
-          <TextReveal as="h2" id="facts-title" className="display-lg max-w-2xl text-navy">
-            The company.
-          </TextReveal>
-          <dl className="relative mt-10">
-            <RowRule position="top" />
-            {facts.map((f, i) => (
-              <Reveal as="div" key={f.k} delay={0.06 * i} className="relative grid gap-2 py-6 md:grid-cols-12 md:gap-8">
-                <RowRule delay={0.06 * i + 0.2} />
-                <dt className="eyebrow text-navy/60 md:col-span-4 md:pt-1">{f.k}</dt>
-                <dd className="max-w-lg text-[15px] leading-relaxed text-navy/85 md:col-span-8 md:text-base">{f.v}</dd>
-              </Reveal>
-            ))}
-          </dl>
-        </Container>
-      </section>
-
-      <section data-scene="dark" className="bg-navy-900 py-14 text-white md:py-20">
+      <section className="stage py-14 md:py-20">
         <Container className="flex flex-col items-start justify-between gap-6 md:flex-row md:items-center">
-          <TextReveal as="p" className="max-w-xl text-xl text-blue-100/85">
+          <TextReveal as="p" className="max-w-xl text-xl text-blue-100/85 md:text-2xl">
             Have a complex problem? Tell us how your business works.
           </TextReveal>
           <Reveal delay={0.35} y={10}>

@@ -29,6 +29,10 @@ const config: Config = {
         slate: {
           DEFAULT: "#64748B",
         },
+        line: {
+          DEFAULT: "rgba(255,255,255,0.08)",
+          strong: "rgba(255,255,255,0.18)",
+        },
         surface: {
           DEFAULT: "#F8FAFC",
           2: "#F1F5F9",

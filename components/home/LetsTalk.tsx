@@ -34,7 +34,7 @@ export default function LetsTalk() {
   }, [reduced])
 
   return (
-    <section data-scene="dark" className="relative bg-navy-900 text-white" aria-labelledby="talk-title">
+    <section className="stage text-white" aria-labelledby="talk-title">
       <Link
         ref={box}
         href="/contact"
@@ -71,8 +71,12 @@ export default function LetsTalk() {
         </Reveal>
 
         <Reveal as="p" delay={0.35} y={10} className="mt-8 text-sm text-blue-100/60 md:mt-10 md:text-base">
-          Tell us what isn&apos;t working. We&apos;ll tell you what we&apos;d build.{" "}
-          <span className="font-medium text-white/90">{siteConfig.contactEmail}</span>
+          Tell us what isn&apos;t working. We&apos;ll tell you what we&apos;d build.
+        </Reveal>
+        <Reveal as="div" delay={0.45} y={10} className="mt-6 flex flex-wrap items-center justify-center gap-2">
+          <span className="pill">{siteConfig.contactPhone}</span>
+          <span className="pill">{siteConfig.contactEmail}</span>
+          <span className="pill">{siteConfig.address.city}</span>
         </Reveal>
       </Link>
     </section>

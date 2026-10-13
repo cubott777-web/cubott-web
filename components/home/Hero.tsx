@@ -1,11 +1,13 @@
 "use client"
 
+import Link from "next/link"
 import { motion } from "framer-motion"
 import Container from "@/components/ui/Container"
 import Button from "@/components/ui/Button"
 import HeroSignature from "@/components/home/HeroSignature"
 import { useMediaQuery, REDUCED_MOTION } from "@/components/motion/useMediaQuery"
 import { BEATS } from "@/components/three/hero-clock"
+import { intents } from "@/lib/site"
 
 const EASE = [0.16, 1, 0.3, 1] as const
 
@@ -27,7 +29,10 @@ export default function Hero() {
   const ctaDelay = reduced ? 0.1 : BEATS.reveal + 0.55
 
   return (
-    <section data-scene="dark" className="relative isolate min-h-screen overflow-hidden bg-navy-900 text-white" aria-labelledby="hero-title">
+    <section
+      className="relative isolate mx-3 mt-[calc(var(--header-h)+12px)] min-h-[calc(100svh-var(--header-h)-24px)] overflow-hidden rounded-[28px] border border-line bg-navy-900 text-white md:rounded-[32px] lg:mx-6"
+      aria-labelledby="hero-title"
+    >
       {/* ground: isometric grid across the whole scene, a low blue horizon, a touch of grain — the
           glow is anchored low-right, toward the cube, so the far side of the viewport still has
           depth instead of reading as empty navy */}
@@ -46,7 +51,7 @@ export default function Hero() {
       {/* a scrim under the text column so the headline stays legible over the object behind it */}
       <div aria-hidden="true" className="pointer-events-none absolute inset-y-0 left-0 -z-10 w-full lg:w-[58%]" style={{ background: "linear-gradient(100deg, rgba(11,20,38,0.92) 0%, rgba(11,20,38,0.74) 50%, rgba(11,20,38,0) 100%)" }} />
 
-      <Container className="relative flex min-h-screen flex-col justify-center pb-16 pt-[calc(var(--header-h)+3rem)] lg:pb-20 lg:pt-[calc(var(--header-h)+1rem)]">
+      <Container className="relative flex min-h-[calc(100svh-var(--header-h)-24px)] flex-col justify-center py-16 lg:py-20">
         <div className="max-w-2xl">
           <h1 id="hero-title" className="display-hero max-w-[16ch]">
             <span className="block overflow-hidden">
@@ -94,6 +99,25 @@ export default function Hero() {
             <Button href="#products" size="lg" variant="ghost-dark" arrow>
               See what we&apos;ve built
             </Button>
+          </motion.div>
+
+          {/* intent chips: the visitor says what they're here for, and the contact form is prefilled */}
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, delay: ctaDelay + 0.25, ease: EASE }}
+            className="mt-10 flex flex-wrap items-center gap-2"
+          >
+            <span className="mr-1 text-sm text-white/45">I&apos;d like to…</span>
+            {intents.map((i) => (
+              <Link
+                key={i.key}
+                href={`/contact?intent=${i.key}`}
+                className="pill transition-[border-color,background-color,color] duration-300 hover:border-line-strong hover:bg-white/[0.08] hover:text-white"
+              >
+                {i.label}
+              </Link>
+            ))}
           </motion.div>
         </div>
       </Container>

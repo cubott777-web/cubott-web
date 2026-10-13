@@ -25,9 +25,16 @@ export const siteConfig = {
 /** E.164 form for tel: links and structured data. */
 export const phoneHref = siteConfig.contactPhone.replace(/\s+/g, "")
 
+/** Hero intent chips → /contact?intent=key, which prefills the message. */
+export const intents = [
+  { key: "system", label: "Run my business on one system", message: "I want to run my business on one system. Today we use…" },
+  { key: "product", label: "Launch a product", message: "I want to launch a product. The idea is…" },
+  { key: "replace", label: "Replace software that doesn't fit", message: "Our current software doesn't fit. What isn't working is…" },
+] as const
+
 export const nav = [
   { href: "/", label: "Home" },
-  { href: "/products", label: "Products" },
+  { href: "/products", label: "Work" },
   { href: "/about", label: "About" },
   { href: "/contact", label: "Contact" },
 ] as const

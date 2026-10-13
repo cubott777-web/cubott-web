@@ -7,7 +7,7 @@ interface StaggerProps {
   children: ReactNode
   className?: string
   gap?: number
-  as?: "div" | "ul" | "ol"
+  as?: "div" | "ul" | "ol" | "dl"
 }
 
 const item = {

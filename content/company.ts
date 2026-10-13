@@ -87,6 +87,37 @@ export const principles = [
   { title: "We build for reality.", text: "Real people, real workflows, exceptions and changing requirements." },
 ] as const
 
+/** Homepage: the three ways we work, as scannable cards. */
+export const services = [
+  {
+    key: "systems",
+    title: "Business systems",
+    text: "People, processes and data in one system built around how your business works.",
+    pills: ["Multi-role platforms", "Workflow & approvals", "Role dashboards", "Audit log", "Multi-tenant", "WhatsApp intake"],
+  },
+  {
+    key: "products",
+    title: "Digital products",
+    text: "Complete software products for a specific industry, shaped with you and supported after launch.",
+    pills: ["Product shaping", "UX & UI", "Web & mobile", "Launch & iterate", "Support after launch"],
+  },
+  {
+    key: "custom",
+    title: "Custom software",
+    text: "When existing software doesn't fit, we build what does.",
+    pills: ["Internal tools", "API integrations", "Data & reporting", "Replacing spreadsheets", "Legacy rebuilds"],
+  },
+] as const
+
+/** Five things a client can hold us to. One line each; no numbers we can't back. */
+export const promises = [
+  { title: "We understand the business first.", text: "Who does what, in what order, and where the exceptions live." },
+  { title: "We build the whole system.", text: "Front end, APIs, rules and data as one thing, not isolated screens." },
+  { title: "We model reality, not the template.", text: "Parallel approvals and odd cases are normal. The software should already know." },
+  { title: "Launch is the middle.", text: "The business changes, so the software does. We stay with it." },
+  { title: "We reply ourselves.", text: "Every message is read and answered by the people who build." },
+] as const
+
 export const builderInputs = ["Your people", "Your data", "Your workflow", "Your rules", "Your systems", "Your constraints"] as const
 
 export const solutionCategories = [
