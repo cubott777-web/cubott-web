@@ -35,12 +35,15 @@ export default function Header() {
     }
   }, [open])
 
+  // The menu panel is a sibling of the bar, not a child: the bar's entry transform would otherwise become the
+  // containing block for the fixed panel and collapse it to the bar's 72px height.
   return (
+    <>
     <motion.header
       initial={reduce ? false : { y: -12, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.7, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
-      className={cn("fixed inset-x-0 top-0 z-50 transition-colors duration-500", (scrolled || open) && "bg-navy-900/80 backdrop-blur-md")}
+      className={cn("fixed inset-x-0 top-0 z-50 transition-colors duration-500", scrolled && !open && "bg-navy-900/80 backdrop-blur-md", open && "bg-navy-900")}
     >
       <Container size="xl">
         <nav className="flex h-[72px] items-center justify-between" aria-label="Primary">
@@ -94,43 +97,44 @@ export default function Header() {
         </nav>
       </Container>
 
-      <AnimatePresence>
-        {open && (
-          <motion.div
-            id="mobile-menu"
-            initial={reduce ? false : { opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.2 }}
-            className="fixed inset-x-0 bottom-0 top-[72px] z-40 overflow-y-auto bg-navy-900 md:hidden"
-          >
-            <Container size="xl" className="flex min-h-full flex-col py-6">
-              <ul className="flex flex-col">
-                {nav.map((item, i) => (
-                  <motion.li
-                    key={item.href}
-                    initial={reduce ? false : { opacity: 0, x: -8 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: 0.04 * i, duration: 0.3 }}
-                    className="border-b border-line"
-                  >
-                    <Link href={item.href} className="flex items-center justify-between py-5 text-2xl font-semibold tracking-tight text-white" onClick={() => setOpen(false)}>
-                      {item.label}
-                      <span className="text-blue-400" aria-hidden="true">→</span>
-                    </Link>
-                  </motion.li>
-                ))}
-              </ul>
-              <div className="mt-8">
-                <Button href="/contact" size="lg" variant="primary-dark" className="w-full" arrow onClick={() => setOpen(false)}>
-                  Let&apos;s build
-                </Button>
-              </div>
-              <p className="mt-auto pt-10 text-sm text-white/50">Technology for businesses that don&apos;t fit inside a template.</p>
-            </Container>
-          </motion.div>
-        )}
-      </AnimatePresence>
     </motion.header>
+    <AnimatePresence>
+      {open && (
+        <motion.div
+          id="mobile-menu"
+          initial={reduce ? false : { opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.2 }}
+          className="fixed inset-x-0 bottom-0 top-[72px] z-40 overflow-y-auto bg-navy-900 md:hidden"
+        >
+          <Container size="xl" className="flex min-h-full flex-col py-6">
+            <ul className="flex flex-col">
+              {nav.map((item, i) => (
+                <motion.li
+                  key={item.href}
+                  initial={reduce ? false : { opacity: 0, x: -8 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: 0.04 * i, duration: 0.3 }}
+                  className="border-b border-line"
+                >
+                  <Link href={item.href} className="flex items-center justify-between py-5 text-2xl font-semibold tracking-tight text-white" onClick={() => setOpen(false)}>
+                    {item.label}
+                    <span className="text-blue-400" aria-hidden="true">→</span>
+                  </Link>
+                </motion.li>
+              ))}
+            </ul>
+            <div className="mt-8">
+              <Button href="/contact" size="lg" variant="primary-dark" className="w-full" arrow onClick={() => setOpen(false)}>
+                Let&apos;s build
+              </Button>
+            </div>
+            <p className="mt-auto pt-10 text-sm text-white/50">Technology for businesses that don&apos;t fit inside a template.</p>
+          </Container>
+        </motion.div>
+      )}
+    </AnimatePresence>
+    </>
   )
 }
