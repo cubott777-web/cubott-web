@@ -1,3 +1,5 @@
+import Link from "next/link"
+import { ArrowRight } from "lucide-react"
 import Container from "@/components/ui/Container"
 import Reveal from "@/components/motion/Reveal"
 import TextReveal from "@/components/motion/TextReveal"
@@ -17,6 +19,12 @@ export default function Promises() {
             <TextReveal as="h2" id="promises-title" className="display-lg mt-3 max-w-[12ch]" delay={0.1}>
               Five things you can hold us to.
             </TextReveal>
+            <Reveal delay={0.3} className="mt-6">
+              <Link href="/about#process" className="group inline-flex items-center gap-1.5 text-sm font-semibold text-white/80 transition-colors hover:text-blue-400">
+                See how a project runs
+                <ArrowRight className="h-4 w-4 transition-transform duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:translate-x-1" aria-hidden="true" />
+              </Link>
+            </Reveal>
           </div>
           <ol className="relative lg:col-span-7">
             <RowRule position="top" tone="dark" />

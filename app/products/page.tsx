@@ -54,6 +54,9 @@ export default function ProductsPage() {
           <TextReveal as="h1" className="display-xl mt-5 max-w-3xl" delay={0.15} immediate>
             Systems that are running today.
           </TextReveal>
+          <Reveal as="p" delay={0.4} className="mt-6 max-w-xl text-xl leading-relaxed text-blue-100/80 md:text-2xl">
+            Three systems in production. Nine roles on one platform. Every screen below is the real thing.
+          </Reveal>
           <Reveal as="div" delay={0.5} className="mt-8 flex flex-wrap gap-2">
             {products.map((p) => (
               <a key={p.key} href={`#${p.key}`} className="pill transition-[border-color,background-color,color] duration-300 hover:border-line-strong hover:bg-white/[0.08] hover:text-white">

@@ -6,6 +6,7 @@ import TextReveal from "@/components/motion/TextReveal"
 import Stagger, { StaggerItem } from "@/components/motion/Stagger"
 import CubottMark from "@/components/brand/CubottMark"
 import { siteConfig } from "@/lib/site"
+import { process } from "@/content/company"
 
 export const metadata: Metadata = {
   title: "About — product engineering company in Hyderabad",
@@ -73,6 +74,44 @@ export default function AboutPage() {
         </Container>
       </section>
 
+      <section id="process" className="stage scroll-mt-6 py-14 md:py-20" aria-labelledby="process-title">
+        <Container>
+          <div className="grid gap-6 lg:grid-cols-12 lg:gap-8">
+            <div className="lg:col-span-7">
+              <Reveal as="p" y={8} className="eyebrow text-blue-400">
+                How a project runs
+              </Reveal>
+              <TextReveal as="h2" id="process-title" className="display-lg mt-3 max-w-[14ch]" delay={0.1}>
+                Seven steps. Each one leaves evidence.
+              </TextReveal>
+            </div>
+            <Reveal delay={0.35} className="lg:col-span-4 lg:col-start-9 lg:self-end lg:pb-2">
+              <p className="max-w-sm text-base leading-relaxed text-white/60 md:text-lg">The examples under each step come from Dealer Management, the system this process produced.</p>
+            </Reveal>
+          </div>
+          <Stagger as="ol" gap={0.07} className="mt-10 grid gap-4 md:mt-12 md:grid-cols-2 lg:grid-cols-3">
+            {process.map((p) => (
+              <StaggerItem as="li" key={p.key} className="card card-hover flex flex-col p-6 md:p-7">
+                <span aria-hidden="true" className="text-sm font-semibold tabular-nums text-blue-400">
+                  {p.n}
+                </span>
+                <h3 className="mt-3 text-xl font-semibold tracking-tight md:text-2xl">{p.title}</h3>
+                <p className="mt-2 text-[15px] leading-relaxed text-white/60">{p.text}</p>
+                <p className="eyebrow mt-5 text-white/40">{p.evidence.label}</p>
+                <ul className="mt-2 space-y-1.5 text-sm text-white/70">
+                  {p.evidence.items.map((it) => (
+                    <li key={it} className="flex gap-2">
+                      <span aria-hidden="true" className="mt-[0.55em] h-1 w-1 shrink-0 rounded-full bg-blue-400" />
+                      {it}
+                    </li>
+                  ))}
+                </ul>
+              </StaggerItem>
+            ))}
+          </Stagger>
+        </Container>
+      </section>
+
       <section className="stage py-14 md:py-20" aria-labelledby="company-title">
         <Container>
           <div className="grid gap-10 lg:grid-cols-12 lg:gap-8">
@@ -81,7 +120,7 @@ export default function AboutPage() {
                 The company
               </Reveal>
               <TextReveal as="h2" id="company-title" className="display-lg mt-3 max-w-[12ch]" delay={0.1}>
-                Small, close, and in production.
+                A small team with systems in production.
               </TextReveal>
               <Reveal as="div" delay={0.3} className="mt-6 flex flex-wrap gap-2">
                 {stack.map((s) => (

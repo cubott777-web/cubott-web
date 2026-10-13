@@ -118,6 +118,26 @@ export const promises = [
   { title: "We reply ourselves.", text: "Every message is read and answered by the people who build." },
 ] as const
 
+/** Contact page: the questions a client asks before they trust us. Answers only say what the rest of the site already says. */
+export const faq = [
+  {
+    q: "We're not technical. Can we still work with you?",
+    a: "Yes. We start by understanding how your business runs — who does what, in what order, where it breaks. You explain the business; we handle the technology.",
+  },
+  {
+    q: "What happens after launch?",
+    a: "We stay with it. Launch is the middle of the relationship, not the end: the business changes, so the software does. Dealer Management has had finance, gate-pass and workshop tracking added after its first release.",
+  },
+  {
+    q: "What do you build with?",
+    a: "TypeScript across the stack, PostgreSQL, state-driven workflows with role-based access and an audit log built in. Multi-tenant from the first release where it matters.",
+  },
+  {
+    q: "How does a project start?",
+    a: "With a conversation about your business, not a quote. Tell us what isn't working and we'll tell you what we'd build — and whether we're the right people to build it.",
+  },
+] as const
+
 export const builderInputs = ["Your people", "Your data", "Your workflow", "Your rules", "Your systems", "Your constraints"] as const
 
 export const solutionCategories = [

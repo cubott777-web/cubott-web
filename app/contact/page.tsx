@@ -6,6 +6,7 @@ import TextReveal from "@/components/motion/TextReveal"
 import Stagger, { StaggerItem } from "@/components/motion/Stagger"
 import ContactForm from "@/components/contact/ContactForm"
 import { siteConfig, phoneHref, intents } from "@/lib/site"
+import { faq } from "@/content/company"
 
 export const metadata: Metadata = {
   title: "Contact — custom software company in Hyderabad",
@@ -17,15 +18,22 @@ export const metadata: Metadata = {
 const tiles = [
   { Icon: Phone, k: "Call", v: siteConfig.contactPhone, href: `tel:${phoneHref}` },
   { Icon: Mail, k: "Email", v: siteConfig.contactEmail, href: `mailto:${siteConfig.contactEmail}` },
-  { Icon: MapPin, k: "Visit", v: `${siteConfig.address.city}, ${siteConfig.address.region}`, href: undefined },
+  { Icon: MapPin, k: "Visit", v: `${siteConfig.address.street}, ${siteConfig.address.city} ${siteConfig.address.postalCode}`, href: undefined },
 ]
+
+const faqLd = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: faq.map((f) => ({ "@type": "Question", name: f.q, acceptedAnswer: { "@type": "Answer", text: f.a } })),
+}
 
 export default async function ContactPage({ searchParams }: { searchParams: Promise<{ intent?: string }> }) {
   const { intent } = await searchParams
   const initialMessage = intents.find((i) => i.key === intent)?.message ?? ""
 
   return (
-    <main id="main" className="pt-[calc(var(--header-h)+12px)]">
+    <main id="main" className="space-y-3 pt-[calc(var(--header-h)+12px)] lg:space-y-6">
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqLd) }} />
       <section className="stage py-16 md:py-24">
         <Container>
           <div className="grid gap-12 lg:grid-cols-12 lg:gap-16">
@@ -69,6 +77,29 @@ export default async function ContactPage({ searchParams }: { searchParams: Prom
             <div className="lg:col-span-7">
               <ContactForm key={intent} initialMessage={initialMessage} />
             </div>
+          </div>
+        </Container>
+      </section>
+
+      <section className="stage py-14 md:py-20" aria-labelledby="faq-title">
+        <Container>
+          <div className="grid gap-10 lg:grid-cols-12 lg:gap-8">
+            <div className="lg:col-span-5">
+              <Reveal as="p" y={8} className="eyebrow text-blue-400">
+                Before you write
+              </Reveal>
+              <TextReveal as="h2" id="faq-title" className="display-lg mt-3 max-w-[12ch]" delay={0.1}>
+                The questions we get first.
+              </TextReveal>
+            </div>
+            <Stagger as="dl" gap={0.08} className="grid gap-4 lg:col-span-7">
+              {faq.map((f) => (
+                <StaggerItem key={f.q} className="card p-6 md:p-7">
+                  <dt className="text-lg font-semibold tracking-tight md:text-xl">{f.q}</dt>
+                  <dd className="mt-2 text-[15px] leading-relaxed text-white/60 md:text-base">{f.a}</dd>
+                </StaggerItem>
+              ))}
+            </Stagger>
           </div>
         </Container>
       </section>

@@ -11,7 +11,7 @@ import { intents } from "@/lib/site"
 
 const EASE = [0.16, 1, 0.3, 1] as const
 
-const SECOND_LINE = "we help founders shape their product, not just build it.".split(" ")
+const SECOND_LINE = "We help founders shape their product, not just build it.".split(" ")
 
 /**
  * Hero: the cube isn't an illustration next to the headline — it's the set. Full-bleed, it opens on

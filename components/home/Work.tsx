@@ -17,7 +17,7 @@ export default function Work() {
     <section id="products" className="stage scroll-mt-6 py-14 md:py-20" aria-labelledby="work-title">
       <Container>
         <Reveal as="p" y={8} className="eyebrow text-blue-400">
-          Proof, not promises
+          Running today
         </Reveal>
         <TextReveal as="h2" id="work-title" className="display-lg mt-3 max-w-[14ch]" delay={0.1}>
           What we&apos;ve built.

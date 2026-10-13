@@ -17,7 +17,7 @@ export interface Product {
 export const products: Product[] = [
   {
     key: "dealer",
-    title: "Dealership Management",
+    title: "Dealer Management",
     sector: "Agricultural machinery dealers",
     line: "Service operations, parts, warranty and workshop workflows — connected in one system.",
     href: "/products",
